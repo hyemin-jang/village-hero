@@ -24,7 +24,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @SequenceGenerator(name="apply_seq", sequenceName="apply_seq", initialValue=1, allocationSize=1)
-public class ApplyEntity {
+public class Apply {
 	
 	@Id
 	@Column(name="apply_id")
@@ -33,10 +33,10 @@ public class ApplyEntity {
 	
 	@OneToOne
 	@JoinColumn(name="member_id")
-	private MemberEntity applicant;
+	private Member applicant;
 	
 	private String message;
 	
 	@OneToMany(mappedBy = "applyId")
-	List<ErrandApplyEntity> errands = new ArrayList<>();
+	List<ErrandApply> errands = new ArrayList<>();
 }

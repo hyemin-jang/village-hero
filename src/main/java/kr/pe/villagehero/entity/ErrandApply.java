@@ -20,7 +20,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @SequenceGenerator(name="errand_apply_seq", sequenceName="errand_apply_seq", initialValue=1, allocationSize=1)
-public class ErrandApplyEntity {
+public class ErrandApply {
 	
 	@Id
 	@Column(name="errand_apply_id")
@@ -29,11 +29,11 @@ public class ErrandApplyEntity {
 	
 	@ManyToOne
 	@JoinColumn(name="errand_id")
-	private ErrandEntity errandId;
+	private Errand errandId;
 	
 	@ManyToOne
 	@JoinColumn(name="apply_id")
-	private ApplyEntity applyId;
+	private Apply applyId;
 	
 	private char matching;
 }
