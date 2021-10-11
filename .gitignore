@@ -1,3 +1,26 @@
+# Created by https://www.toptal.com/developers/gitignore/api/java,maven,eclipse
+# Edit at https://www.toptal.com/developers/gitignore?templates=java,maven,eclipse
+*.properties
+### Eclipse ###
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+# External tool builders
+.externalToolBuilders/
+# Locally stored "Eclipse launch configurations"
+*.launch
+# PyDev specific (Python IDE for Eclipse)
+*.pydevproject
+# CDT-specific (C/C++ Development Tooling)
+.cproject
 # CDT- autotools
 .autotools
 # Java annotation processor (APT)
@@ -56,9 +79,10 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
-.mvn/timing.properties
+.mvn/
+mvnw
+mvnw.cmd
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
-.mvn/wrapper/maven-wrapper.jar
 ### Maven Patch ###
 # Eclipse m2e generated files
 # Eclipse Core
