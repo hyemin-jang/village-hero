@@ -25,7 +25,7 @@ import lombok.Setter;
 public class Member {
 	
 	@Id
-//	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="member_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="member_seq")
 	@Column(name="member_id")
 	private long memberId;
 	
@@ -56,7 +56,7 @@ public class Member {
 	private int score;
 	
 	@Column(name="member_status")
-	private char memberStatus;
+	private int memberStatus;
 	
 //	@OneToMany(mappedBy="memberId")
 //	List<Errand> errands = new ArrayList<>();

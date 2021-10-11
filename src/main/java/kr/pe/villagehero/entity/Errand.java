@@ -1,9 +1,5 @@
 package kr.pe.villagehero.entity;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,11 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity
 @SequenceGenerator(name="errand_seq", sequenceName="errand_seq", initialValue=1, allocationSize=1)
 public class Errand {
@@ -34,11 +30,11 @@ public class Errand {
 	private long errandId;
 	
 	@ManyToOne
-	@JoinColumn(name="member_id")
+	@JoinColumn(name="writer")
 	private Member writer;
 	
 	@Column(name="created_at")
-	private Date createdAt;
+	private String createdAt;
 	
 	private String title;
 	
@@ -50,15 +46,12 @@ public class Errand {
 	private String reqLocation;
 	
 	@Column(name="req_date")
-	private Date reqDate;
+	private String reqDate;
 	
 	@Column(name="errand_status")
 	private char errandStatus;
 	
-//	@OneToOne
-//	@JoinColumn(name="member_id")
-//	private MemberEntity hero;
 	
-	@OneToMany(mappedBy = "errandId")
-	List<ErrandApply> apllicants = new ArrayList<>();
+//	@OneToMany(mappedBy = "errandId")
+//	List<ErrandApply> apllicants = new ArrayList<>();
 }
