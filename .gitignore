@@ -1,8 +1,8 @@
-
 # Created by https://www.toptal.com/developers/gitignore/api/java,maven,eclipse
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,maven,eclipse
 
 *.properties
+
 
 ### Eclipse ###
 .metadata
@@ -109,6 +109,7 @@ buildNumber.properties
 mvnw
 mvnw.cmd
 
+
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 
 
@@ -118,5 +119,3 @@ mvnw.cmd
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
-
-# End of https://www.toptal.com/developers/gitignore/api/java,maven,eclipse
