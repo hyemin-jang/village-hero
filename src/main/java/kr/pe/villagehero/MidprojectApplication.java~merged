@@ -4,10 +4,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+<<<<<<< HEAD
+public class MidprojectApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(MidprojectApplication.class, args);
+=======
 public class MidProjectApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MidProjectApplication.class, args);
+		
+>>>>>>> 24f79ea827d6944967874c532e749259ae83971b
 	}
 
 }
