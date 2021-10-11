@@ -22,10 +22,10 @@ import lombok.Setter;
 @Setter
 @Entity
 @SequenceGenerator(name="member_seq", sequenceName="member_seq", initialValue=1, allocationSize=1)
-public class MemberEntity {
+public class Member {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="member_seq")
+//	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="member_seq")
 	@Column(name="member_id")
 	private long memberId;
 	
@@ -35,7 +35,7 @@ public class MemberEntity {
 	
 	private String password2;
 	
-	private String nickName;
+	private String nickname;
 	
 	private int age;
 	
@@ -58,6 +58,6 @@ public class MemberEntity {
 	@Column(name="member_status")
 	private char memberStatus;
 	
-	@OneToMany(mappedBy="memberId")
-	List<ErrandEntity> errands = new ArrayList<>();
+//	@OneToMany(mappedBy="memberId")
+//	List<Errand> errands = new ArrayList<>();
 }

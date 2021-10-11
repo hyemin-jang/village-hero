@@ -26,7 +26,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @SequenceGenerator(name="errand_seq", sequenceName="errand_seq", initialValue=1, allocationSize=1)
-public class ErrandEntity {
+public class Errand {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="errand_seq")
@@ -35,7 +35,7 @@ public class ErrandEntity {
 	
 	@ManyToOne
 	@JoinColumn(name="member_id")
-	private MemberEntity writer;
+	private Member writer;
 	
 	@Column(name="created_at")
 	private Date createdAt;
@@ -60,5 +60,5 @@ public class ErrandEntity {
 //	private MemberEntity hero;
 	
 	@OneToMany(mappedBy = "errandId")
-	List<ErrandApplyEntity> apllicants = new ArrayList<>();
+	List<ErrandApply> apllicants = new ArrayList<>();
 }
