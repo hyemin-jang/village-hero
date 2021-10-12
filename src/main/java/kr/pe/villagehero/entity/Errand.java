@@ -1,5 +1,8 @@
 package kr.pe.villagehero.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import lombok.AllArgsConstructor;
@@ -51,13 +55,9 @@ public class Errand {
 	@Column(name="errand_status")
 	private char errandStatus;
 	
-<<<<<<< HEAD
-//	@OneToOne
-//	@JoinColumn(name="member_id")
-//	private Member hero;
-=======
->>>>>>> e45a7aa38b8a2799f34a368bcf9a0a16629ca4e8
-	
 //	@OneToMany(mappedBy = "errandId")
-//	List<ErrandApply> apllicants = new ArrayList<>();
+//	List<Apply> applicants = new ArrayList<Apply>();
+	
+	
+	
 }

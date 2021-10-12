@@ -9,9 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+
+import org.hibernate.annotations.ManyToAny;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,11 +34,21 @@ public class Apply {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "apply_seq")
 	private long applyId;
 	
-	@OneToOne
+	@ManyToOne
+	@JoinColumn(name="errand_id")
+	private Errand errand;
+	
+	@ManyToOne
 	@JoinColumn(name="member_id")
 	private Member applicant;
 	
 	private String message;
+	
+	@Column(name="created_at")
+	private String createdAt;
+	
+	@Column(name="match_status")
+	private char matchStatus;
 	
 //	@OneToMany(mappedBy = "applyId")
 //	List<ErrandApply> errands = new ArrayList<>();

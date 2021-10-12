@@ -58,6 +58,9 @@ public class Member {
 	@Column(name="member_status")
 	private int memberStatus;
 	
+//	@OneToMany(mappedBy = "memberId")
+//	List<Apply> apply = new ArrayList<>();
+	
 //	@OneToMany(mappedBy="memberId")
 //	List<Errand> errands = new ArrayList<>();
 }

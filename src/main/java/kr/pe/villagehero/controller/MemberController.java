@@ -23,9 +23,9 @@ public class MemberController {
 		return member.get();
 	}
 	
-	@PostMapping("/create")
-	public String create() {
-		dao.save(new Member(5, "hm@gmail.com", "123", "123", "hm", 20, 'F', "010-0000-0000", "seoul", "aa", null, null, null, 0, 0));
-		return "redirect:address.html";
-	}
+//	@PostMapping("/create")
+//	public String create() {
+//		dao.save(new Member(5, "hm@gmail.com", "123", "123", "hm", 20, 'F', "010-0000-0000", "seoul", "aa", null, null, null, 0, 0));
+//		return "redirect:address.html";
+//	}
 }
