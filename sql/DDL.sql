@@ -11,7 +11,7 @@ DROP SEQUENCE errand_apply_seq;
 CREATE SEQUENCE member_seq;
 CREATE TABLE member (
        member_id		NUMBER(10)  PRIMARY KEY,
-       eamil			VARCHAR2(50) NOT NULL unique,
+       email			VARCHAR2(50) NOT NULL unique,
        password     	VARCHAR2(20) NOT NULL,
        password2    	VARCHAR2(20) NOT NULL,
        nickname			VARCHAR2(20) NOT NULL UNIQUE,

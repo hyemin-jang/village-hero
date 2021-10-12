@@ -59,6 +59,6 @@ public class Errand {
 //	@JoinColumn(name="member_id")
 //	private Member hero;
 	
-//	@OneToMany(mappedBy = "errandId")
-//	List<ErrandApply> apllicants = new ArrayList<>();
+	@OneToMany(mappedBy = "errandId")
+	List<ErrandApply> apllicants = new ArrayList<>();
 }
