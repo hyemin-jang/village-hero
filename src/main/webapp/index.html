@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 지도 API include -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c2c65e47ff9efd53c90ebd6f14d04ecb&libraries=services,clusterer,drawing"></script>	
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>	
+	<template id="header">
+		<div>
+			
+		</div>
+	</template>
+
+	<template id="side">
+		<div>
+			
+		</div>
+	</template>
+
+	<template id="main">
+		<div>
+			<div id="map" style="width:600px;height:600px;"></div>
+		</div>
+	</template>
+	
+
+	<div id="app">
+		<main-com></main-com>					
+	</div>
+	
+	
+	<script>		
+		Vue.component("main-com", {
+			template: "#main",
+			data: function(){
+				return {
+
+				}
+			},
+			methods: {
+
+			},
+			created: function(){
+				
+			},
+			mounted: function(){	
+				var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
+				console.log(mapContainer);
+				var mapOption = { 
+					center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+					level: 3 // 지도의 확대 레벨
+				};
+
+				// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+				var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+				if (navigator.geolocation) {
+    
+					// GeoLocation을 이용해서 현 접속 위치를 얻어옵니다
+					navigator.geolocation.getCurrentPosition(function(position) {						
+						var lat = position.coords.latitude; // 위도
+						var	lon = position.coords.longitude; // 경도
+						
+						var locPosition = new kakao.maps.LatLng(lat, lon); 		
+
+						map.setCenter(locPosition);		// 지도 중심위치를 현 접속위치로 변경						
+					})
+				}				
+			}			
+		});
+		
+		new Vue({
+            el: "#app"            
+        });
+
+	</script>
+	
+</body>
+</html>
