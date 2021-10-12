@@ -37,6 +37,8 @@ public class Errand {
 	@JoinColumn(name="writer")
 	private Member writer;
 	
+	private int pay;
+	
 	@Column(name="created_at")
 	private String createdAt;
 	
