@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.service.ErrandService;
@@ -16,15 +16,21 @@ public class ErrandController {
 	@Autowired
 	private ErrandService service;
 	
+//	@GetMapping("errands")
+//	public ModelAndView getAllErrands(){
+//		ModelAndView mv = new ModelAndView();
+//		List<ErrandDTO> errandList = service.getAllErrands();
+//		
+//		mv.setViewName("errands");
+//		mv.addObject("errands", errandList);
+//		
+//		return mv;		
+//	}
+	
 	@GetMapping("errands")
-	public ModelAndView getAllErrands(){
-		ModelAndView mv = new ModelAndView();
-		List<ErrandDTO> errandList = service.getAllErrands();
-		
-		mv.setViewName("errands");
-		mv.addObject("errands", errandList);
-		
-		return mv;		
+	public List<ErrandDTO> getErrandsMarker(RedirectAttributes attr) {
+		return service.getAllErrands();		
 	}
+	
 	
 }

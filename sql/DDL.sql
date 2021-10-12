@@ -29,10 +29,7 @@ CREATE SEQUENCE errand_seq;
 CREATE TABLE errand (
 	   errand_id		NUMBER(10) PRIMARY KEY,
 	   writer 			NUMBER(10) NOT NULL,
-<<<<<<< HEAD
-=======
 	   pay				NUMBER(10) NOT NULL,
->>>>>>> c2c33aaa3ae721d4cda296d3dd4b658192974d3b
 	   created_at		DATE NOT NULL,
 	   title			VARCHAR2(100) NOT NULL,
 	   content 			VARCHAR2(1000) NOT NULL,	  
