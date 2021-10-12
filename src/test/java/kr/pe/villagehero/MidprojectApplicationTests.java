@@ -8,6 +8,6 @@ class MidProjectApplicationTests {
 
 	@Test
 	void contextLoads() {
+		
 	}
-
 }
