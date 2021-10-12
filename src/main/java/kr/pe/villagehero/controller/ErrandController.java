@@ -14,23 +14,16 @@ import kr.pe.villagehero.service.ErrandService;
 public class ErrandController {
 	
 	@Autowired
-	private ErrandService service;
+	private ErrandService service;	
 	
-//	@GetMapping("errands")
-//	public ModelAndView getAllErrands(){
-//		ModelAndView mv = new ModelAndView();
-//		List<ErrandDTO> errandList = service.getAllErrands();
-//		
-//		mv.setViewName("errands");
-//		mv.addObject("errands", errandList);
-//		
-//		return mv;		
-//	}
 	
 	@GetMapping("errands")
-	public List<ErrandDTO> getErrandsMarker(RedirectAttributes attr) {
+	public List<ErrandDTO> getAllErrands() {
 		return service.getAllErrands();		
 	}
 	
-	
+	@GetMapping("errand")
+	public ErrandDTO getOneErrand(long id) {
+		return service.getOneErrand(id);
+	}
 }

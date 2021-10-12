@@ -10,36 +10,56 @@
 </head>
 <body>	
 	<template id="header">
-		<div>
-			<!-- header 부분 템플릿 여기다 만들기 -->
+		<div>		
+			<a href="myinfo?member=1">마이페이지</a>
 		</div>
 	</template>
 
 	<template id="side">
 		<div>
-			<!-- side 부분 템플릿 여기다 만들기 -->
+			
 		</div>
 	</template>
 
 	<template id="main">
-		<div>			
-			<div id="map" style="width:1000px;height:800px;"></div>				
+		<div>					
+			<div id="side" v-for="errand in allErrands" style="border:1px solid;">
+				<img class="picture" src="#">
+				<div class="title">{{errand.title}}</div>
+				<div class="reqLoc">{{errand.reqLocation}}</div>
+				<div class="help"><a href="#">도와줄게요</a></div>
+			</div>		
+			
+			<div id="map" style="width:1000px;height:800px;"></div>		
 		</div>
 	</template>
 	
 
 	<div id="app">
+		<header-com></header-com>
 		<main-com></main-com>					
 	</div>
 	
 	
-	<script>		
+	<script>
+		// header 컴포넌트
+		Vue.component("header-com", {
+			template: "#header",
+			data: function(){
+				return {
+
+				}
+			},
+
+		})
+		
+		// main 컴포넌트
 		Vue.component("main-com", {
 			template: "#main",
 			data: function(){
 				return {
 					allErrands: [],		
-					erranderrandLocations: []			
+					errandLocations: []			
 				}
 			},
 			methods: {
@@ -51,14 +71,14 @@
 					url: "http://localhost:8088/errands"		
 				}).then(resData => {						      			
 					this.allErrands = resData.data;   
-					this.errandLocations = resData.data.map(v => v.reqLocation); // 모든 심부름 정보의 위치만 빼서 errandLocations 배열에 담기			
+					//this.errandLocations = resData.data.map(v => v.reqLocation); // 모든 심부름 정보의 위치만 빼서 errandLocations 배열에 담기						
 
 
 					/*** 지도 생성하기 ***/
 					var mapContainer = document.getElementById("map"); // 지도를 표시할 div 				
 					var mapOption = { 
 						center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-						level: 3 // 지도의 확대 레벨
+						level: 4 // 지도의 확대 레벨
 					};				
 					var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 표시할 div와 지도 옵션으로 지도를 생성
 
@@ -76,28 +96,53 @@
 					/*** 지도에 마커 표시 ***/				
 					var geocoder = new kakao.maps.services.Geocoder(); // 주소-좌표 변환 객체를 생성
 					
-					// errandLocations 에 담긴 모든 심부름 주소들에 대해
-					for (var i=0; i<this.errandLocations.length; i++){
-						geocoder.addressSearch(this.errandLocations[i], function(result, status) {					
-							if (status === kakao.maps.services.Status.OK) { // 정상적으로 검색이 완료됐으면 
-								var coords = new kakao.maps.LatLng(result[0].y, result[0].x);  // 좌표로 변환
-	
-								// 결과값으로 받은 위치를 마커로 표시합니다
-								var marker = new kakao.maps.Marker({
-									map: map,
-									position: coords
-								});
+					for (var errand of this.allErrands){					
+						
+						// 심부름 주소를 좌표값으로 변환하기
+						geocoder.addressSearch(errand.reqLocation, function(result, status) {						
+							if (status === kakao.maps.services.Status.OK) { 								
+								// 좌표로 변환된 위치
+								var coords = new kakao.maps.LatLng(result[0].y, result[0].x);  
+								var title = errand.title;		
 							}
+
+							// 결과값으로 받은 위치를 마커로 표시
+							var marker = new kakao.maps.Marker({
+								map: map,
+								position: coords
+							});		
+							
+							
+							console.log(coords);
+							console.log(title);
+
+							// 인포윈도우 생성
+							var infowindow = new kakao.maps.InfoWindow({
+								position : coords, 
+								content : title
+							});
+
+							// 마커에 이벤트 등록
+							kakao.maps.event.addListener(marker, 'mouseover', function(){  
+								infowindow.open(map, marker);
+							});
+							kakao.maps.event.addListener(marker, 'mouseout', function(){
+								infowindow.close();
+							});
 						});
 					}
+
 				}).catch(error => {
 					console.log("error", error);
 				});  
 				
-			}		
+			},
+			mounted: function(){					
+				
+			}			
 		});
 		
-		
+
 		new Vue({
             el: "#app"            
         });

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 지도 API include -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c2c65e47ff9efd53c90ebd6f14d04ecb&libraries=services,clusterer,drawing"></script>	
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
+</head>
+<body>	
+	
+	<template id="profile">
+		<div>					
+			
+		</div>
+	</template>
+	
+
+	<div id="app">
+		<profile-com></profile-com>					
+	</div>
+	
+	
+	<script>		
+		Vue.component("profile-com", {
+			template: "#profile",
+			data: function(){
+				return {
+						
+				}
+			},
+			methods: {
+				
+			},
+			created: function(){	
+                sessionStorage.setItem("myinfo", "hi");
+
+				axios({
+					method: "get",
+					url: "http://localhost:8088/myinfo"		
+				}).then(resData => {						      			
+					this.allErrands = resData.data;   					
+
+				}).catch(error => {
+					console.log("error", error);
+				});  
+				
+			},					
+		});
+		
+
+		new Vue({
+            el: "#app"            
+        });
+
+	</script>
+	
+</body>
+</html>

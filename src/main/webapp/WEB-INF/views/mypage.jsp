@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-${requestScope.errands[0].title}
+마이페이지 ${memberId}
 </body>
 </html>
