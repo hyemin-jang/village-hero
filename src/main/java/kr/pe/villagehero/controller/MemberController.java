@@ -27,11 +27,15 @@ public class MemberController {
 		model.addAttribute("loginMember", loginMember);		// 세션에 현재 로그인한 회원의 정보 저장
 		
 //		return "redirect:mypage.html";  ?????
-		return new RedirectView("/mypage.jsp");		
+		return new RedirectView("/mypage.html");		
 		
 	}
 	
 	
-	
+	// 세션에 담긴 로그인한 회원의 정보 반환하는 메소드
+	@GetMapping("getSession")
+	public Object getLogInSession(Model model) {
+		return model.getAttribute("loginMember");
+	}
 	
 }
