@@ -1,5 +1,15 @@
 package kr.pe.villagehero;
 
+<<<<<<< HEAD
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class MidprojectApplicationTests {
+
+	@Test
+	void contextLoads() {
+=======
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,6 +42,7 @@ class MidProjectApplicationTests {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+>>>>>>> 19e1229b10e3687caf7c44cd0cc5d32e4469be1e
 	}
 
 }
