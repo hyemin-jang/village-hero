@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-${requestScope.errands[0].title}
+	 ${sessionScope.id}
 </body>
 </html>

@@ -1,5 +1,7 @@
 package kr.pe.villagehero.dto;
 
+import java.util.Comparator;
+
 import kr.pe.villagehero.entity.Errand;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
