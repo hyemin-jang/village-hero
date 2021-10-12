@@ -30,7 +30,6 @@ class MidProjectApplicationTests {
 		try {
 			mock.perform(get("/test").param("id", "1")).andExpect(status().isOk()).andDo(print());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

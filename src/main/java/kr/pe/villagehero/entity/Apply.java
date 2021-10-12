@@ -37,6 +37,6 @@ public class Apply {
 	
 	private String message;
 	
-	@OneToMany(mappedBy = "applyId")
-	List<ErrandApply> errands = new ArrayList<>();
+//	@OneToMany(mappedBy = "applyId")
+//	List<ErrandApply> errands = new ArrayList<>();
 }
