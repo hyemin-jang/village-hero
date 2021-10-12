@@ -11,7 +11,12 @@
 <body>	
 	<template id="header">
 		<div>		
-			<a href="myinfo?member=1">마이페이지</a>
+			<a href="#">모든 심부름</a>
+			<a href="#">내 심부름</a><br>
+			<a href="#">회원가입</a>
+			<a href="login.html">로그인</a>
+			<a href="#">마이페이지</a>			
+			<a href="#">로그아웃</a>
 		</div>
 	</template>
 
@@ -71,8 +76,6 @@
 					url: "http://localhost:8088/errands"		
 				}).then(resData => {						      			
 					this.allErrands = resData.data;   
-					//this.errandLocations = resData.data.map(v => v.reqLocation); // 모든 심부름 정보의 위치만 빼서 errandLocations 배열에 담기						
-
 
 					/*** 지도 생성하기 ***/
 					var mapContainer = document.getElementById("map"); // 지도를 표시할 div 				
@@ -97,10 +100,12 @@
 					var geocoder = new kakao.maps.services.Geocoder(); // 주소-좌표 변환 객체를 생성
 					
 					for (var errand of this.allErrands){					
-						
+						console.log("for문 최상단 " + errand.title);
 						// 심부름 주소를 좌표값으로 변환하기
-						geocoder.addressSearch(errand.reqLocation, function(result, status) {						
-							if (status === kakao.maps.services.Status.OK) { 								
+						geocoder.addressSearch(errand.reqLocation, function(result, status) {	
+							console.log("geocoder.addressSearch 함수내 " + errand.title);
+							if (status === kakao.maps.services.Status.OK) { 	
+								console.log("if블럭 내 " + errand.title);
 								// 좌표로 변환된 위치
 								var coords = new kakao.maps.LatLng(result[0].y, result[0].x);  
 								var title = errand.title;		
@@ -112,10 +117,6 @@
 								position: coords
 							});		
 							
-							
-							console.log(coords);
-							console.log(title);
-
 							// 인포윈도우 생성
 							var infowindow = new kakao.maps.InfoWindow({
 								position : coords, 

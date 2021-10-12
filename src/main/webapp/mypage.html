@@ -12,7 +12,7 @@
 	
 	<template id="profile">
 		<div>					
-			
+			마이페이지
 		</div>
 	</template>
 	
@@ -29,24 +29,7 @@
 				return {
 						
 				}
-			},
-			methods: {
-				
-			},
-			created: function(){	
-                sessionStorage.setItem("myinfo", "hi");
-
-				axios({
-					method: "get",
-					url: "http://localhost:8088/myinfo"		
-				}).then(resData => {						      			
-					this.allErrands = resData.data;   					
-
-				}).catch(error => {
-					console.log("error", error);
-				});  
-				
-			},					
+			},				
 		});
 		
 

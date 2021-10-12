@@ -7,10 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<<<<<<< HEAD:src/main/webapp/mypage.jsp
-마이페이지 ${memberId}
-=======
-	 ${sessionScope.id}
->>>>>>> 41df1c0ecd821e52cbe9c879d4d5bc9f4a38a462:src/main/webapp/session.jsp
+로그인한 사람: ${loginMember.nickname}
 </body>
 </html>

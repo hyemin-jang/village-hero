@@ -21,7 +21,7 @@ import kr.pe.villagehero.service.ErrandService;
 
 
 @RestController
-@RequestMapping("sessiontracking")
+//@RequestMapping("sessiontracking")  ?? 지워도되나여??
 public class ErrandController {
 
 	@Autowired
