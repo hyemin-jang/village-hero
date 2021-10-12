@@ -38,3 +38,4 @@ public class ErrandDTO {
 		this.errandStatus = entity.getErrandStatus();
 	}
 }
+

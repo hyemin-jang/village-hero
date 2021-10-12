@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>errand registration</title>
+</head>
+<body>
+
+	<div class="form">
+		<div class="header">
+			<h2>심부름 요청서</h2>
+		</div>
+		<form class="errandForm" action="/errand" method="POST">
+			<label for="title">심부름 제목</label>
+			<div>
+				<input type="text" class="form-control" id="title" name="title"
+					required>
+			</div>
+
+			<label for="category">심부름 항목 선택</label>
+			<div>
+				<input type="text" class="form-control" id="category"
+					name="category" required>
+			</div>
+
+			<label for="location">위치</label>
+			<div>
+				<input type="text" class="form-control" id="location"
+					name="reqLocation" required>
+			</div>
+
+			<label for="requestDate">요청일시</label>
+			<div>
+				<input type="text" class="form-control" id="requestDate"
+					name="reqDate" required>
+			</div>
+
+			<label for="content">내용</label>
+			<div>
+				<input type="text" class="form-control" id="content" name="content"
+					required>
+			</div>
+
+			<label for="price">가격</label>
+			<div>
+				<input type="text" class="form-control" id="price" name="pay"
+					required>
+			</div>
+
+			<br>
+
+			<button @click="postErrand()">등록하기</button>
+
+		</form>
+	</div>
+
+	<script>
+
+	
+	</script>
+
+
+</body>
+</html>

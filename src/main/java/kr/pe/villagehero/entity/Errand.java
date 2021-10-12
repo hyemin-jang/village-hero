@@ -24,6 +24,20 @@ import lombok.Setter;
 @SequenceGenerator(name="errand_seq", sequenceName="errand_seq", initialValue=1, allocationSize=1)
 public class Errand {
 
+	public Errand(Member writer, int pay, String createdAt, String title, String content, String category,
+			String reqLocation, String reqDate, char errandStatus) {
+		super();
+		this.writer = writer;
+		this.pay = pay;
+		this.createdAt = createdAt;
+		this.title = title;
+		this.content = content;
+		this.category = category;
+		this.reqLocation = reqLocation;
+		this.reqDate = reqDate;
+		this.errandStatus = errandStatus;
+	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="errand_seq")
 	@Column(name="errand_id")
