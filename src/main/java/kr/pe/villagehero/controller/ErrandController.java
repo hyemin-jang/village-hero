@@ -18,7 +18,6 @@ public class ErrandController {
 	
 	@GetMapping("errands")
 	public ModelAndView getAllErrands(){
-		// 컨트롤러 : 예외처리 + 뷰 넘겨주기
 		ModelAndView mv = new ModelAndView();
 		List<ErrandDTO> errandList = service.getAllErrands();
 		

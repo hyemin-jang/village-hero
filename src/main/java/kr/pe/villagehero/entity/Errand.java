@@ -33,6 +33,8 @@ public class Errand {
 	@JoinColumn(name="writer")
 	private Member writer;
 	
+	private int pay;
+	
 	@Column(name="created_at")
 	private String createdAt;
 	
@@ -51,7 +53,9 @@ public class Errand {
 	@Column(name="errand_status")
 	private char errandStatus;
 	
-	
 //	@OneToMany(mappedBy = "errandId")
-//	List<ErrandApply> apllicants = new ArrayList<>();
+//	List<Apply> applicants = new ArrayList<Apply>();
+	
+	
+	
 }

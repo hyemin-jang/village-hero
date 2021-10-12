@@ -4,9 +4,15 @@ insert into member values(member_seq.nextval, 'email2@google.com', '222', '222',
 insert into member values(member_seq.nextval, 'email3@google.com', '222', '222', '혜미니', '25', 'F', '010-3333-3333', '서울시 마포구', '돌봄', NULL, NULL, NULL, 0, 0);
 
 -- [심부름 등록]
+<<<<<<< HEAD
 insert into errand values(errand_seq.nextval, 1, '2021-10-11', '바퀴벌레 잡아 주실 분ㅠㅠ', '집에 바퀴벌레가 너무 많아요ㅠㅠ 처리 가능한 용자분 찾습니다!', '벌레', '파주', '2021-10-11', 1);
 insert into errand values(errand_seq.nextval, 2, '2021-10-12', '강아지 돌보는 분 급구!!', '혼자 여행 가서 그런데 강아지 사랑으로 돌봐주실 분ㅎㅎ', '돌봄', '용인', '2021-10-12', 2); 
 insert into errand values(errand_seq.nextval, 3, '2021-10-13', '급하게 서류 전달해 주실 분!?', '급한 건데 몸이 아파서 대신 전달해 주실 분 계실까요~', '배달', '서울시 강서구 등촌로39가길 15-6', '2021-10-13', 1);
+=======
+insert into errand values(errand_seq.nextval, 1, 10000, '2021-10-11', '바퀴벌레 잡아 주실 분ㅠㅠ', '집에 바퀴벌레가 너무 많아요ㅠㅠ 처리 가능한 용자분 찾습니다!', '벌레', '파주', '2021-10-11', 1);
+insert into errand values(errand_seq.nextval, 2, 20000, '2021-10-12', '강아지 돌보는 분 급구!!', '혼자 여행 가서 그런데 강아지 사랑으로 돌봐주실 분ㅎㅎ', '돌봄', '용인', '2021-10-12', 2); 
+insert into errand values(errand_seq.nextval, 3, 15000, '2021-10-13', '급하게 서류 전달해 주실 분!?', '급한 건데 몸이 아파서 대신 전달해 주실 분 계실까요~', '배달', '서울시 강서구 등촌로39가길 15-6', '2021-10-13', 1);
+>>>>>>> c2c33aaa3ae721d4cda296d3dd4b658192974d3b
 
 -- [심부름 지원]
 insert into apply values(apply_seq.nextval, 3, 1, '파주지역 이거저거 배달 가능합니다! 불러주세요~', '2021-10-14', 0);
