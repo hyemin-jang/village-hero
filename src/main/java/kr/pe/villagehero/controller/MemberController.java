@@ -77,7 +77,7 @@ public class MemberController {
 		Long num = 0l;
 		MemberDTO.Get sessiondata = (MemberDTO.Get)model.getAttribute("loginMember");
 		for(int i=0;i<allapply.size();i++) {
-			if(sessiondata.getMemberId() == allapply.get(i).get) {
+			if(sessiondata.getMemberId() == allapply.get(i).getApplicant()) {
 				num = allapply.get(i).getErrand();
 			}
 			for(int j=0;j<allerrand.size();j++) {
