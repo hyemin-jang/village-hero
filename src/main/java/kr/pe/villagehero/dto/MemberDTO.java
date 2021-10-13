@@ -48,7 +48,7 @@ public class MemberDTO {
 	@AllArgsConstructor
 	@Getter
 	@Setter
-	public static class Login {
+	public static class Login {  // 로그인한 정보 넘겨줄때 필요한 DTO 클래스
 		private String email;	
 		private String password;
 	}

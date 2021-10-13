@@ -1,6 +1,7 @@
 package kr.pe.villagehero.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,8 +27,8 @@ public class MemberController {
 		
 		model.addAttribute("loginMember", loginMember);		// 세션에 현재 로그인한 회원의 정보 저장
 		
-//		return "redirect:mypage.html";  ?????
-		return new RedirectView("/mypage.html");		
+//		return "redirect:mypage.html";  
+		return new RedirectView("/mypage.html");	
 		
 	}
 	

@@ -12,24 +12,75 @@
 	
 	<template id="profile">
 		<div>					
-			<div v-bind="logInMember">마이페이지 - {{logInMember.nickname}}</div>
+			<div v-bind="logInMember">
+				<img src="{{logInMember.picture}}">
+				<div class="req_count">
+					심부름 요청<br>
+					?번
+				</div>
+				<div class="done_count">
+					수행 완료<br>
+					?번
+				</div>
+			</div>
+			<a href="#">회원정보 수정하기</a>
+		</div>
+	</template>
+	
+	<template id="list">
+		<div>
+			<div class="menu">
+				<span @click="">요청 내역</span>
+				<span>수행 내역</span>
+				<table id="reqList" style="border:1px solid;" v-bind="show">
+					<thead>
+						<tr>
+							<th>등록일</th><th>완료일</th><th>심부름 제목</th><th>분류</th><th>도와준 히어로</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td></td><td></td><td></td><td></td>
+						</tr>
+					</tbody>
+				</table>
+				<table id="doneList" style="border:1px solid;">
+					<thead>
+						<tr>
+							<th>완료일</th><th>작성자</th><th>심부름 제목</th><th>분류</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td></td><td></td><td></td><td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</template>
 	
 
 	<div id="app">
-		<profile-com></profile-com>					
+		<profile-com></profile-com>	
+		<hr>
+		<list-com></list-com>				
 	</div>
 	
 	
-	<script>		
+	<script>
+		// 이벤트버스
+		let eventBus = new Vue();
+	
+		// 프로필 컴포넌트
 		Vue.component("profile-com", {
 			template: "#profile",
 			data: function(){
 				return {
 					logInMember: ""	
 				}
-			},created : function(){
+			},
+			created : function(){
 				axios({
 					method: "get",
 					url: "http://localhost:8088/logincheck"		
@@ -39,6 +90,45 @@
 				}).catch(error => {
 					console.log("error", error);
 				});  
+			}, 
+			methods: {
+				logInCheck: function(){
+					eventBus.$emit("logInMember", this.logInMember);  // 이벤트버스로 로그인한 회원 데이터 공유
+				}
+			}				
+		});
+		
+		// 나의 심부름 요청, 수행 내역 컴포넌트
+		Vue.component("list-com", {
+			template: "#list",
+			data: function(){
+				return {
+					logInMember: [],
+					reqList: [],
+					doneList: []
+				}
+			},created : function(){
+				axios({
+					method: "get",
+<<<<<<< HEAD
+					url: "http://localhost:8088/logincheck"		
+=======
+					url: "http://localhost:8088/my-req-done"		
+>>>>>>> ec565646519b6ae8fa36b659fc6b56534d6b0b8d
+				}).then(resData => {						      			
+					this.logInMember = resData.data;   
+					console.log(this.logInMember);
+				}).catch(error => {
+					console.log("error", error);
+				});  
+
+				// 이벤트버스로부터 로그인한 회원 정보 공유받아서 사용
+				eventBus.$on("logInMember", (v) => {
+					this.logInMember = v;
+				})
+			},
+			methods: {
+
 			}				
 		});
 		

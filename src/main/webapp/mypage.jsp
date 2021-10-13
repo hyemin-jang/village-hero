@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-로그인한 사람: ${loginMember.nickname}
+로그인한 사람: ${sessionScope.loginMember.nickname}
 </body>
 </html>

@@ -80,5 +80,6 @@ public class ErrandController {
 		System.out.println("m2() -- " + session.getAttribute("id"));
 		return "redirect:/session.jsp";
 	}
-	
+
 }
+

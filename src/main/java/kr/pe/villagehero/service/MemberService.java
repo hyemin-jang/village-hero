@@ -14,6 +14,7 @@ public class MemberService {
 	@Autowired
 	private MemberRepository dao;
 
+	// 로그인 - DB에서 해당 email 가진 회원 조회
 	public Get logIn(String email) {	
 		System.out.println("service - " + email);
 		
