@@ -79,12 +79,11 @@ public class MemberController {
 		MemberDTO.Get sessiondata = (MemberDTO.Get)model.getAttribute("loginMember");
 		for(int i=0;i<allapply.size();i++) {
 			if(sessiondata.getMemberId() == allapply.get(i).getApplicant()) {
-				num = allapply.get(i).getErrand();
-			}
-			for(int j=0;j<allerrand.size();j++) {
-				if(num==allerrand.get(i).getErrandId()) {
-					myapply.add(allerrand.get(j));
-					break;
+				for(int j=0;j<allerrand.size();j++) {
+					if(allapply.get(i).getErrand()==allerrand.get(j).getErrandId()) {
+						myapply.add(allerrand.get(j));
+						break;
+					}
 				}
 			}
 		}
