@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import kr.pe.villagehero.dto.ApplyDTO;
+import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.service.ApplyService;
@@ -40,17 +40,22 @@ public class MemberController {
 	@Autowired
 	private ApplyService service3;
 	
-	@PostMapping("login")
-	public RedirectView logIn(Model model, MemberDTO.Login loginData) {
-		
-		MemberDTO.Get loginMember = service.logIn(loginData.getEmail());  
-		System.out.println("controller - " + loginMember.getNickname());
-		
-		model.addAttribute("loginMember", loginMember);		// 세션에 현재 로그인한 회원의 정보 저장
-		
-//		return "redirect:mypage.html";  ?????
-		return new RedirectView("/index.html");//restController는 이런식으로 redirect:/ 를 표현해야함.		
-		
+	// 로그인 메소드
+	@PostMapping("/login")
+	public RedirectView logIn(Model model, MemberDTO.Login loginData) {		
+		MemberDTO.Get member = service.logIn(loginData.getEmail()); 
+		RedirectView resultPage = null;
+				
+		// 로그인 성공시
+		if (member.getPassword().equals(loginData.getPassword())) {  
+			model.addAttribute("loginMember", member); // 세션에 현재 로그인한 회원의 정보 저장
+			resultPage = new RedirectView("/index.html");
+			
+		// 로그인 실패시 (비밀번호 오류)
+		}else {	
+			resultPage =  new RedirectView("/login.html"); //restController는 이런식으로 redirect:/ 를 표현해야함.		
+		}		
+		return resultPage;
 	}
 	
 	
@@ -83,10 +88,11 @@ public class MemberController {
 		return myerrands;
 	}
 	
+	
 	//현재 세션에 저장된 member_id 값으로 내가 지원한 모든 심부름 목록(수락대기중) 출력
 	@GetMapping("myapply")
 	public List<ErrandDTO> myApply(Model model){
-		List<ApplyDTO.Get> allapply = service3.getAllApplies();
+		List<MyPageDTO.Get> allapply = service3.getAllApplies();
 		List<ErrandDTO>	myapply = new ArrayList<>();
 		List<ErrandDTO> allerrand = service2.getAllErrands(); 
 		Long num = 0l;

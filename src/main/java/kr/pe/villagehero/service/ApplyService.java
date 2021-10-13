@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.pe.villagehero.dao.ApplyRepository;
+import kr.pe.villagehero.dao.ErrandRepository;
 import kr.pe.villagehero.dao.MemberRepository;
-import kr.pe.villagehero.dto.ApplyDTO;
-import kr.pe.villagehero.dto.ApplyDTO.Get;
+import kr.pe.villagehero.dto.MyPageDTO;
+import kr.pe.villagehero.dto.MyPageDTO.Req;
 import kr.pe.villagehero.entity.Apply;
+import kr.pe.villagehero.entity.Errand;
 import kr.pe.villagehero.entity.Member;
 
 @Service
@@ -21,11 +23,11 @@ public class ApplyService {
 	private ApplyRepository dao;
 	
 	//존재하는 모든 지원정보들 return
-	public List<ApplyDTO.Get> getAllApplies(){
+	public List<MyPageDTO.Get> getAllApplies(){
 		List<Apply> all = (List<Apply>)dao.findAll();
-		List<ApplyDTO.Get> all2 = new ArrayList<>();
+		List<MyPageDTO.Get> all2 = new ArrayList<>();
 		
-		all.forEach(v -> all2.add(new ApplyDTO.Get(v)));
+		all.forEach(v -> all2.add(new MyPageDTO.Get(v)));
 		
 		return all2;
 	}
@@ -34,23 +36,49 @@ public class ApplyService {
 	private ApplyRepository applyDAO;
 	@Autowired
 	private MemberRepository memberDAO;
-
-	// 마이페이지 - 내가 요청한 심부름 내역 (등록일-errand.createdAt, 심부름 제목-errand.title, 분류-errand.category, 도와준 히어로-applicant.nickname, 완료일)
-	public List<ApplyDTO.ErrandInfo> getAllMyReqDone(Long memberId) {
+	@Autowired
+	private ErrandRepository errandDAO;
+	
+	// 마이페이지 - 내가 요청한 심부름 내역
+	public List<MyPageDTO.Req> getAllMyReq(Long memberId) {
 		Optional<Member> m = memberDAO.findById(memberId);  
-		List<ApplyDTO.ErrandInfo> myReqList = new ArrayList<>();
+		List<MyPageDTO.Req> myReqList = new ArrayList<>();
 		
 		m.ifPresent(member -> {
-			System.out.println(member);
-			List<Apply> all = applyDAO.findByApplicant(member);			
-			
-			all.forEach(v -> myReqList.add(new ApplyDTO.ErrandInfo(v.getErrand().getWriter().getNickname(),
-																   v.getErrand().getCreatedAt(),
-																   v.getErrand().getTitle(),
-																   v.getErrand().getCategory(),
-															       v.getApplicant().getNickname())));
+			List<Errand> all = errandDAO.findMyReq(member);	
+			all.forEach(v -> myReqList.add(new MyPageDTO.Req(v.getCreatedAt(),
+															v.getTitle(),
+															v.getCategory(),															
+															v.getCompletedAt())));
+															       
 		});			
 		
 		return myReqList;
+	}
+
+	// 마이페이지 - 내가 수행한 심부름 내역
+	public List<MyPageDTO.Completion> getAllMyCompletion(Long memberId) {
+		Optional<Member> m = memberDAO.findById(memberId);  
+		List<MyPageDTO.Completion> myCompletionList = new ArrayList<>();
+		
+		m.ifPresent(member -> {
+			List<Apply> all = applyDAO.findMyCompletion(member);			
+			
+			all.forEach(v -> myCompletionList.add(new MyPageDTO.Completion(v.getErrand().getCompletedAt(),
+																   v.getErrand().getWriter().getNickname(),
+																   v.getErrand().getTitle(),
+																   v.getErrand().getCategory())));
+															       
+		});			
+		
+		return myCompletionList;
+	}
+
+	public List joinTest(long memberId) {
+		List result = new ArrayList<>();
+		Optional<Apply> a = applyDAO.findById(memberId);
+		a.ifPresent(v -> result.add(v));
+		return result;
+		
 	}
 }

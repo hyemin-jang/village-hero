@@ -37,8 +37,8 @@ public class Apply {
 	
 	private String message;
 	
-	@Column(name="created_at")
-	private String createdAt;
+	@Column(name="applied_at")
+	private String appliedAt;
 	
 	@Column(name="match_status")
 	private char matchStatus;
