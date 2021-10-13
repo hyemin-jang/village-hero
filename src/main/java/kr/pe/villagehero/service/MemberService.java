@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.pe.villagehero.dao.MemberRepository;
-import kr.pe.villagehero.dto.MemberDTO;
 
 @Service
-public class MemberService implements MemberServiceInter{	
+public class MemberService {	
 	
 	@Autowired
-	MemberRepository memberRepository;
+	private MemberRepository dao;
 	
 
 
