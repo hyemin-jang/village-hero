@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,7 +72,7 @@ public class MemberController {
 	//현재 세션에 저장된 member_id 값으로 내가 지원한 모든 심부름 목록(수락대기중) 출력
 	@GetMapping("myapply")
 	public List<ErrandDTO> myApply(Model model){
-		List<ApplyDTO> allapply = service3.getAllApplies();
+		List<ApplyDTO.Get> allapply = service3.getAllApplies();
 		List<ErrandDTO>	myapply = new ArrayList<>();
 		List<ErrandDTO> allerrand = service2.getAllErrands(); 
 		Long num = 0l;

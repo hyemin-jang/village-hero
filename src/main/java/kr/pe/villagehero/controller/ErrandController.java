@@ -72,15 +72,6 @@ public class ErrandController {
 		
 		return all;
 	}
-	
-	//현재 세션에 저장된 member_id 값으로 내가 등록한 모든 심부름 목록 출력.
-//	@GetMapping("myerrands")
-//	public List<ErrandDTO> MyErrands(Model model) {
-//		List<Long> ids = new ArrayList<Long>();
-//		ids.add(1l);
-//		List<ErrandDTO> myerrands = service.getErrandsById(ids);
-//		
-//		return myerrands;
-//	}
+
 }
 
