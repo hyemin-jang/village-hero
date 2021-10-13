@@ -3,12 +3,12 @@ package kr.pe.villagehero.service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.pe.villagehero.dao.ErrandRepository;
+import kr.pe.villagehero.dao.MemberRepository;
 import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.entity.Errand;
 
@@ -17,6 +17,9 @@ public class ErrandService {
 
 	@Autowired
 	private ErrandRepository dao;
+	
+	@Autowired
+	private MemberRepository memberDAO;
 
 	// 존재하는 모든 심부름을 DTO객체로 return
 	public List<ErrandDTO> getAllErrands() {

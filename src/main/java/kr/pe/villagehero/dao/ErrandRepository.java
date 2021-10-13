@@ -6,4 +6,5 @@ import kr.pe.villagehero.entity.Errand;
 
 public interface ErrandRepository extends CrudRepository<Errand, Long>{
 
+
 }

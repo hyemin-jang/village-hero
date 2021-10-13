@@ -33,7 +33,7 @@ public class MemberController {
 	
 	
 	// 세션에 담긴 로그인한 회원의 정보 반환하는 메소드
-	@GetMapping("getSession")
+	@GetMapping("logincheck")
 	public Object getLogInSession(Model model) {
 		return model.getAttribute("loginMember");
 	}
