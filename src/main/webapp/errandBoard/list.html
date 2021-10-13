@@ -7,39 +7,36 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <body>
-<div id="body">
-	<button @click="get()">errands 출력</button><br>
-	<button @click="getPayDesc()">errands 내림차순 출력</button><br>
-	<button @click="cancel()">접기</button><br>
-	<button @click="session()">세션값 저장</button>
-	<table v-if="resData">
-		<tr>
-			<th>errandId</th>
-			<th>writer</th>
-			<th>pay</th>
-			<th>createdAt</th>
-			<th>title</th>
-			<th>content</th>
-			<th>category</th>
-			<th>reqLocation</th>
-			<th>reqDate</th>
-			<th>errandStatus</th>
-		</tr>
-		<tr v-for="v in errands">
-			<td>{{v.errandId}}</td>
-			<td>{{v.writer}}</td>
-			<td>{{v.pay}}</td>
-			<td>{{v.createdAt}}</td>
-			<td>{{v.title}}</td>
-			<td>{{v.content}}</td>
-			<td>{{v.category}}</td>
-			<td>{{v.reqlocation}}</td>
-			<td>{{v.reqDate}}</td>
-			<td>{{v.errandStatus}}</td>
-		</tr>
-	</table>
-	<a href="sessiontracking/sessionTest2">2-2. @SessionAttributes 이해하기 </a>
-</div>
+
+	<div id="body">
+		<a href="registration.html">심부름 요청하기</a> <br>
+		<!-- <button @click="get()">errands 출력</button><br> -->
+		<button @click="getPayDesc()">errands 내림차순 출력</button><br>
+		<button @click="cancel()">접기</button><br>
+		<button @click="session()">세션값 저장</button>
+		<table v-if="resData">
+			<tr>
+				<th>errandId</th>
+				<th>createdAt</th>
+				<th>title</th>
+				<th>category</th>
+				<th>reqLocation</th>
+				<th>reqDate</th>
+				<th>pay</th>
+				<th>errandStatus</th>
+			</tr>
+			<tr v-for="v in errands">
+				<td>{{v.errandId}}</td>
+				<td>{{v.createdAt}}</td>
+				<td onClick="location.href='http://localhost:8088/errandBoard/detail.html'">{{v.title}}</td>
+				<td>{{v.category}}</td>
+				<td>{{v.reqlocation}}</td>
+				<td>{{v.reqDate}}</td>
+				<td>{{v.pay}}</td>
+				<td>{{v.errandStatus}}</td>
+			</tr>
+		</table>
+	</div>
 
 	<script>
 	new Vue({
@@ -48,8 +45,19 @@
         	resData : false,
         	errands :[]
         },
+        created :function(){
+        	axios({
+                method : "get",
+                url : "http://localhost:8088/errands"
+            }).then( resData => {
+            	this.resData=true;
+                return this.errands = resData.data;
+            }).catch(errorData => {
+            	return console.log(errorData);
+            })
+        },
         methods :{
-        	get : function(){
+        	/* get : function(){
         		axios({
                     method : "get",
                     url : "http://localhost:8088/errands"
@@ -59,7 +67,7 @@
                 }).catch(errorData => {
                 	return console.log(errorData);
                 })
-        	},
+        	}, */
         	getPayDesc : function(){
         		axios({
                     method : "get",
@@ -81,20 +89,10 @@
         			return console.log(errorData);
         		})
         	},
-        	session : function(){
-        		axios({
-        			method : "get",
-        			url : "http://localhost:8088/"
-        		}).then( resData =>{
-        			this.resData=false;
-        		}).catch(errorData =>{
-        			return console.log(errorData);
-        		})
-        	},
         }
         	
         	
-    })
+    });
 	</script>
 </body>
 </html>
