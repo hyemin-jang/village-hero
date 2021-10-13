@@ -2,13 +2,15 @@ package kr.pe.villagehero.controller;
 
 import java.util.List;
 
+import javax.persistence.metamodel.StaticMetamodel;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 import kr.pe.villagehero.dto.ErrandDTO;
-import kr.pe.villagehero.entity.Errand;
 import kr.pe.villagehero.service.ErrandService;
 
 
@@ -19,10 +21,12 @@ public class ErrandController {
 	private ErrandService service;	
 
 	@PostMapping("errand")
-    public Errand insertErrand(Errand errand) {
-    
-        return service.insertErrand(errand);
+    public RedirectView insertErrand(ErrandDTO newErrand) {
+		service.insertErrand(newErrand);
+	
+		return new RedirectView("/errandBoard/detail.html");
 	}
+
 
 	//json객체 배열로 errand 테이블의 모든 값
 	@GetMapping("errands")
@@ -43,4 +47,3 @@ public class ErrandController {
 	}
 
 }
-

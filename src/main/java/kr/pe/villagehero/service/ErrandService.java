@@ -39,26 +39,26 @@ public class ErrandService {
 		return errand;
 	}
 
-	public Errand insertErrand(Errand errand) {
+	public Errand insertErrand(ErrandDTO newErrand) {
 		System.out.println("심부름 요청 등록시도");
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		Date time = new Date();
 	
 		Member writer = memberDAO.findById(1L).get() ; // session에서 받아와야함
-    	int pay = errand.getPay();
+    	int pay = newErrand.getPay();
     	String createdAt = dateFormat.format(time);
-    	String title = errand.getTitle();
-    	String content = errand.getContent();
-    	String category = errand.getCategory();
-    	String reqLocation = errand.getReqLocation();
-    	String reqDate = errand.getReqDate();
+    	String title = newErrand.getTitle();
+    	String content = newErrand.getContent();
+    	String category = newErrand.getCategory();
+    	String reqLocation = newErrand.getReqLocation();
+    	String reqDate = newErrand.getReqDate();
     	char errandStatus = '0';
 
-    	Errand newErrand = new Errand(writer, pay, createdAt, title, content, category, reqLocation, reqDate, errandStatus);
+    	Errand errand = new Errand(writer, pay, createdAt, title, content, category, reqLocation, reqDate, errandStatus);
 
-		dao.save(newErrand);
-		return newErrand;
+		dao.save(errand);
+		return errand;
 
 	}
 
