@@ -13,7 +13,8 @@
 	
 	<div id="detail">
 		<div v-bind="errands">
-		{{errands}}
+		{{newErrand}}
+		newErrand
 
 	
 			<div class="form-group">
@@ -26,7 +27,7 @@
 			
 			<div class="form-group">
 				<p id="username">
-					작성자: <span>{{errands.writer}}</span> <br>
+					작성자: <span>{{Errands.writer}}</span> <br>
 					요청위치: <span>{{errands.reqLocation}}</span>
 				</p>
 			</div>
@@ -54,7 +55,7 @@
 
 	</div>
 	
-	<script>
+ 	<script>
 		new Vue({
 	        el:"#detail",
 	        data : {
@@ -63,8 +64,8 @@
 	        },
 	        created :function(){
 	        	axios({
-	                method : "get",
-	                url : "http://localhost:8088/errandDetail"
+	                method : "post",
+	                url : "http://localhost:8088/errand"
 	            }).then( resData => {
 	            	this.resData=true;
 	                return this.errands = resData.data;

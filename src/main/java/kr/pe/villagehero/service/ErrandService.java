@@ -39,13 +39,13 @@ public class ErrandService {
 		return errand;
 	}
 
-	public Errand insertErrand(ErrandDTO newErrand) {
+	public Errand insertErrand(long id, ErrandDTO newErrand) {
 		System.out.println("심부름 요청 등록시도");
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		Date time = new Date();
 	
-		Member writer = memberDAO.findById(1L).get() ; // session에서 받아와야함
+		Member writer = memberDAO.findById(id).get() ; // session에서 받아와야함
     	int pay = newErrand.getPay();
     	String createdAt = dateFormat.format(time);
     	String title = newErrand.getTitle();
