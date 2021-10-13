@@ -52,13 +52,6 @@ public class ErrandService {
 		return all;
 	}
 	
-	//writer 값으로 심부름 필터링
-	public List<ErrandDTO> getErrandsById(List<Long> ids){
-		List<Errand> all2 = (List<Errand>)dao.findAllById(ids);
-		List<ErrandDTO> all = new ArrayList<>();
-		all2.forEach(v -> all.add(new ErrandDTO(v)));
-		return all;
-	}
 }
 
 class PayComparator implements Comparator<ErrandDTO> {
