@@ -7,12 +7,17 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c2c65e47ff9efd53c90ebd6f14d04ecb&libraries=services,clusterer,drawing"></script>	
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
+<style>
+	th, td {
+		border: 1px solid;
+	}
+</style>
 </head>
-<body>	
-	
+<body>		
 	<template id="profile">
 		<div>					
 			<div v-bind="logInMember">
+				{{logInMember.nickname}}의 마이페이지
 				<img src="{{logInMember.picture}}">
 				<div class="req_count">
 					심부름 요청<br>
@@ -32,19 +37,19 @@
 			<div class="menu">
 				<span @click="">요청 내역</span>
 				<span>수행 내역</span>
-				<table id="reqList" style="border:1px solid;" v-bind="show">
+				<table id="reqList">
 					<thead>
 						<tr>
-							<th>등록일</th><th>완료일</th><th>심부름 제목</th><th>분류</th><th>도와준 히어로</th>
+							<th>등록일</th><th>심부름 제목</th><th>분류</th><th>도와준 히어로</th><th>완료일</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td></td><td></td><td></td><td></td>
+						<tr v-for="info in reqList">
+							<td>{{info.createdAt}}</td><td>{{info.title}}</td><td>{{info.category}}</td><td>{{info.hero}}</td><td>?</td>
 						</tr>
 					</tbody>
 				</table>
-				<table id="doneList" style="border:1px solid;">
+				<table id="doneList">
 					<thead>
 						<tr>
 							<th>완료일</th><th>작성자</th><th>심부름 제목</th><th>분류</th>
@@ -85,15 +90,18 @@
 					method: "get",
 					url: "http://localhost:8088/logincheck"		
 				}).then(resData => {						      			
-					this.logInMember = resData.data;   
-					console.log(this.logInMember);
+					this.logInMember = resData.data;   					
 				}).catch(error => {
 					console.log("error", error);
 				});  
+
+				logInCheck();
 			}, 
 			methods: {
+				// 이벤트버스로 로그인한 회원 정보 컴포넌트간 공유
 				logInCheck: function(){
-					eventBus.$emit("logInMember", this.logInMember);  // 이벤트버스로 로그인한 회원 데이터 공유
+					console.log(this.loginMember);
+					eventBus.$emit("logInMember", this.logInMember);  
 				}
 			}				
 		});
@@ -105,26 +113,34 @@
 				return {
 					logInMember: [],
 					reqList: [],
-					doneList: []
+					doneList: [],
+					show: "req"
 				}
 			},created : function(){
 				axios({
 					method: "get",
-					url: "http://localhost:8088/my-req-done"		
-				}).then(resData => {						      			
-					this.logInMember = resData.data;   
-					console.log(this.logInMember);
+					url: "http://localhost:8088/my-req-done?memberId="+this.logInMember.memberId	 	
+				}).then(resData => {									      			
+					this.reqList = resData.data;  									
 				}).catch(error => {
 					console.log("error", error);
 				});  
 
 				// 이벤트버스로부터 로그인한 회원 정보 공유받아서 사용
-				eventBus.$on("logInMember", (v) => {
-					this.logInMember = v;
-				})
+				eventBus.$on("logInMember", this.addLogInMember);			
 			},
 			methods: {
-
+				addLogInMember: function(v){
+					console.log(v);
+					this.logInMember = v;
+				},
+				changeList: function(){
+					if (show == "req"){
+						show = "done"
+					}else{
+						show = "req"
+					}
+				}
 			}				
 		});
 		

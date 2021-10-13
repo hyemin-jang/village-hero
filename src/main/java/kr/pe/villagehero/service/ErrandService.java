@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.view.RedirectView;
 
 import kr.pe.villagehero.dao.ErrandRepository;
 import kr.pe.villagehero.dao.MemberRepository;
@@ -72,9 +71,7 @@ public class ErrandService {
 		all.sort(new PayComparator());
 		return all;
 	}
-
-	// 현재 저장된 세션값(로그인회원id번호)으로 내가 등록한 심부름 목록 출력
-
+	
 }
 
 class PayComparator implements Comparator<ErrandDTO> {
