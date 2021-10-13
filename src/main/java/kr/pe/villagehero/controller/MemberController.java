@@ -3,9 +3,7 @@ package kr.pe.villagehero.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,18 +14,26 @@ import org.springframework.web.servlet.view.RedirectView;
 import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MemberDTO;
-import kr.pe.villagehero.dto.MemberDTO.Get;
 import kr.pe.villagehero.service.ApplyService;
 import kr.pe.villagehero.service.ErrandService;
 import kr.pe.villagehero.service.MemberService;
 
 @RestController
-@SessionAttributes({"loginMember"})
+@SessionAttributes({"loginMember"})  //loginMember 라는 이름으로 서버 메모리에 client 정보 저장하겠다는 설정 
 public class MemberController {
 	
 	@Autowired
 	private MemberService service;
 		
+	/* /http://ip:port/login  요청하면서 id/pw값이 전송이 되면
+	 * MemberDTO.Login   객체가 자동 생성
+	 * Model에 저장
+	 * Model에 addAttribute()에  loginMember 키로 데이터 저장  = 세션에 데이터가 저장되는 원리 
+	 * 
+	 * 
+	 */
+	//http://ip:port/login  
+	
 	@Autowired
 	private ErrandService service2;
 	
@@ -59,6 +65,13 @@ public class MemberController {
 		return model.getAttribute("loginMember");
 	}
 	
+	/*
+	 * 
+	 */
+//	@PostMapping("addUser")
+//	public String addUser(    ) {
+//		
+//	}
 	
 	//현재 세션에 저장된 member_id 값으로 내가 등록한 모든 심부름 목록 출력.
 	@GetMapping("myerrands")
