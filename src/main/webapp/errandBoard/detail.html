@@ -13,10 +13,7 @@
 	
 	<div id="detail">
 		<div v-bind="errands">
-		{{newErrand}}
-		newErrand
 
-	
 			<div class="form-group">
 				<p id="title">
 				<span>{{errands.title}}</span> <br>
@@ -27,7 +24,7 @@
 			
 			<div class="form-group">
 				<p id="username">
-					작성자: <span>{{Errands.writer}}</span> <br>
+					작성자: <span>{{errands.writer}}</span> <br>
 					요청위치: <span>{{errands.reqLocation}}</span>
 				</p>
 			</div>
@@ -64,7 +61,7 @@
 	        },
 	        created :function(){
 	        	axios({
-	                method : "post",
+	                method : "get",
 	                url : "http://localhost:8088/errandDetail"
 	            }).then( resData => {
 	            	this.resData=true;

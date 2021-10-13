@@ -29,6 +29,7 @@ public class ErrandController {
 		long id = loginMember.getMemberId();
 		
 		service.insertErrand(id, newErrand);
+		
 		return new RedirectView("/errandBoard/detail.html");
 	}
 	
