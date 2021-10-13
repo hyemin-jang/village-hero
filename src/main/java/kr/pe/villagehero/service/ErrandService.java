@@ -59,7 +59,6 @@ public class ErrandService {
 
 		dao.save(errand);
 		return errand;
-
 	}
 
 	// 존재하는 모든 심부름을 가격순(내림차순)으로 return
