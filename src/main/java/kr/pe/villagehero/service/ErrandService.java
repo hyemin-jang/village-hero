@@ -1,5 +1,6 @@
 package kr.pe.villagehero.service;
 
+import java.security.cert.PKIXRevocationChecker.Option;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -50,9 +51,14 @@ public class ErrandService {
 		all.sort(new PayComparator());
 		return all;
 	}
-
-	// 현재 저장된 세션값(로그인회원id번호)으로 내가 등록한 심부름 목록 출력
-
+	
+	//writer 값으로 심부름 필터링
+	public List<ErrandDTO> getErrandsById(List<Long> ids){
+		List<Errand> all2 = (List<Errand>)dao.findAllById(ids);
+		List<ErrandDTO> all = new ArrayList<>();
+		all2.forEach(v -> all.add(new ErrandDTO(v)));
+		return all;
+	}
 }
 
 class PayComparator implements Comparator<ErrandDTO> {

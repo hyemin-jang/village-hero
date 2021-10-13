@@ -14,7 +14,7 @@ public class MemberService {
 	@Autowired
 	private MemberRepository dao;
 
-	public Get logIn(String email) {	
+	public Get logIn(String email) {//MemberDTO 클래스 내부 이너클래스인 Get클래스	
 		System.out.println("service - " + email);
 		
 		Member m = dao.findByEmail(email);
