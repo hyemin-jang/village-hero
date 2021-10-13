@@ -10,12 +10,26 @@ import org.springframework.stereotype.Service;
 import kr.pe.villagehero.dao.ApplyRepository;
 import kr.pe.villagehero.dao.MemberRepository;
 import kr.pe.villagehero.dto.ApplyDTO;
+import kr.pe.villagehero.dto.ApplyDTO.Get;
 import kr.pe.villagehero.entity.Apply;
 import kr.pe.villagehero.entity.Member;
 
 @Service
 public class ApplyService {
 
+	@Autowired
+	private ApplyRepository dao;
+	
+	//존재하는 모든 지원정보들 return
+	public List<ApplyDTO.Get> getAllApplies(){
+		List<Apply> all = (List<Apply>)dao.findAll();
+		List<ApplyDTO.Get> all2 = new ArrayList<>();
+		
+		all.forEach(v -> all2.add(new ApplyDTO.Get(v)));
+		
+		return all2;
+	}
+	
 	@Autowired
 	private ApplyRepository applyDAO;
 	@Autowired
@@ -38,6 +52,5 @@ public class ApplyService {
 		});			
 		
 		return myReqList;
-		
 	}
 }

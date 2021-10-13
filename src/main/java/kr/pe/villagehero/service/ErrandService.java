@@ -1,22 +1,28 @@
 package kr.pe.villagehero.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.pe.villagehero.dao.ErrandRepository;
+import kr.pe.villagehero.dao.MemberRepository;
 import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.entity.Errand;
+import kr.pe.villagehero.entity.Member;
 
 @Service
 public class ErrandService {
 
 	@Autowired
 	private ErrandRepository dao;
+	
+	@Autowired
+	private MemberRepository memberDAO;
 
 	// 존재하는 모든 심부름을 DTO객체로 return
 	public List<ErrandDTO> getAllErrands() {
@@ -33,11 +39,26 @@ public class ErrandService {
 		return errand;
 	}
 
-	public String insertErrand(Errand errand) {
+	public Errand insertErrand(Errand errand) {
 		System.out.println("심부름 요청 등록시도");
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+		Date time = new Date();
+	
+		Member writer = memberDAO.findById(1L).get() ; // session에서 받아와야함
+    	int pay = errand.getPay();
+    	String createdAt = dateFormat.format(time);
+    	String title = errand.getTitle();
+    	String content = errand.getContent();
+    	String category = errand.getCategory();
+    	String reqLocation = errand.getReqLocation();
+    	String reqDate = errand.getReqDate();
+    	char errandStatus = '0';
 
-		dao.save(errand);
-		return "성공";
+    	Errand newErrand = new Errand(writer, pay, createdAt, title, content, category, reqLocation, reqDate, errandStatus);
+
+		dao.save(newErrand);
+		return newErrand;
 
 	}
 
@@ -50,9 +71,7 @@ public class ErrandService {
 		all.sort(new PayComparator());
 		return all;
 	}
-
-	// 현재 저장된 세션값(로그인회원id번호)으로 내가 등록한 심부름 목록 출력
-
+	
 }
 
 class PayComparator implements Comparator<ErrandDTO> {

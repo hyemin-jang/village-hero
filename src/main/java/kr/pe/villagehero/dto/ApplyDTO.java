@@ -23,4 +23,27 @@ public class ApplyDTO {
 		private String hero;
 	}
 	
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Getter
+	@Setter
+	@Builder
+	public static class Get {
+		private long applyId;
+		private long errand;
+		private long applicant;
+		private String message;
+		private String createdAt;
+		private char matchStatus;
+		
+		public Get(Apply entity) {
+			this.applyId=entity.getApplyId();
+			this.errand=entity.getErrand().getErrandId();
+			this.applicant=entity.getApplicant().getMemberId();
+			this.message=entity.getMessage();
+			this.createdAt=entity.getCreatedAt();
+			this.matchStatus=entity.getMatchStatus();
+		}
+	}
+	
 }
