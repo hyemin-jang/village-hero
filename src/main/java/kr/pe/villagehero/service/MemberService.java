@@ -16,14 +16,17 @@ public class MemberService {
 
 	//MemberDTO 클래스 내부 이너클래스인 Get클래스	
 	// 로그인 - DB에서 해당 email 가진 회원 조회
-	public Get logIn(String email) {	
-		System.out.println("service - " + email);
-		
+	public Get logIn(String email) {			
 		Member m = dao.findByEmail(email);
-		System.out.println("service - " + m);
+		MemberDTO.Get loginMember = null;
+		if (m!=null) {  
+			loginMember = new MemberDTO.Get(m);
+		} else {  // 없는 회원일때
+			
+		}
 		
-		MemberDTO.Get loginMember = new MemberDTO.Get(m);
 		return loginMember;
-	}	
+	}
 
+	
 }

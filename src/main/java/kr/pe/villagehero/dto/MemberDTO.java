@@ -14,31 +14,35 @@ public class MemberDTO {
 	@Setter
 	public static class Get {  // 회원의 모든 정보 조회할 때 사용하는 DTO 클래스 
 		private long memberId;
-		private String email;		
+		private String email;	
+		private String password;
 		private String nickname;
-		private int age;
+		private int birthYear;
+		private int birthMonth;
+		private int birthDay;
 		private char gender;
 		private String phone;
 		private String address;
 		private String specialty1;
 		private String specialty2;
-		private String specialty3;
-		private String picture;
+		private String specialty3;		
 		private int score;
 		private int memberStatus;
 		
 		public Get(Member entity) {
 			this.memberId=entity.getMemberId();
-			this.email=entity.getEmail();			
+			this.email=entity.getEmail();		
+			this.password=entity.getPassword();
 			this.nickname=entity.getNickname();
-			this.age=entity.getAge();
+			this.birthYear=entity.getBirthYear();
+			this.birthMonth=entity.getBirthMonth();
+			this.birthDay=entity.getBirthDay();
 			this.gender=entity.getGender();
 			this.phone=entity.getPhone();
 			this.address=entity.getAddress();
 			this.specialty1=entity.getSpecialty1();
 			this.specialty2=entity.getSpecialty2();
 			this.specialty3=entity.getSpecialty3();
-			this.picture=entity.getPicture();
 			this.score=entity.getScore();
 			this.memberStatus=entity.getMemberStatus();
 		}
