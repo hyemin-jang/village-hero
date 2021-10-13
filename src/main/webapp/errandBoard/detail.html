@@ -8,13 +8,12 @@
 	<div id="title" class="py-5 text-center">
 		<h2>심부름 상세페이지</h2>
 	</div>
-	<div id="detail" class="row justify-content-center">
-	{{errands.title}}
-		<form id="form" class="col-sm-8" action="/posts/40" method="post" novalidate="">
-			<input type="hidden" name="_csrf" value="7e1dc9cf-99f2-4819-9d12-c911fd50b99c">
-			<input type="hidden" name="_method" value="delete"> 
-			<input id="_method" type="hidden" name="_method" value="delete">
-			
+	
+	<div id="detail">
+		<div v-bind="errands">
+		
+			{{errands.title}}
+	
 			<div class="form-group">
 				<p id="title">
 				<span>{{errands.title}}</span>
@@ -40,8 +39,7 @@
 			<div class="form-group">
 				<a href="list.html" class="btn btn-secondary float-left">목록으로</a>
 			</div>
-		</form>
-		<br> <br>
+		</div>
 
 	</div>
 	
