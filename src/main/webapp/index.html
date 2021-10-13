@@ -5,76 +5,149 @@
 <title>Insert title here</title>
 <!-- 지도 API include -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c2c65e47ff9efd53c90ebd6f14d04ecb&libraries=services,clusterer,drawing"></script>	
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
 </head>
-<body>
-	<div id="map" style="width:500px;height:400px;"></div>
-	<button type="button" onclick="getCurrentPosBtn()">내위치</button>
-	<a href="errands">모든 심부름 조회</a>
+<body>	
+	<template id="header">
+		<div>		
+			<a href="#">모든 심부름</a>
+			<a href="#">내 심부름</a><br>
+			<a href="#">회원가입</a>
+			<a href="login.html">로그인</a>
+			<a href="#">마이페이지</a>			
+			<a href="#">로그아웃</a>
+		</div>
+	</template>
+
+	<template id="side">
+		<div>
+			
+		</div>
+	</template>
+
+	<template id="main">
+		<div>					
+			<div id="side" v-for="errand in allErrands" style="border:1px solid;">
+				<img class="picture" src="#">
+				<div class="title">{{errand.title}}</div>
+				<div class="reqLoc">{{errand.reqLocation}}</div>
+				<div class="help"><a href="#">도와줄게요</a></div>
+			</div>		
+			
+			<div id="map" style="width:1000px;height:800px;"></div>		
+		</div>
+	</template>
+	
+
+	<div id="app">
+		<header-com></header-com>
+		<main-com></main-com>					
+	</div>
+	
 	
 	<script>
-		var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-		var options = { //지도를 생성할 때 필요한 기본 옵션
-			center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-			level: 3 //지도의 레벨(확대, 축소 정도)
-		};
-	
-		var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+		// header 컴포넌트
+		Vue.component("header-com", {
+			template: "#header",
+			data: function(){
+				return {
 
-		// 주소-좌표 변환 객체 생성
-		var geocoder = new kakao.maps.services.Geocoder();
+				}
+			},
 
-
-		// 주소로 좌표 검색
-		geocoder.addressSearch("대구광역시 북구 대현남로 25", function(result, status){
-			// 정상적으로 주소가 검색됐으면
-			if (status === kakao.maps.services.Status.OK) {
-
-				var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-				console.log(coords);
+		})
 		
-				// 결과값으로 받은 위치를 마커로 표시합니다
-				var marker = new kakao.maps.Marker({
-					map: map,
-					position: coords
-				});
+		// main 컴포넌트
+		Vue.component("main-com", {
+			template: "#main",
+			data: function(){
+				return {
+					allErrands: [],		
+					errandLocations: []			
+				}
+			},
+			methods: {
+				
+			},
+			created: function(){				
+				axios({
+					method: "get",
+					url: "http://localhost:8088/errands"		
+				}).then(resData => {						      			
+					this.allErrands = resData.data;   
+
+					/*** 지도 생성하기 ***/
+					var mapContainer = document.getElementById("map"); // 지도를 표시할 div 				
+					var mapOption = { 
+						center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+						level: 4 // 지도의 확대 레벨
+					};				
+					var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 표시할 div와 지도 옵션으로 지도를 생성
+
+					if (navigator.geolocation) {					
+						navigator.geolocation.getCurrentPosition(function(position) { // GeoLocation을 이용해서 현 접속 위치 가져오기				
+							var lat = position.coords.latitude; // 위도
+							var	lon = position.coords.longitude; // 경도						
+							var locPosition = new kakao.maps.LatLng(lat, lon); 		
+
+							map.setCenter(locPosition); // 지도 중심위치를 현 접속위치로 변경						
+						});
+					}
+					
+
+					/*** 지도에 마커 표시 ***/				
+					var geocoder = new kakao.maps.services.Geocoder(); // 주소-좌표 변환 객체를 생성
+					
+					for (var errand of this.allErrands){					
+						console.log("for문 최상단 " + errand.title);
+						// 심부름 주소를 좌표값으로 변환하기
+						geocoder.addressSearch(errand.reqLocation, function(result, status) {	
+							console.log("geocoder.addressSearch 함수내 " + errand.title);
+							if (status === kakao.maps.services.Status.OK) { 	
+								console.log("if블럭 내 " + errand.title);
+								// 좌표로 변환된 위치
+								var coords = new kakao.maps.LatLng(result[0].y, result[0].x);  
+								var title = errand.title;		
+							}
+
+							// 결과값으로 받은 위치를 마커로 표시
+							var marker = new kakao.maps.Marker({
+								map: map,
+								position: coords
+							});		
+							
+							// 인포윈도우 생성
+							var infowindow = new kakao.maps.InfoWindow({
+								position : coords, 
+								content : title
+							});
+
+							// 마커에 이벤트 등록
+							kakao.maps.event.addListener(marker, 'mouseover', function(){  
+								infowindow.open(map, marker);
+							});
+							kakao.maps.event.addListener(marker, 'mouseout', function(){
+								infowindow.close();
+							});
+						});
+					}
+
+				}).catch(error => {
+					console.log("error", error);
+				});  
+				
+			},
+			mounted: function(){					
+				
+			}			
+		});
 		
-				// 인포윈도우로 장소에 대한 설명을 표시합니다
-				var infowindow = new kakao.maps.InfoWindow({
-					content: '<div style="width:150px;text-align:center;padding:6px 0;">우리집</div>'
-				});
-				infowindow.open(map, marker);
-		
-				// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-				map.setCenter(coords);
-			} 
-		});    	
-		
-		
-		function locationLoadSuccess(pos){
-		    // 현재 위치 받아오기
-		    var currentPos = new kakao.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
 
-		    // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
-		    map.panTo(currentPos);
+		new Vue({
+            el: "#app"            
+        });
 
-		    // 마커 생성
-		    var marker = new kakao.maps.Marker({
-		        position: currentPos
-		    });
-
-		    // 기존에 마커가 있다면 제거
-		    marker.setMap(null);
-		    marker.setMap(map);
-		};
-
-		function locationLoadError(pos){
-		    alert('위치 정보를 가져오는데 실패했습니다.');
-		};
-
-		// 위치 가져오기 버튼 클릭시
-		function getCurrentPosBtn(){
-		    navigator.geolocation.getCurrentPosition(locationLoadSuccess,locationLoadError);
-		};
 	</script>
 	
 </body>

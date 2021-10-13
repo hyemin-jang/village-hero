@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-${requestScope.errands[0].title}
+로그인한 사람: ${loginMember.nickname}
 </body>
 </html>

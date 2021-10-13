@@ -15,6 +15,7 @@ import lombok.Setter;
 public class ErrandDTO {	
 	private long errandId;
 	private long writer;
+	private int pay;
 	private String createdAt;
 	private String title;
 	private String content;
@@ -27,6 +28,7 @@ public class ErrandDTO {
 	public ErrandDTO(Errand entity) {
 		this.errandId = entity.getErrandId();
 		this.writer = entity.getWriter().getMemberId();
+		this.pay = entity.getPay();
 		this.createdAt = entity.getCreatedAt();
 		this.title = entity.getTitle();
 		this.content = entity.getContent();
@@ -36,3 +38,4 @@ public class ErrandDTO {
 		this.errandStatus = entity.getErrandStatus();
 	}
 }
+

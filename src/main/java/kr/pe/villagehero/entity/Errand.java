@@ -24,6 +24,20 @@ import lombok.Setter;
 @SequenceGenerator(name="errand_seq", sequenceName="errand_seq", initialValue=1, allocationSize=1)
 public class Errand {
 
+	public Errand(Member writer, int pay, String createdAt, String title, String content, String category,
+			String reqLocation, String reqDate, char errandStatus) {
+		super();
+		this.writer = writer;
+		this.pay = pay;
+		this.createdAt = createdAt;
+		this.title = title;
+		this.content = content;
+		this.category = category;
+		this.reqLocation = reqLocation;
+		this.reqDate = reqDate;
+		this.errandStatus = errandStatus;
+	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="errand_seq")
 	@Column(name="errand_id")
@@ -32,6 +46,8 @@ public class Errand {
 	@ManyToOne
 	@JoinColumn(name="writer")
 	private Member writer;
+	
+	private int pay;
 	
 	@Column(name="created_at")
 	private String createdAt;
@@ -51,7 +67,9 @@ public class Errand {
 	@Column(name="errand_status")
 	private char errandStatus;
 	
-	
 //	@OneToMany(mappedBy = "errandId")
-//	List<ErrandApply> apllicants = new ArrayList<>();
+//	List<Apply> applicants = new ArrayList<Apply>();
+	
+	
+	
 }
