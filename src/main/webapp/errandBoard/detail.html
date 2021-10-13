@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>심부름 상세페이지</title>
+</head>
+<body>
+	<div id="title" class="py-5 text-center">
+		<h2>심부름 상세페이지</h2>
+	</div>
+	<div id="detail" class="row justify-content-center">
+	{{errands.title}}
+		<form id="form" class="col-sm-8" action="/posts/40" method="post" novalidate="">
+			<input type="hidden" name="_csrf" value="7e1dc9cf-99f2-4819-9d12-c911fd50b99c">
+			<input type="hidden" name="_method" value="delete"> 
+			<input id="_method" type="hidden" name="_method" value="delete">
+			
+			<div class="form-group">
+				<p id="title">
+				<span>{{errands.title}}</span>
+				</p>
+			</div>
+			<div class="form-group">
+				<p id="username">
+					작성자: <span></span>
+				</p>
+			</div>
+			
+			<div class="form-group">
+				<p id="createdAt">
+					작성일: <span></span>
+				</p>
+			</div>
+			<div class="form-group">
+				<p id="modifiedAt">
+					수정일: <span></span>
+				</p>
+			</div>
+			
+			<div class="form-group">
+				<a href="list.html" class="btn btn-secondary float-left">목록으로</a>
+			</div>
+		</form>
+		<br> <br>
+
+	</div>
+	
+	<script>
+	new Vue({
+        el:"#detail",
+        data : {
+        	resData : false,
+        	errands :[]
+        },
+        created :function(){
+        	axios({
+                method : "get",
+                url : "http://localhost:8088/errand?id=1"
+            }).then( resData => {
+            	this.resData=true;
+                return this.errands = resData.data;
+            }).catch(errorData => {
+            	return console.log(errorData);
+            })
+        },
+    });
+	</script>
+	
+</body>
+
+
+
+
+
+</html>

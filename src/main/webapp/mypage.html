@@ -110,11 +110,7 @@
 			},created : function(){
 				axios({
 					method: "get",
-<<<<<<< HEAD
-					url: "http://localhost:8088/logincheck"		
-=======
 					url: "http://localhost:8088/my-req-done"		
->>>>>>> ec565646519b6ae8fa36b659fc6b56534d6b0b8d
 				}).then(resData => {						      			
 					this.logInMember = resData.data;   
 					console.log(this.logInMember);
