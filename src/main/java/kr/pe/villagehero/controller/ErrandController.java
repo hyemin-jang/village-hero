@@ -20,11 +20,11 @@ import kr.pe.villagehero.service.ErrandService;
 
 
 @RestController
-@RequestMapping("sessiontracking")
+//@RequestMapping("sessiontracking")  ?? 지워도되나여??
 public class ErrandController {
 
 	@Autowired
-	private ErrandService service;
+	private ErrandService service;	
 
 	@Autowired
 	private MemberRepository memberDAO;
@@ -51,30 +51,16 @@ public class ErrandController {
         return "저장성공";
     }
 
-	
-//	@GetMapping("errands")
-//	public ModelAndView getAllErrands(){
-//		ModelAndView mv = new ModelAndView();
-//		List<ErrandDTO> errandList = service.getAllErrands();
-//		
-//		mv.setViewName("errands");
-//		mv.addObject("errands", errandList);
-//		
-//		return mv;		
-//	}
-	
-//	@GetMapping("errands")
-//	public List<ErrandDTO> getErrandsMarker(RedirectAttributes attr) {
-//		return service.getAllErrands();		
-//	}
-	
 
 	//json객체 배열로 errand 테이블의 모든 값
 	@GetMapping("errands")
-	public List<ErrandDTO> getAllErrands(){
-		List<ErrandDTO> errandList = service.getAllErrands();
-		
-		return errandList;		
+	public List<ErrandDTO> getAllErrands() {
+		return service.getAllErrands();		
+	}
+	
+	@GetMapping("errand")
+	public ErrandDTO getOneErrand(long id) {
+		return service.getOneErrand(id);
 	}
 	
 	@GetMapping("payerrands")

@@ -3,6 +3,7 @@ package kr.pe.villagehero.service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,11 @@ public class ErrandService {
 		errands.forEach(v -> errandList.add(new ErrandDTO(v)));
 
 		return errandList;
+	}
+
+	public ErrandDTO getOneErrand(long id) {
+		ErrandDTO errand = new ErrandDTO(dao.findById(id).get());		
+		return errand;
 	}
 
 	public String insertErrand(Errand errand) {
