@@ -15,4 +15,10 @@ insert into apply values(apply_seq.nextval, 2, 3, '마당있는 전원주택입니다^^반려
 
 commit;
 
+SELECT * FROM apply;
+SELECT * FROM MEMBER;
+ALTER TABLE apply RENAME COLUMN applicant TO member_id;
+ALTER TABLE apply RENAME COLUMN errand TO errand_id;
 
+
+select * from apply where applicant = 1;

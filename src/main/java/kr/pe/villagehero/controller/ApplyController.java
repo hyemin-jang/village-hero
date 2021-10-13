@@ -20,7 +20,8 @@ public class ApplyController {
 	
 	// 마이페이지 - 내가 요청한 심부름 (applicant=memberId, errand.errand_status=3)
 	@GetMapping("my-req-done")
-	public List<ApplyDTO> getAllMyReqDone(Long memberId){
+	public List<ApplyDTO.ErrandInfo> getAllMyReqDone(Long memberId){
+		System.out.println(memberId);
 		return service.getAllMyReqDone(memberId);
 	}
 }

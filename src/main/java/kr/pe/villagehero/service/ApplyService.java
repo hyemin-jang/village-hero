@@ -21,18 +21,23 @@ public class ApplyService {
 	@Autowired
 	private MemberRepository memberDAO;
 
-	// 세션에 있는 로그인 회원 아이디로 내 지원내역 조회
-	public List<ApplyDTO> getAllMyReqDone(Long memberId) {
+	// 마이페이지 - 내가 요청한 심부름 내역 (등록일-errand.createdAt, 심부름 제목-errand.title, 분류-errand.category, 도와준 히어로-applicant.nickname, 완료일)
+	public List<ApplyDTO.ErrandInfo> getAllMyReqDone(Long memberId) {
 		Optional<Member> m = memberDAO.findById(memberId);  
-		List<ApplyDTO> myApplications = new ArrayList<ApplyDTO>();
+		List<ApplyDTO.ErrandInfo> myReqList = new ArrayList<>();
 		
 		m.ifPresent(member -> {
 			System.out.println(member);
-			List<Apply> all = applyDAO.findByApplicant(member);		
-			all.forEach(v -> myApplications.add(new ApplyDTO(v)));
-		});
+			List<Apply> all = applyDAO.findByApplicant(member);			
+			
+			all.forEach(v -> myReqList.add(new ApplyDTO.ErrandInfo(v.getErrand().getWriter().getNickname(),
+																   v.getErrand().getCreatedAt(),
+																   v.getErrand().getTitle(),
+																   v.getErrand().getCategory(),
+															       v.getApplicant().getNickname())));
+		});			
 		
-		return myApplications;
+		return myReqList;
 		
 	}
 }
