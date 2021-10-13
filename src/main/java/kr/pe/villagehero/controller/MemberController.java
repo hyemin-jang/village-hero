@@ -12,7 +12,7 @@ import kr.pe.villagehero.dao.MemberRepository;
 import kr.pe.villagehero.entity.Member;
 
 @RestController
-@RequestMapping("/member")
+//@RequestMapping("/member")
 public class MemberController {
 	@Autowired
 	private MemberRepository dao;
