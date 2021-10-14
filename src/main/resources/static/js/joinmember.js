@@ -203,7 +203,7 @@ function checkPhoneNum() {
 }
 
 function isAddressCorrect() {
-    var addressPattern = //;
+    var addressPattern;
 
     if(address.value === "") { 
     	error[7].innerHTML = "필수 정보입니다.";

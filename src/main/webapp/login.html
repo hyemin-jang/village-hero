@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,7 @@
 			<form action="login" method="post">
 				<input type="text" name="email" value="hm@google.com">
 				<input type="password" name="password" value="123">
-				<input type="submit" value="로그인"><br>
+				<input type="submit" value="로그인" @click="logInCheck"><br>
 				<div>비밀번호가 일치하지 않습니다.</div>
 				<div>존재하지 않는 계정입니다.</div>
 			</form>
@@ -37,7 +38,18 @@
 				
 			}, 
 			methods: {				
-				
+				logInCheck: function(){
+					axios({
+						method: "get",
+						url: "http://localhost:8088/logincheck"		
+					}).then(resData => {						      			
+						this.logInMember = resData.data;   						
+						sessionStorage.setItem("logInMember", JSON.stringify(this.logInMember));
+						
+					}).catch(error => {
+						console.log("error", error);
+					});  
+				}
 			}				
 		});
 
