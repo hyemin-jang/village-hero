@@ -22,6 +22,7 @@ public class ErrandController {
 	@Autowired
 	private ErrandService service;
 
+	// 심부름 등록 
 	@PostMapping("errand")
 	public RedirectView insertErrand(Model model, ErrandDTO newErrand) {
 		model.getAttribute("loginMember");
@@ -32,28 +33,25 @@ public class ErrandController {
 		
 		return new RedirectView("/errandBoard/detail.html");
 	}
-	
-	@GetMapping("errandDetail")
-	public ErrandDTO getNewErrand(long id) {
-		return service.getOneErrand(id);
-	}
-
-	// json객체 배열로 errand 테이블의 모든 값
+		
+	// 모든 심부름 조회
 	@GetMapping("errands")
 	public List<ErrandDTO> getAllErrands() {
 		return service.getAllErrands();
 	}
 
+	// 심부름 1개 조회
 	@GetMapping("errand")
 	public ErrandDTO getOneErrand(long id) {
 		return service.getOneErrand(id);
 	}
 
+	// 모든 심부름 내림차순 정렬 조회
 	@GetMapping("payerrands")
 	public List<ErrandDTO> getAllErrandsPayDesc() {
 		List<ErrandDTO> all = service.getAllErrandsPayDes();
 
 		return all;
 	}
-
+	
 }

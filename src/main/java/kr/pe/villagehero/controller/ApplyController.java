@@ -4,14 +4,20 @@ package kr.pe.villagehero.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
+import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.dto.MyPageDTO;
+import kr.pe.villagehero.dto.MemberDTO.Get;
 import kr.pe.villagehero.service.ApplyService;
 
 @RestController
+@SessionAttributes({"loginMember"})
 public class ApplyController {
 
 	@Autowired
@@ -29,8 +35,16 @@ public class ApplyController {
 		return service.getAllMyCompletion(memberId);
 	}
 	
-	@GetMapping("/mypage/test")
-	public List joinTest(long memberId) {
-		return service.joinTest(memberId);
+	@PostMapping("/apply")
+	public RedirectView apply(Model model, String message) {
+		System.out.println(message);
+		model.getAttribute("loginMember");
+		MemberDTO.Get loginMember = (Get) model.getAttribute("loginMember");
+		long memberId = loginMember.getMemberId();
+		
+		System.out.println(memberId);
+		service.addApply(memberId, message);
+		
+		return new RedirectView("/errandBoard/list.html");
 	}
 }

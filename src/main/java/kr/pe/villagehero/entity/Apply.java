@@ -43,6 +43,14 @@ public class Apply {
 	@Column(name="match_status")
 	private char matchStatus;
 	
+	public Apply(Errand errand, Member applicant, String message, String appliedAt, char matchStatus) {
+		this.errand = errand;
+		this.applicant = applicant;
+		this.message = message;
+		this.appliedAt = appliedAt;
+		this.matchStatus = matchStatus;
+	}
+	
 //	@OneToMany(mappedBy = "applyId")
 //	List<ErrandApply> errands = new ArrayList<>();
 }

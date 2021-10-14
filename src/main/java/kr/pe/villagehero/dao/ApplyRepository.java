@@ -23,5 +23,8 @@ public interface ApplyRepository extends CrudRepository<Apply, Long>{
 	// 마이페이지 - 수행 내역 조회
 	@Query("select a from Apply a where a.applicant=:member and a.matchStatus=1")
 	List<Apply> findMyCompletion(Member member);
+	
+	// 도와줄게요 (심부름 지원하기)
+	
 
 }

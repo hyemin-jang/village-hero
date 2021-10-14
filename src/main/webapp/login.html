@@ -31,7 +31,8 @@
 			template: "#form",
 			data: function(){
 				return {
-					logInTry: ""
+					logInTry: "",
+					logInMember: ""
 				}
 			},
 			created : function(){
@@ -43,9 +44,8 @@
 						method: "get",
 						url: "http://localhost:8088/logincheck"		
 					}).then(resData => {						      			
-						this.logInMember = resData.data;   						
-						sessionStorage.setItem("logInMember", JSON.stringify(this.logInMember));
-						
+						this.logInMember = JSON.stringify(resData.data);   						
+						sessionStorage.setItem("logInMember", this.logInMember);						
 					}).catch(error => {
 						console.log("error", error);
 					});  
