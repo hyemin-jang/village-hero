@@ -7,82 +7,106 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
 <body>
-<div id="body">
-	<button @click="getmyerrands()">현재 로그인된 사용자의 심부름목록 출력</button><br>
-	<button @click="getmyapply()">현재 로그인된 사용자의 지원한 심부름 목록 출력</button>
-	<button @click="cancel()">접기</button>
-	<table v-if="resData">
-		<tr>
-			<th>errandId</th>
-			<th>writer</th>
-			<th>pay</th>
-			<th>createdAt</th>
-			<th>title</th>
-			<th>content</th>
-			<th>category</th>
-			<th>reqLocation</th>
-			<th>reqDate</th>
-			<th>errandStatus</th>
-		</tr>
-		<tr v-for="v in myerrands">
-			<td>{{v.errandId}}</td>
-			<td>{{v.writer}}</td>
-			<td>{{v.pay}}</td>
-			<td>{{v.createdAt}}</td>
-			<td>{{v.title}}</td>
-			<td>{{v.content}}</td>
-			<td>{{v.category}}</td>
-			<td>{{v.reqLocation}}</td>
-			<td>{{v.reqDate}}</td>
-			<td>{{v.errandStatus}}</td>
-		</tr>
-	</table>
+
+<div id="app">
+	<mycom></mycom>
 </div>
 	
+	<template id="myerrand">
+		<div v-bind="logInMember">
+		<button @click="getmyerrands()">내가 요청한 심부름 목록</button>
+		<button @click="getmyapplies()">내가 지원한 심부름 목록(진행중인)</button>
+			<table v-if="myReqBool">
+				<tr><th></th><th>No.</th><th>심부름 제목</th><th>상태</th></tr>
+				<tr v-for="v,index in myReq" v-if="v.errandStatus!=3">
+				<td>심부름 취소</td>
+				<td>{{index}}</td>
+				<td>{{v.title}}</td>
+				<td v-if="v.errandStatus==0">지원자 대기중</td>
+				<td v-if="v.errandStatus==1">매칭 대기중</td>
+				<td v-if="v.errandStatus==2">취소됨</td>
+				</tr>
+			</table>
+			<table v-if="myApplyBool">
+				<tr><th></th><th>No.</th><th>심부름 제목</th><th>상태</th></tr>
+				<tr v-for="v,index in myApply">
+				<td>지원 취소</td>
+				<td>{{index}}</td>
+				<td>{{v.title}}</td>
+				<td v-if="v.matchStatus==0">수락 대기중</td>
+				<td v-if="v.matchStatus==2">다른사람한테 매칭됨</td>
+				<td v-if="v.matchStatus==3">취소됨</td>
+				</tr>
+			</table>
+		</div>
+	</template>
+	
 <script>
-new Vue({
-    el:"#body",
-    data : {
-    	resData : false,
-    	myerrands :[]
-    },
-    methods :{
-    	getmyerrands : function(){
-    		axios({
-                method : "get",
-                url : "http://localhost:8088/myerrands"
-            }).then( resData => {
-            	this.resData=true;
-                return this.myerrands = resData.data;
-            }).catch(errorData => {
-            	return console.log(errorData);
-            })
-    	},
-    	cancel : function(){
-    		axios({
-    			method : "get",
-    			url : "http://localhost:8088"
-    		}).then( resData =>{
-    			this.resData=false;
-    			return this.myerrands = resData.data;
-    		}).catch(errorData =>{
-    			return console.log(errorData);
-    		})
-    	},
-    	getmyapply : function(){
-    		axios({
-    			method : "get",
-    			url : "http://localhost:8088/myapply"
-    		}).then( resData =>{
-    			this.resData=false;
-    		}).catch(errorData =>{
-    			return console.log(errorData);
-    		})
-    	},
-    }
-    	
-    	
-})
+
+	//현재 세션에 저장된 값 확인 component
+	Vue.component("mycom",{
+		template : "#myerrand",
+		data : function(){
+			return{
+				logInMember:"",
+				myReq:[],
+				myReqBool : true,
+				myApply : [],
+				myApplyBool : false
+			}
+		},
+		created : function(){
+			axios({
+					method: "get",
+					url: "http://localhost:8088/login"		
+				}).then(resData => {						      			
+					this.logInMember = resData.data;   						
+					sessionStorage.setItem("logInMember", JSON.stringify(this.logInMember));
+				}).catch(error => {
+					console.log("error", error);
+				});
+			
+			axios({
+				method: "get",
+				url: "http://localhost:8088/myerrands/req?memberId="+JSON.parse(sessionStorage.getItem("logInMember")).memberId					
+			}).then(resData => {
+				this.myReq = resData.data; 
+			}).catch(error => {
+				console.log("error", error);
+			}); 
+		},
+		methods: {
+			getmyerrands : function(){
+	    		axios({
+	                method : "get",
+	                url : "http://localhost:8088/myerrands/req?memberId="+JSON.parse(sessionStorage.getItem("logInMember")).memberId
+	            }).then( resData => {
+	            	this.myReqBool=true;
+	            	this.myApplyBool=false;
+	                return this.myReq = resData.data;
+	            }).catch(errorData => {
+	            	return console.log(errorData);
+	            })
+	    	},
+	    	getmyapplies : function(){
+	    		axios({
+	                method : "get",
+	                url : "http://localhost:8088/myerrands/apply?memberId="+JSON.parse(sessionStorage.getItem("logInMember")).memberId
+	            }).then( resData => {
+	            	this.myApplyBool=true;
+	            	this.myReqBool=false;
+	                return this.myApply = resData.data;
+	            }).catch(errorData => {
+	            	return console.log(errorData);
+	            })
+	    	}
+		}
+	})
+
+	
+	new Vue({
+		el:"#app"
+	});
 </script>
 </body>
 </html>

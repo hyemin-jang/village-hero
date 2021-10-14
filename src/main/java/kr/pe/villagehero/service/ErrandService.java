@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import kr.pe.villagehero.dao.ErrandRepository;
 import kr.pe.villagehero.dao.MemberRepository;
 import kr.pe.villagehero.dto.ErrandDTO;
+import kr.pe.villagehero.dto.MemberDTO;
+import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.entity.Errand;
 import kr.pe.villagehero.entity.Member;
 
@@ -103,6 +106,20 @@ public class ErrandService {
 		all.sort(new PayComparator());
 		return all;
 	}
+	
+	//멤버 id 값으로 저장된 모든 심부름 find
+	public List<MyPageDTO.ErrandDTO2> getAllMyErrands(Long memberId){
+		Optional<Member> m = memberDAO.findById(memberId);
+		List<MyPageDTO.ErrandDTO2> myreqlist = new ArrayList<>();
+		
+		m.ifPresent(member ->{
+			List<Errand> sub = dao.findAllMyReq(member);
+			
+			sub.forEach(v -> myreqlist.add(new MyPageDTO.ErrandDTO2(v.getTitle(),v.getErrandStatus())));
+		});
+		return myreqlist;
+	}
+	
 }
 
 class PayComparator implements Comparator<ErrandDTO> {

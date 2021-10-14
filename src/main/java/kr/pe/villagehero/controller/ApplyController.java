@@ -47,4 +47,11 @@ public class ApplyController {
 		
 		return new RedirectView("");
 	}
+	
+	//내 심부름 - 내가 지원한 심부름 목록 로딩
+	@GetMapping("myerrands/apply")
+	public List<MyPageDTO.MyApply> getAllMyApply(Long memberId){
+		
+		return service.getMyApply(memberId);
+	}
 }

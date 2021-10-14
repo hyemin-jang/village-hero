@@ -58,4 +58,26 @@ public class MyPageDTO {
 		}
 	}
 	
+	//내심부름 -> 내 심부름 요청목록 확인에서 뿌려줄 내용을 위한 DTO
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Getter
+	@Setter
+	@Builder
+	public static class ErrandDTO2{
+		private String title;
+		private char errandStatus;
+	}
+	
+	//내심부름 -> 내 심부름 내가 지원한 심부름 목록 확인에서 뿌려줄 내용을 위한 DTO
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Getter
+	@Setter
+	@Builder
+	public static class MyApply{
+		private String title;
+		private char matchStatus;
+	}
+	
 }

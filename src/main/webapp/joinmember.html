@@ -1,481 +1,290 @@
 <!DOCTYPE html>
-<html lnag="ko">
-    <head>
-        <meta charset="UTF-8">
-        <title>동네히어로 : 회원가입</title>
-        <link rel="stylesheet" href="new_main.css">
-    </head>
-    
-    
-    
-    
-    
-    <style>
-/* 레이아웃 틀 */
-html {
-    height: 100%;
-}
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>동네히어로 : 회원가입</title>
+<link rel="stylesheet" href="css/joinmember.css">
+</head>
 
-body {
-    margin: 0;
-    height: 100%;
-    background: color:white;
-    font-family: 'MaruBuri-Bold';
-}
+<!-- 바디 -->
+<body>
+	<!-- header -->
+	<div id="header">
+		<h1 class="join_title">
+			<label for="id">회원가입</label>
+		</h1>
+	</div>
 
-#logo {
-    width: 240px;
-    height: 44px;
-    cursor: pointer;
-}
+	<!-- wrapper -->
+	<div id="wrapper">
 
-#header {
-    padding-top: 30px;
-    padding-bottom: 0px;
-    text-align: center;
-}
+		<!-- content-->
+		<div id="content">
 
-#wrapper {
-    position: relative;
-    height: 100%;
-}
+			<!--  http://ip:port/addUser  -->
+			<!-- <form method="post" action="addUser" enctype="multipart/form-data"> -->
+			<form method="post" action="addMember">
 
-#content {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%);
-    width: 400px;
-}
+				<!-- ID -->
+				<div>
+					<h3 class="join_title">
+						<label for="id">이메일</label>
+					</h3>
+					<span class="box int_id"> <input type="text" id="id"
+						class="int" maxlength="50" name="email"> <span
+						class="step_url">필수 입력</span>
+					</span> <span class="error_next_box"></span>
+				</div>
 
-/* 입력폼 */
+				<!-- PW1 -->
+				<div>
+					<h3 class="join_title">
+						<label for="pswd1">비밀번호</label>
+					</h3>
+					<span class="box int_pass"> <input type="password"
+						id="pswd1" class="int" maxlength="16" name="password"> <span
+						id="alertTxt">사용불가</span> <img src="images/m_icon_pass.png"
+						id="pswd1_img1" class="pswdImg">
+					</span> <span class="error_next_box"></span>
+				</div>
 
-input:focus {
-    outline: none;
-}
+				<!-- PW2 -->
+				<div>
+					<h3 class="join_title">
+						<label for="pswd2">비밀번호 확인</label>
+					</h3>
+					<span class="box int_pass_check"> <input type="password"
+						id="pswd2" class="int" maxlength="16" name="password2"> <img
+						src="images/m_icon_check_disable.png" id="pswd2_img1"
+						class="pswdImg">
+					</span> <span class="error_next_box"></span>
+				</div>
 
-h3 {
-	color: #545454;
-    margin: 20px 0px 5px 2px;
-    font-size: 14px;
-    font-weight: 700;
-}
+				<!-- NICKNAME -->
+				<div>
+					<h3 class="join_title">
+						<label for="nickname">닉네임</label>
+					</h3>
+					<span class="box int_name"> <input type="text" id="nickname"
+						class="int" maxlength="20" name="nickname"> <span
+						class="step_url">3~10자</span>
+					</span> <span class="error_next_box"></span>
+				</div>
 
-.box {
-    display: block;
-    width: 100%;
-    height: 40px;
-    border: solid 1px #dadada;
-    border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px;
-    padding: 5px 10px 5px 10px;
-    box-sizing: border-box;
-    background: #fff;
-    position: relative;
-}
+				<!-- BIRTH -->
+				<div>
+					<h3 class="join_title">
+						<label for="yy">생년월일</label>
+					</h3>
 
-.int {
-    display: block;
-    position: relative;
-    width: 100%;
-    height: 30px;
-    border: none;
-    background: #fff;
-    font-size: 15px;
-}
-
-input {
-    font-family: 'MaruBuri-Bold';
-}
-
-.box.int_id {
-    padding-right: 110px;
-}
-
-.box.int_pass {
-    padding-right: 40px;
-}
-
-.box.int_pass_check {
-    padding-right: 40px;
-}
-
-.step_url {
-    /*@naver.com*/
-    position: absolute;
-    top: 10px;
-    right: 12px;
-    font-size: 15px;
-    color: #8e8e8e;
-}
-
-.pswdImg {
-    width: 18px;
-    height: 20px;
-    display: inline-block;
-    position: absolute;
-    top: 50%;
-    right: 16px;
-    margin-top: -10px;
-    cursor: pointer;
-}
-
-#bir_wrap {
-    display: table;
-    width: 100%;
-}
-
-#bir_yy {
-    display: table-cell;
-    width: 147px;
-}
-
-#bir_mm {
-    display: table-cell;
-    width: 147px;
-    vertical-align: middle;
-    padding-left: 10px;
-}
-
-#bir_dd {
-    display: table-cell;
-    width: 147px;
-    vertical-align: middle;
-    padding-left: 10px;
-}
-
-#bir_gender {
-    display: table-cell;
-    width: 147px;
-    vertical-align: middle;
-    padding-left: 10px;
-}
-
-#spe_wrap {
-    display: table;
-    width: 100%;
-}
-
-#specialty1 {
-    display: table-cell;
-    width: 147px;
-}
-
-#specialty2 {
-    display: table-cell;
-    width: 147px;
-    padding-left: 10px;
-}
-
-#specialty3 {
-    display: table-cell;
-    width: 147px;
-    padding-left: 10px;
-}
-
-select {
-    width: 100%;
-    height: 29px;
-    font-size: 15px;
-    background: #fff url(https://static.nid.naver.com/images/join/pc/sel_arr_2x.gif) 100% 50% no-repeat;
-    background-size: 20px 8px;
-    -webkit-appearance: none;
-    display: inline-block;
-    text-align: start;
-    border: none;
-    cursor: default;
-    font-family: 'MaruBuri-Bold';
-}
-
-/* 에러메세지 */
-
-.error_next_box {
-    margin-top: 9px;
-    font-size: 12px;
-    color: red;    
-    display: none;
-}
-
-#alertTxt {
-    position: absolute;
-    top: 19px;
-    right: 38px;
-    font-size: 12px;
-    color: red;
-    display: none;
-}
-
-/* 버튼 */
-
-.btn_area {
-    margin: 30px 0 91px;
-}
-
-#btnJoin {
-    width: 100%;
-    padding: 16px 0 12px;
-    border: 0;
-    cursor: pointer;
-    color: #fff;
-    background-color: #696969;
-    border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px;
-    font-size: 20px;
-    font-weight: 800;
-    font-family: 'MaruBuri-Bold';
-}
-    </style>
-    
-    
-    
-    
-    <!-- 바디 -->
-    <body>
-        <!-- header -->
-        <div id="header">
-            <h1 class="join_title">
-            	<label for="id">회원가입</label>
-            </h1>
-        </div>
-
-        <!-- wrapper -->
-        <div id="wrapper">
-
-            <!-- content-->
-            <div id="content">
-            
-            	<!--  http://ip:port/addUser  -->
-				<!-- <form method="post" action="addUser" enctype="multipart/form-data"> -->
-				<form method="post" action="addUser">
-				
-                <!-- ID -->
-                <div>
-                    <h3 class="join_title">
-                        <label for="id">이메일</label>
-                    </h3>
-                    <span class="box int_id">
-                        <input type="text" id="id" class="int" maxlength="50" name="">
-                        <span class="step_url">필수 입력</span>
-                    </span>
-                    <span class="error_next_box"></span>
-                </div>
-
-                <!-- PW1 -->
-                <div>
-                    <h3 class="join_title"><label for="pswd1">비밀번호</label></h3>
-                    <span class="box int_pass">
-                        <input type="text" id="pswd1" class="int" maxlength="20">
-                        <span id="alertTxt">사용불가</span>
-                        <img src="images/m_icon_pass.png" id="pswd1_img1" class="pswdImg">
-                    </span>
-                    <span class="error_next_box"></span>
-                </div>
-
-                <!-- PW2 -->
-                <div>
-                    <h3 class="join_title"><label for="pswd2">비밀번호 확인</label></h3>
-                    <span class="box int_pass_check">
-                        <input type="text" id="pswd2" class="int" maxlength="20">
-                        <img src="images/m_icon_check_disable.png" id="pswd2_img1" class="pswdImg">
-                    </span>
-                    <span class="error_next_box"></span>
-                </div>
-
-                <!-- NICKNAME -->
-                <div>
-                    <h3 class="join_title"><label for="nickname">닉네임</label></h3>
-                    <span class="box int_name">
-                        <input type="text" id="nickname" class="int" maxlength="20">
-                        <span class="step_url">필수 입력</span>
-                    </span>
-                    <span class="error_next_box"></span>
-                </div>
-
-                <!-- BIRTH -->
-                <div>
-                    <h3 class="join_title"><label for="yy">생년월일/성별</label></h3>
-                    
 					<div id="bir_wrap">
-                        <!-- BIRTH_YY -->
-                        <div id="bir_yy">
-                            <span class="box">
-                                <input type="text" id="yy" class="int" maxlength="4" placeholder="년(4자)">
-                            </span>
-                        </div>
-
-                        <!-- BIRTH_MM -->
-                        <div id="bir_mm">
-                            <span class="box">
-                                <select id="mm" class="sel">
-                                    <option>월</option>
-                                    <option value="01">1</option>
-                                    <option value="02">2</option>
-                                    <option value="03">3</option>
-                                    <option value="04">4</option>
-                                    <option value="05">5</option>
-                                    <option value="06">6</option>
-                                    <option value="07">7</option>
-                                    <option value="08">8</option>
-                                    <option value="09">9</option>                                    
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                </select>
-                            </span>
-                        </div>
-
-                         <!-- BIRTH_dd -->
-						<div id="bir_dd">
-                            <span class="box">
-                                <select id="dd" class="sel">
-                                    <option>일</option>
-                                    <option value="01">1</option>
-                                    <option value="02">2</option>
-                                    <option value="03">3</option>
-                                    <option value="04">4</option>
-                                    <option value="05">5</option>
-                                    <option value="06">6</option>
-                                    <option value="07">7</option>
-                                    <option value="08">8</option>
-                                    <option value="09">9</option>                                    
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                    <option value="13">13</option>
-                                    <option value="14">14</option>
-                                    <option value="15">15</option>
-                                    <option value="16">16</option>
-                                    <option value="17">17</option>
-                                    <option value="18">18</option>
-                                    <option value="19">19</option>
-                                    <option value="20">20</option>
-                                    <option value="21">21</option>
-                                    <option value="22">22</option>
-                                    <option value="23">23</option>
-                                    <option value="24">24</option>
-                                    <option value="25">25</option>
-                                    <option value="26">26</option>
-                                    <option value="27">27</option>
-                                    <option value="28">28</option>
-                                    <option value="29">29</option>
-                                    <option value="30">30</option>
-                                    <option value="31">31</option>
-                                </select>
-                            </span>
+						<!-- BIRTH_YY -->
+						<div id="bir_yy">
+							<span class="box"> <input type="text" id="yy" class="int"
+								maxlength="4" placeholder="년(4자)" name="birthYear">
+							</span>
 						</div>
-                        
-                        <!-- GENDER -->    
-                        <div id="bir_gender">
+
+						<!-- BIRTH_MM -->
+						<div id="bir_mm">
+							<span class="box"> <select id="mm" class="sel"
+								name="birthMonth">
+									<option>월</option>
+									<option value="01">1</option>
+									<option value="02">2</option>
+									<option value="03">3</option>
+									<option value="04">4</option>
+									<option value="05">5</option>
+									<option value="06">6</option>
+									<option value="07">7</option>
+									<option value="08">8</option>
+									<option value="09">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+							</select>
+							</span>
+						</div>
+
+						<!-- BIRTH_dd -->
+						<div id="bir_dd">
+							<span class="box"> <select id="dd" class="sel"
+								name="birthDay">
+									<option>일</option>
+									<option value="01">1</option>
+									<option value="02">2</option>
+									<option value="03">3</option>
+									<option value="04">4</option>
+									<option value="05">5</option>
+									<option value="06">6</option>
+									<option value="07">7</option>
+									<option value="08">8</option>
+									<option value="09">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="17">17</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+									<option value="24">24</option>
+									<option value="25">25</option>
+									<option value="26">26</option>
+									<option value="27">27</option>
+									<option value="28">28</option>
+									<option value="29">29</option>
+									<option value="30">30</option>
+									<option value="31">31</option>
+							</select>
+							</span>
+						</div>
+
+						<!-- GENDER -->
+						<!-- <div id="bir_gender">
                             <span class="box gender_code">
-                        		<select id="gender" class="sel">
+                        		<select id="gender" class="sel" name="gender">
                             		<option>성별</option>
                             		<option value="M">남자</option>
                            			<option value="F">여자</option>
                         		</select>                            
                     		</span>
                     		<span class="error_next_box">필수 정보입니다.</span>
-                    	</div>
-                           
-					</div>
-					
-                    <span class="error_next_box"></span>    
-                </div>
+                    	</div> -->
 
-                <!-- phone -->
-                <div>
-                    <h3 class="join_title"><label for="phoneNo">휴대전화</label></h3>
-                    <span class="box int_phone">
-                        <input type="tel" id="phoneNo" class="int" maxlength="16" placeholder="전화번호 입력">
-                        <span class="step_url">필수 입력</span>
-                    </span>
-                    <span class="error_next_box"></span>    
-                </div>
-                
-                 <!-- address -->
-                <div>
-                    <h3 class="join_title"><label for="addressNo">주소</label></h3>
-                    <span class="box int_address">
-                        <input type="tel" id="addressNo" class="int" maxlength="16" placeholder="주소 입력">
-                        <span class="step_url">필수 입력</span>
-                    </span>
-                    <span class="error_next_box"></span>    
-                </div>
-                
-                <!-- picture -->
-                
-                <div>
+					</div>
+
+					<span class="error_next_box"></span>
+				</div>
+
+				<!-- gender -->
+				<div>
+					<h3 class="join_title">
+						<label for="gender">성별</label>
+					</h3>
+					<span class="box gender_code"> <select id="gender"
+						class="sel" name="gender">
+							<option>성별</option>
+							<option value="M">남자</option>
+							<option value="F">여자</option>
+					</select>
+					</span> <span class="error_next_box">필수 정보입니다.</span>
+				</div>
+
+				<!-- phone -->
+				<div>
+					<h3 class="join_title">
+						<label for="phone">휴대전화</label>
+					</h3>
+					<span class="box int_phone"> <input type="text" id="phone"
+						class="int" maxlength="11" placeholder="휴대전화 입력" name="phone">
+						<span class="step_url">'-' 생략</span>
+					</span> <span class="error_next_box"></span>
+				</div>
+
+				<!-- address -->
+				<div>
+					<h3 class="join_title">
+						<label for="address">주소</label>
+					</h3>
+					<span class="box int_address"> <input type="text"
+						id="address" class="int" maxlength="50" placeholder="주소 입력"
+						name="address"> <span class="step_url">필수 입력</span>
+					</span> <span class="error_next_box"></span>
+				</div>
+
+				<!-- picture -->
+				<!-- <div>
                 	<h3 class="join_title"><label for="picture">프로필사진</label></h3>
                 	<span class="box int_picture">
                 		<input type="file" name="pictureFile" id="pictureInput" accept="image/png, image/jpeg">
                 		<input type="submit">
                 	</span>
-                </div>
-				
+                </div> -->
+
 				<!-- specialty -->
-                <div>
-                    <h3 class="join_title"><label for="spe1">전문분야</label></h3>
-                    <div id="spe_wrap">
-                    
-                        <!-- specialty1 -->
-                        <div id="specialty1">
-                            <span class="box">
-                                <select id="spe1" class="sel">
-                                    <option>선택1</option>
-                                    <option value="01">배달/장보기</option>
-                                    <option value="02">청소/집안일</option>
-                                    <option value="03">설치/조립/운반</option>
-                                    <option value="04">돌봄/동행</option>
-                                    <option value="05">과외/공부</option>
-                                    <option value="06">벌레/쥐잡기</option>
-                                    <option value="07">기타</option>
-                                </select>
-                            </span>
-                        </div>
-                        
-                        <!-- specialty2 -->
-                        <div id="specialty2">
-                            <span class="box">
-                                <select id="spe2" class="sel">
-                                    <option>선택2</option>
-                                    <option value="01">배달/장보기</option>
-                                    <option value="02">청소/집안일</option>
-                                    <option value="03">설치/조립/운반</option>
-                                    <option value="04">돌봄/동행</option>
-                                    <option value="05">과외/공부</option>
-                                    <option value="06">벌레/쥐잡기</option>
-                                    <option value="07">기타</option>
-                                </select>
-                            </span>
-                        </div>
-                        
-                        <!-- specialty3 -->
-                        <div id="specialty3">
-                            <span class="box">
-                                <select id="spe3" class="sel">
-                                    <option>선택3</option>
-                                    <option value="01">배달/장보기</option>
-                                    <option value="02">청소/집안일</option>
-                                    <option value="03">설치/조립/운반</option>
-                                    <option value="04">돌봄/동행</option>
-                                    <option value="05">과외/공부</option>
-                                    <option value="06">벌레/쥐잡기</option>
-                                    <option value="07">기타</option>
-                                </select>
-                            </span>
-                        </div>
-                    </div>
+				<div>
+					<h3 class="join_title">
+						<label for="spe1">당신의 능력</label>
+					</h3>
+					<div id="spe_wrap">
+
+						<!-- specialty1 -->
+						<div id="specialty1">
+							<span class="box"> <select id="spe1" class="sel"
+								name="specialty1">
+									<option>필수선택</option>
+									<option value="배달/장보기">배달/장보기</option>
+									<option value="청소/집안일">청소/집안일</option>
+									<option value="설치/조립/운반">설치/조립/운반</option>
+									<option value="돌봄/동행">돌봄/동행</option>
+									<option value="과외/공부">과외/공부</option>
+									<option value="역할대행">역할대행</option>
+									<option value="운전/카풀">운전/카풀</option>
+									<option value="벌레/쥐잡기">벌레/쥐잡기</option>
+									<option value="기타">기타</option>
+							</select>
+							</span> <span class="error_next_box">하나는 필수 선택.</span>
+						</div>
+
+						<!-- specialty2 -->
+						<div id="specialty2">
+							<span class="box"> <select id="spe2" class="sel"
+								name="specialty2">
+									<option></option>
+									<option value="배달/장보기">배달/장보기</option>
+									<option value="청소/집안일">청소/집안일</option>
+									<option value="설치/조립/운반">설치/조립/운반</option>
+									<option value="돌봄/동행">돌봄/동행</option>
+									<option value="과외/공부">과외/공부</option>
+									<option value="역할대행">역할대행</option>
+									<option value="운전/카풀">운전/카풀</option>
+									<option value="벌레/쥐잡기">벌레/쥐잡기</option>
+									<option value="기타">기타</option>
+							</select>
+							</span>
+						</div>
+
+						<!-- specialty3 -->
+						<div id="specialty3">
+							<span class="box"> <select id="spe3" class="sel"
+								name="specialty3">
+									<option></option>
+									<option value="배달/장보기">배달/장보기</option>
+									<option value="청소/집안일">청소/집안일</option>
+									<option value="설치/조립/운반">설치/조립/운반</option>
+									<option value="돌봄/동행">돌봄/동행</option>
+									<option value="과외/공부">과외/공부</option>
+									<option value="역할대행">역할대행</option>
+									<option value="운전/카풀">운전/카풀</option>
+									<option value="벌레/쥐잡기">벌레/쥐잡기</option>
+									<option value="기타">기타</option>
+							</select>
+							</span>
+						</div>
+					</div>
 				</div>
-				
-                <!-- JOIN BTN-->
-                <div class="btn_area">
-                    <button type="button" id="btnJoin">
-                        <span>가입하기</span>
-                    </button>
-                </div>
-                
+
+				<!-- JOIN BTN-->
+				<div class="btn_area">
+					<button type="submit" id="btnJoin">
+						<span>가입하기</span>
+					</button>
+				</div>
+
 			</form>
-            </div> 
-            <!-- content-->
-		
-        </div> 
-        <!-- wrapper -->
-    <script src="main.js"></script>
-    </body>
+		</div>
+		<!-- content-->
+
+	</div>
+	<!-- wrapper -->
+
+	<script src="js/joinmember.js"></script>
+</body>
 </html>

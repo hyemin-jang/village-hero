@@ -24,7 +24,7 @@
 				<a href="joinmember.html" v-if="!logInCheck">회원가입</a>
 				<a href="login.html" v-if="!logInCheck">로그인</a>				
 				<a href="mypage.html" v-if="logInCheck">마이페이지</a>			
-				<a href="#" v-if="logInCheck">로그아웃</a>
+				<a href="logout" @click="logout()" v-if="logInCheck">로그아웃</a>
 			</div>			
 		</div>
 	</template>
@@ -62,6 +62,11 @@
 					logInCheck: sessionStorage.getItem("logInMember")
 				}
 			},
+			methods:{
+				logout : function(){
+					sessionStorage.removeItem("logInMember");
+				}
+			}
 		});		
 		
 		

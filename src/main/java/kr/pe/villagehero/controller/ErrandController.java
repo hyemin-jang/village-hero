@@ -15,6 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MemberDTO;
+import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.dto.MemberDTO.Get;
 import kr.pe.villagehero.service.ErrandService;
 
@@ -95,4 +96,10 @@ public class ErrandController {
 		return all;
 	}
 	
+	//내 심부름 목록 뿌려주기 -> 삭제버튼/count/title/status 뿌려줄 것임.
+	@GetMapping("myerrands/req")
+	public List<MyPageDTO.ErrandDTO2> getAllMyErrands(Long memberId){
+
+		return service.getAllMyErrands(memberId);
+	}
 }
