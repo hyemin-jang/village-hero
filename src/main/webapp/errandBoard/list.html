@@ -26,18 +26,10 @@
 				<th>errandStatus</th>
 			</tr>
 			
-			<tr v-for="v in errands">
-				
-				<input type="text" v-bind:value="errandId">
-				
+			<tr v-for="v in errands">				
 				<td>{{v.errandId}}</td>
 				<td>{{v.createdAt}}</td>
-				
-		<!-- 	 	<td onClick="location.href='getErrandDetail/"{{v.errandId}}"'">{{v.title}}</td>  -->
-		
-					<td> <a v-bind:href="urlPart1">{{urlPart1}}{{v.title}}</a> </td>
-			
-			
+			 	<td> <a v-bind:href="urlPart1+v.errandId">{{v.title}}</a></td>
 				<td>{{v.category}}</td>
 				<td>{{v.reqlocation}}</td>
 				<td>{{v.reqDate}}</td>
@@ -54,8 +46,7 @@
         data : {
         	resData : false,
         	errands :[],
-        	urlPart1 : "location.href=getErrandDetail/",
-        	errandId : ''
+        	urlPart1 : "http://localhost:8088/getErrandDetail/",
         },
         created :function(){
         	axios({

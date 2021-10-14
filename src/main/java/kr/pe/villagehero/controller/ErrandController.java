@@ -15,36 +15,50 @@ import org.springframework.web.servlet.view.RedirectView;
 import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.dto.MemberDTO.Get;
-import kr.pe.villagehero.entity.Errand;
 import kr.pe.villagehero.service.ErrandService;
 
 @RestController
-@SessionAttributes({"loginMember"})
+@SessionAttributes({ "loginMember" })
 public class ErrandController {
 
 	@Autowired
 	private ErrandService service;
 
-	//심부름 요청 저장 메소드
+	// 심부름 요청 저장 메소드
 	@PostMapping("errand")
 	public RedirectView insertErrand(Model model, ErrandDTO newErrand) {
 		model.getAttribute("loginMember");
 		MemberDTO.Get loginMember = (Get) model.getAttribute("loginMember");
 		long id = loginMember.getMemberId();
-		
+
 		service.insertErrand(id, newErrand);
 		return new RedirectView("/errandBoard/list.html");
 	}
-	
+
+//	@GetMapping("getErrandDetail/{id}")
+//	public RedirectView getNewErrand(@PathVariable long id, Model model) {
+//		
+//
+//		return new RedirectView("/errandBoard/detail.html");
+//	}
+
 	@GetMapping("getErrandDetail/{id}")
 	public ModelAndView getNewErrand(@PathVariable long id, Model model) {
-		Errand errand = service.getOneErrand2(id);
-		ModelAndView mav = new ModelAndView();
-		
-		mav.addObject("asdf");
-		
-		mav.setView(new RedirectView("/errandBoard/detail.html"));
-		return mav;
+		ModelAndView mv = new ModelAndView();
+
+		//mv.addObject("id", id);
+		mv.addObject("id", id);
+
+		mv.setViewName("/errandBoard/detail.html?id=1");
+
+		//return new RedirectView("/errandBoard/detail.html");
+		return mv;
+	}
+
+	@GetMapping("errandDetail")
+	public ErrandDTO errandDetail(long id) {
+		ErrandDTO errand = service.getOneErrand(id);
+		return errand;
 	}
 
 	// json객체 배열로 errand 테이블의 모든 값

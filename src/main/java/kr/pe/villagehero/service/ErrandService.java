@@ -38,11 +38,6 @@ public class ErrandService {
 		ErrandDTO errand = new ErrandDTO(dao.findById(id).get());		
 		return errand;
 	}
-	
-	public Errand getOneErrand2(long id) {
-		Errand errand = dao.findById(id).get();
-		return errand;
-	}
 
 	public String insertErrand(long id, ErrandDTO newErrand) {
 		System.out.println("심부름 요청 등록시도");

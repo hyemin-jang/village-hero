@@ -13,7 +13,7 @@
 	
 	<div id="detail">
 		<div v-bind="errands">
-		{{errands}}
+	
 
 			<div class="form-group">
 				<p id="title">
@@ -63,7 +63,7 @@
 	        created :function(){
 	        	axios({
 	                method : "get",
-	                url : "http://localhost:8088/errandBoard/detail.html"
+	                url : "http://localhost:8088/errandDetail"
 	            }).then( resData => {
 	            	this.resData=true;
 	                return this.errands = resData.data;
