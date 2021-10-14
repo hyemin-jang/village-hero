@@ -2,46 +2,54 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>동네히어로</title>
 <!-- 지도 API include -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c2c65e47ff9efd53c90ebd6f14d04ecb&libraries=services,clusterer,drawing"></script>	
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
+
+<link rel="stylesheet" href="/css/index.css" />
 </head>
 <body>	
 	<template id="header">
-		<div>		
-			<a href="errandBoard/list.html">모든 심부름</a>
-			<a href="joinmember.html">회원가입</a>
-			<a href="login.html">로그인</a>
-			<a href="myerrands.html">내 심부름</a>
-			<a href="mypage.html">마이페이지</a>			
-			<a href="#">로그아웃</a>
+		<div class="header">	
+			<div class="menu-logo">
+				동네히어로
+			</div>	
+			<div class="menu-left">
+				<a href="errandBoard/list.html">모든 심부름 보기</a>
+				<a href="myerrands.html" v-if="logInCheck">내 심부름</a>
+			</div>
+			<div class="menu-right">
+				<a href="joinmember.html" v-if="!logInCheck">회원가입</a>
+				<a href="login.html" v-if="!logInCheck">로그인</a>				
+				<a href="mypage.html" v-if="logInCheck">마이페이지</a>			
+				<a href="#" v-if="logInCheck">로그아웃</a>
+			</div>			
 		</div>
 	</template>
+	
 
-	<template id="side">
-		<div>
+	<template id="container">
+		<div class="container">	
+			<div class="side">		
+				<div class="errand" v-for="errand in allErrands">				
+					<div class="title">{{errand.title}}</div>
+					<div class="reqLoc">{{errand.reqLocation}}</div>
+					<div class="help"><a href="#">도와줄게요</a></div>
+				</div>	
+			</div>			
 			
-		</div>
-	</template>
-
-	<template id="main">
-		<div>					
-			<div id="side" v-for="errand in allErrands" style="border:1px solid;">				
-				<div class="title">{{errand.title}}</div>
-				<div class="reqLoc">{{errand.reqLocation}}</div>
-				<div class="help"><a href="#">도와줄게요</a></div>
-			</div>		
-			
-			<div id="map" style="width:1000px;height:800px;"></div>		
+			<div class="main">
+				<div id="map" style="height:800px;"></div>					
+			</div>
 		</div>
 	</template>
 	
 
 	<div id="app">
 		<header-com></header-com>
-		<main-com></main-com>					
+		<container-com></container-com>					
 	</div>
 	
 	
@@ -51,15 +59,16 @@
 			template: "#header",
 			data: function(){
 				return {
-
+					logInCheck: sessionStorage.getItem("logInMember")
 				}
 			},
 
-		})
+		});		
 		
-		// main 컴포넌트
-		Vue.component("main-com", {
-			template: "#main",
+		
+		// container 컴포넌트
+		Vue.component("container-com", {
+			template: "#container",
 			data: function(){
 				return {
 					allErrands: [],		
