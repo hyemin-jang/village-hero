@@ -28,7 +28,6 @@ public class ErrandController {
 	// 심부름 등록 
 	@PostMapping("errand")
 	public RedirectView insertErrand(Model model, ErrandDTO newErrand) {
-		model.getAttribute("loginMember");
 		MemberDTO.Get loginMember = (Get) model.getAttribute("loginMember");
 		long id = loginMember.getMemberId();
 

@@ -19,7 +19,6 @@ import kr.pe.villagehero.dto.ApplyDTO.Form;
 import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.dto.MemberDTO.Get;
 import kr.pe.villagehero.dto.MyPageDTO;
-import kr.pe.villagehero.dto.MyPageDTO.Req;
 import kr.pe.villagehero.entity.Apply;
 import kr.pe.villagehero.entity.Errand;
 import kr.pe.villagehero.entity.Member;
