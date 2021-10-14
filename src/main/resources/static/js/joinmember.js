@@ -1,6 +1,6 @@
-/*변수 선언*/
-
-
+/**
+* 변수 선언
+*/
 var id = document.querySelector('#id');
 
 var pw1 = document.querySelector('#pswd1');
@@ -29,9 +29,11 @@ var error = document.querySelectorAll('.error_next_box');
 
 
 
-/*이벤트 핸들러 연결*/
 
 
+/**
+* 이벤트 핸들러 연결
+*/
 id.addEventListener("focusout", checkId);
 pw1.addEventListener("focusout", checkPw);
 pw2.addEventListener("focusout", comparePw);
@@ -60,9 +62,9 @@ spe1.addEventListener("focusout", function() {
 
 
 
-/*콜백 함수*/
-
-
+/**
+* 콜백 함수
+*/
 function checkId() {
     var idPattern = /[a-z0-9]{2,}@[a-z0-9-]{2,}\.[a-z0-9]{2,}/;
     if(id.value === "") {
