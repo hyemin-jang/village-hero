@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 public class MemberDTO {
 	
@@ -52,6 +53,7 @@ public class MemberDTO {
 	@AllArgsConstructor
 	@Getter
 	@Setter
+	@ToString
 	public static class Login {  // 로그인한 정보 넘겨줄때 필요한 DTO 클래스
 		private String email;	
 		private String password;

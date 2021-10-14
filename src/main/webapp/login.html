@@ -11,13 +11,13 @@
 	<template id="form">
 		<div>
 			<h3>로그인</h3>
-			<form action="login" method="post">
-				<input type="text" name="email" value="hm@google.com">
-				<input type="password" name="password" value="123">
+	<!-- 		<form action="login" method="post"> -->
+				<input type="text" v-model="email">
+				<input type="password" v-model="password">
 				<input type="submit" value="로그인" @click="logInCheck"><br>
 				<div>비밀번호가 일치하지 않습니다.</div>
 				<div>존재하지 않는 계정입니다.</div>
-			</form>
+			<!-- </form> -->
 		</div>
 	</template>
 
@@ -31,22 +31,30 @@
 			template: "#form",
 			data: function(){
 				return {
-					logInTry: ""
+					logInTry: "",
+					logInMember: "",
+					email: "gh@google.com",
+					password: "222"
 				}
 			},
-			created : function(){
-				
-			}, 
+		
 			methods: {				
 				logInCheck: function(){
 					axios({
 						method: "get",
-						url: "http://localhost:8088/logincheck"		
-					}).then(resData => {						      			
-						this.logInMember = resData.data;   						
+						url: "http://localhost:8088/login?email="+this.email+"&password="+this.password,
+						data: {
+							email: this.email,
+							password: this.password
+						},
+	
+					
+					}).then(resData => {		
+						this.logInMember = resData.data;   				
 						sessionStorage.setItem("logInMember", JSON.stringify(this.logInMember));
-						
+						document.location.href = '/';
 					}).catch(error => {
+						alert(2);
 						console.log("error", error);
 					});  
 				}
