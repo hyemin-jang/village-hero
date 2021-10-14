@@ -13,6 +13,7 @@
 	
 	<div id="detail">
 		<div v-bind="errands">
+	
 
 			<div class="form-group">
 				<p id="title">
@@ -47,6 +48,7 @@
 			
 			<div class="form-group">
 				<a href="list.html" class="btn btn-secondary float-left">목록으로</a>
+				<a href="apply.html" class="btn btn-secondary float-left">도와줄게요</a>
 			</div>
 		</div>
 
@@ -60,9 +62,10 @@
 	        	errands :""
 	        },
 	        created :function(){
+	        	console.log(location.search);
 	        	axios({
 	                method : "get",
-	                url : "http://localhost:8088/errandDetail"
+	                url : "http://localhost:8088/errandDetail" + location.search
 	            }).then( resData => {
 	            	this.resData=true;
 	                return this.errands = resData.data;

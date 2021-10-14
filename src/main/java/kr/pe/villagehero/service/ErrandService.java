@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 import kr.pe.villagehero.dao.ErrandRepository;
 import kr.pe.villagehero.dao.MemberRepository;
 import kr.pe.villagehero.dto.ErrandDTO;
+import kr.pe.villagehero.dto.MemberDTO;
+import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.entity.Errand;
 import kr.pe.villagehero.entity.Member;
 
@@ -39,7 +42,7 @@ public class ErrandService {
 		return errand;
 	}
 
-	public Errand insertErrand(long id, ErrandDTO newErrand) {
+	public String insertErrand(long id, ErrandDTO newErrand) {
 		System.out.println("심부름 요청 등록시도");
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
@@ -58,7 +61,7 @@ public class ErrandService {
     	Errand errand = new Errand(writer, pay, createdAt, title, content, category, reqLocation, reqDate, errandStatus);
 
 		dao.save(errand);
-		return errand;
+		return "심부름 요청 저장 성공";
 	}
 
 	// 존재하는 모든 심부름을 가격순(내림차순)으로 return
@@ -69,6 +72,20 @@ public class ErrandService {
 		all2.forEach(v -> all.add(new ErrandDTO(v)));
 		all.sort(new PayComparator());
 		return all;
+	}
+
+	
+	//멤버 id 값으로 저장된 모든 심부름 find
+	public List<MyPageDTO.ErrandDTO2> getAllMyErrands(Long memberId){
+		Optional<Member> m = memberDAO.findById(memberId);
+		List<MyPageDTO.ErrandDTO2> myreqlist = new ArrayList<>();
+		
+		m.ifPresent(member ->{
+			List<Errand> sub = dao.findAllMyReq(member);
+			
+			sub.forEach(v -> myreqlist.add(new MyPageDTO.ErrandDTO2(v.getTitle(),v.getErrandStatus())));
+		});
+		return myreqlist;
 	}
 	
 }

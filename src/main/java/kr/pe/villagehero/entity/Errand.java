@@ -70,7 +70,7 @@ public class Errand {
 		this.reqDate = reqDate;
 		this.errandStatus = errandStatus;
 	}
-	
+
 //	@OneToMany(mappedBy = "errandId")
 //	List<Apply> applicants = new ArrayList<Apply>();
 	
