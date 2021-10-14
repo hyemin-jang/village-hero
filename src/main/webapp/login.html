@@ -14,8 +14,6 @@
 				<input type="text" v-model="email">
 				<input type="password" v-model="password">
 				<input type="submit" value="로그인" @click="logInCheck"><br>
-				<div>비밀번호가 일치하지 않습니다.</div>
-				<div>존재하지 않는 계정입니다.</div>
 			<!-- </form> -->
 		</div>
 	</template>
@@ -49,7 +47,13 @@
 					}).then(resData => {		
 						this.logInMember = resData.data;   				
 						sessionStorage.setItem("logInMember", JSON.stringify(this.logInMember));
-						document.location.href = '/';
+						if(this.logInMember==""){
+							alert("비밀번호 혹은 이메일을 확인해주세요.");
+						}else{
+							alert("환영합니다.");
+							document.location.href = '/';
+						}
+						
 					}).catch(error => {
 						alert(2);
 						console.log("error", error);

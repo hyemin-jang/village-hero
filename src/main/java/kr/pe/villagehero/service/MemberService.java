@@ -48,7 +48,7 @@ public class MemberService {
 		if (m!=null) {  
 			loginMember = new MemberDTO.Get(m);
 		} else {  // 없는 회원일때
-			
+			return null;
 		}
 		
 		return loginMember;
