@@ -59,9 +59,12 @@
 			template: "#header",
 			data: function(){
 				return {
-					logInCheck: sessionStorage.getItem("logInMember")
+					logInCheck: sessionStorage.getItem("logInMember")==""
 				}
 			},
+			created: function() {
+				console.log(this.logInCheck);
+			}
 		});		
 		
 		

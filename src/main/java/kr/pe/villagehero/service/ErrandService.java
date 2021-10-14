@@ -71,6 +71,11 @@ public class ErrandService {
 		return all;
 	}
 
+	public void updateErrandStatus() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }
 

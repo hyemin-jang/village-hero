@@ -5,15 +5,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
-import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MemberDTO;
+import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.service.ApplyService;
 import kr.pe.villagehero.service.ErrandService;
 import kr.pe.villagehero.service.MemberService;
@@ -41,29 +40,39 @@ public class MemberController {
 	private ApplyService service3;
 	
 	// 로그인 메소드
-	@PostMapping("/login")
-	public RedirectView logIn(Model model, MemberDTO.Login loginData) {		
-		MemberDTO.Get member = service.logIn(loginData.getEmail()); 
-		RedirectView resultPage = null;
-				
-		// 로그인 성공시
-		if (member.getPassword().equals(loginData.getPassword())) {  
-			model.addAttribute("loginMember", member); // 세션에 현재 로그인한 회원의 정보 저장
-			resultPage = new RedirectView("/index.html");
-			
-		// 로그인 실패시 (비밀번호 오류)
-		}else {	
-			resultPage =  new RedirectView("/login.html"); //restController는 이런식으로 redirect:/ 를 표현해야함.		
-		}		
-		return resultPage;
+	@GetMapping("/login")
+	public Object logIn(Model model, String email, String password) throws Exception {		
+		System.out.println(email);
+		MemberDTO.Get member = null;
+		
+		
+		member = service.logIn(email); // 입력한 이메일로 db 조회
+		System.out.println(member);
+		
+		if (member == null) {
+			throw new Exception("존재하지 않는 회원입니다.");					
+		} else {
+			if (!member.getPassword().equals(password)) {
+				throw new Exception("비밀번호가 일치하지 않습니다.");
+			} 
+		}
+		
+		return member;
+		
 	}
 	
+	@ExceptionHandler
+	public String loginException(Exception e) {
+		return e.getMessage();
+	}
 	
+	/*
 	// 세션에 담긴 로그인한 회원의 정보 반환하는 메소드
 	@GetMapping("logincheck")
 	public Object getLogInSession(Model model) {
+		System.out.println("2--" + model.getAttribute("loginMember"));
 		return model.getAttribute("loginMember");
-	}
+	}*/
 	
 	/*
 	 * 

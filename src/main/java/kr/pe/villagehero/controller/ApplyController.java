@@ -15,6 +15,7 @@ import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.dto.MemberDTO.Get;
 import kr.pe.villagehero.service.ApplyService;
+import kr.pe.villagehero.service.ErrandService;
 
 @RestController
 @SessionAttributes({"loginMember"})
@@ -22,6 +23,8 @@ public class ApplyController {
 
 	@Autowired
 	private ApplyService service;	
+	@Autowired
+	private ErrandService errandService;
 
 	// 마이페이지 - 내가 요청한 심부름 내역
 	@GetMapping("/mypage/req")
@@ -35,15 +38,15 @@ public class ApplyController {
 		return service.getAllMyCompletion(memberId);
 	}
 	
+	// 도와줄게요 (심부름 지원하기)
 	@PostMapping("/apply")
 	public RedirectView apply(Model model, String message) {
-		System.out.println(message);
 		model.getAttribute("loginMember");
 		MemberDTO.Get loginMember = (Get) model.getAttribute("loginMember");
 		long memberId = loginMember.getMemberId();
 		
-		System.out.println(memberId);
-		service.addApply(memberId, message);
+		service.addApply(memberId, message);  // apply 테이블에 지원내역 추가
+		errandService.updateErrandStatus();  // 해당 심부름 상태 1 (지원자대기중) 으로 변경
 		
 		return new RedirectView("");
 	}
