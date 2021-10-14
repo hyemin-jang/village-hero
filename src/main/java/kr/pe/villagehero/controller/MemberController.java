@@ -40,6 +40,11 @@ public class MemberController {
 	@Autowired
 	private ApplyService service3;
 	
+	@PostMapping("addMember")
+	public String addMember(    ) {
+		
+	}
+	
 	// 로그인 메소드
 	@PostMapping("/login")
 	public RedirectView logIn(Model model, MemberDTO.Login loginData) {		
@@ -65,13 +70,6 @@ public class MemberController {
 		return model.getAttribute("loginMember");
 	}
 	
-	/*
-	 * 
-	 */
-//	@PostMapping("addUser")
-//	public String addUser(    ) {
-//		
-//	}
 	
 	//현재 세션에 저장된 member_id 값으로 내가 등록한 모든 심부름 목록 출력.
 	@GetMapping("myerrands")
