@@ -38,8 +38,37 @@
 		</tr>
 	</table>
 </div>
+<div id="app">
+	<mycom></mycom>
+</div>
 	
+	<template id="myerrand">
+		<div v-bind="logInMember">
+			{{logInMember.memberId}}
+		</div>
+	</template>
 <script>
+
+	//현재 세션에 저장된 값 확인 component
+	Vue.component("mycom",{
+		template : "#myerrand",
+		data : function(){
+			return{
+				logInMember:""
+			}
+		},
+		created : function(){
+			axios({
+					method: "get",
+					url: "http://localhost:8088/logincheck"		
+				}).then(resData => {						      			
+					this.logInMember = resData.data;   						
+					sessionStorage.setItem("logInMember", JSON.stringify(this.logInMember));
+				}).catch(error => {
+					console.log("error", error);
+				});  	
+		}
+	})
 new Vue({
     el:"#body",
     data : {
@@ -83,6 +112,10 @@ new Vue({
     	
     	
 })
+	
+	new Vue({
+		el:"#app"
+	});
 </script>
 </body>
 </html>
