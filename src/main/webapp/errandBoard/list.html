@@ -25,10 +25,19 @@
 				<th>pay</th>
 				<th>errandStatus</th>
 			</tr>
+			
 			<tr v-for="v in errands">
+				
+				<input type="text" v-bind:value="errandId">
+				
 				<td>{{v.errandId}}</td>
 				<td>{{v.createdAt}}</td>
-				<td onClick="location.href='http://localhost:8088/errandBoard/detail.html'">{{v.title}}</td>
+				
+		<!-- 	 	<td onClick="location.href='getErrandDetail/"{{v.errandId}}"'">{{v.title}}</td>  -->
+		
+					<td> <a v-bind:href="urlPart1">{{urlPart1}}{{v.title}}</a> </td>
+			
+			
 				<td>{{v.category}}</td>
 				<td>{{v.reqlocation}}</td>
 				<td>{{v.reqDate}}</td>
@@ -37,13 +46,16 @@
 			</tr>
 		</table>
 	</div>
-
+	
 	<script>
+
 	new Vue({
         el:"#body",
         data : {
         	resData : false,
-        	errands :[]
+        	errands :[],
+        	urlPart1 : "location.href=getErrandDetail/",
+        	errandId : ''
         },
         created :function(){
         	axios({
@@ -52,29 +64,20 @@
             }).then( resData => {
             	this.resData=true;
                 return this.errands = resData.data;
+                
             }).catch(errorData => {
             	return console.log(errorData);
             })
         },
         methods :{
-        	/* get : function(){
-        		axios({
-                    method : "get",
-                    url : "http://localhost:8088/errands"
-                }).then( resData => {
-                	this.resData=true;
-                    return this.errands = resData.data;
-                }).catch(errorData => {
-                	return console.log(errorData);
-                })
-        	}, */
         	getPayDesc : function(){
         		axios({
                     method : "get",
                     url : "http://localhost:8088/payerrands"
                 }).then( resData => {
                 	this.resData=true;
-                    return this.errands = resData.data;
+                	return this.errands = resData.data;
+                    
                 }).catch(errorData => {
                 	return console.log(errorData);
                 })
