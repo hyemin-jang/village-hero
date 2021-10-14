@@ -14,8 +14,7 @@
 </style>
 </head>
 <body>		
-
-	<template id="profile">
+	<template id="mypage">
 		<div>					
 			<div v-bind="logInMember">
 				{{logInMember.nickname}}의 마이페이지				
@@ -29,11 +28,6 @@
 				</div>
 			</div>
 			<a href="#">회원정보 수정하기</a>
-		</div>
-	</template>
-	
-	<template id="list">
-		<div>			
 			<div class="menu">
 				<button @click="showReqList">요청 내역</button>
 				<button @click="showDoneList">수행 내역</button>
@@ -54,12 +48,12 @@
 				<table id="completionList"  v-if="show=='completion'">
 					<thead>
 						<tr>
-							<th>완료일</th><th>작성자</th><th>심부름 제목</th><th>분류</th>
+							<th>작성자</th><th>심부름 제목</th><th>분류</th><th>완료일</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr v-for="v in completionList">
-							<td>{{v.completedAt}}</td><td>{{v.writer}}</td><td>{{v.title}}</td><td>{{v.category}}</td>
+							<td>{{v.writer}}</td><td>{{v.title}}</td><td>{{v.category}}</td><td>{{v.completedAt}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -69,56 +63,16 @@
 	
 
 	<div id="app">
-		<profile-com></profile-com>	
-		<hr>
-		<list-com></list-com>				
+		<my-com></my-com>				
 	</div>
 	
 	
 	<script>
-		// 이벤트버스
-		let eventBus = new Vue();
-	
-		// 프로필 컴포넌트
-		Vue.component("profile-com", {
-			template: "#profile",
+		Vue.component("my-com", {
+			template: "#mypage",
 			data: function(){
 				return {
-					logInMember: ""	,
-					reqCnt: 0,
-					completionCnt: 0
-				}
-			},
-			created : function(){
-				axios({
-					method: "get",
-					url: "http://localhost:8088/logincheck"		
-				}).then(resData => {						      			
-					this.logInMember = resData.data;   						
-					sessionStorage.setItem("logInMember", JSON.stringify(this.logInMember));
-					
-				}).catch(error => {
-					console.log("error", error);
-				});  
-
-				eventBus.$on("reqCnt", this.addReqCnt);
-				eventBus.$on("completionCnt", this.addCompletionCnt);
-			}, 
-			methods: {				
-				addReqCnt: function(data){
-					this.reqCnt = data;
-				},
-				addCompletionCnt: function(data){
-					this.completionCnt = data;
-				}
-			}				
-		});
-		
-		// 나의 심부름 요청, 수행 내역 컴포넌트
-		Vue.component("list-com", {
-			template: "#list",
-			data: function(){
-				return {					 
+					logInMember: JSON.parse(sessionStorage.getItem("logInMember")),
 					reqList: [],
 					completionList: [],
 					reqCnt: 0,
@@ -126,15 +80,14 @@
 					show: "req"
 				}
 			},
-			created : function(){		
+			created : function(){				
 				// 내 요청 내역 데이터 받아오는 비동기			
 				axios({
 					method: "get",
-					url: "http://localhost:8088/mypage/req?memberId="+JSON.parse(sessionStorage.getItem("logInMember")).memberId					
+					url: "http://localhost:8088/mypage/req?memberId="+this.logInMember.memberId					
 				}).then(resData => {									      			
 					this.reqList = resData.data;  	
 					this.reqCnt = resData.data.length;
-					eventBus.$emit("reqCnt", this.reqCnt);								
 				}).catch(error => {
 					console.log("error", error);
 				}); 	
@@ -142,25 +95,24 @@
 				// 내 수행 내역 데이터 받아오는 비동기			
 				axios({
 					method: "get",
-					url: "http://localhost:8088/mypage/completion?memberId="+JSON.parse(sessionStorage.getItem("logInMember")).memberId					
+					url: "http://localhost:8088/mypage/completion?memberId="+this.logInMember.memberId					
 				}).then(resData => {									      			
 					this.completionList = resData.data;  
 					this.completionCnt = resData.data.length;
-					eventBus.$emit("completionCnt", this.completionCnt);											
 				}).catch(error => {
 					console.log("error", error);
-				}); 								
-			},				
+				}); 				
+			}, 
 			methods: {
 				showReqList: function(){
 					this.show = "req";
 				},
 				showDoneList: function(){
 					this.show = "completion";				
-				}
+				}		
 			}				
 		});
-		
+				
 
 		new Vue({
             el: "#app"            
