@@ -81,4 +81,18 @@ public class ApplyService {
 		return result;
 		
 	}
+	
+	//내 심부름 -> 내가 지원한 심부름 목록
+	public List<MyPageDTO.MyApply> getMyApply(Long memberId){
+		Optional<Member> m = memberDAO.findById(memberId);
+		List<MyPageDTO.MyApply> all = new ArrayList<>();
+		
+		m.ifPresent(member -> {
+			List<Apply> sub = applyDAO.findMyApply(member);
+			
+			sub.forEach(v -> all.add(new MyPageDTO.MyApply(v.getErrand().getTitle(),
+															v.getMatchStatus())));
+		});
+		return all;
+	}
 }
