@@ -1,7 +1,8 @@
+   
 -- [회원]
-insert into member values(member_seq.nextval, 'se@google.com', '111', '세으니', '20', 'F', '010-1111-1111', '파주', '배달', NULL, NULL, 0, 0);
-insert into member values(member_seq.nextval, 'gh@google.com', '222', '기화니', '30', 'M', '010-2222-2222', '용인', '청소', NULL, NULL, 0, 0);
-insert into member values(member_seq.nextval, 'hm@google.com', '123', '혜미니', '25', 'F', '010-3333-3333', '서울시 강서구 등촌로39가길 15-6', '돌봄', NULL, NULL, 0, 0);
+insert into member values(member_seq.nextval, 'se@google.com', '111', '세으니', '1997', '01', '01', 'F', '010-1111-1111', '파주', '배달', NULL, NULL, 0, 0);
+insert into member values(member_seq.nextval, 'gh@google.com', '222', '기화니', '1995', '10', '10', 'M', '010-2222-2222', '용인', '청소', NULL, NULL, 0, 0);
+insert into member values(member_seq.nextval, 'hm@google.com', '123', '혜미니', '1994', '04', '28', 'F', '010-3333-3333', '서울시 강서구 등촌로39가길 15-6', '돌봄', NULL, NULL, 0, 0);
 
 -- [심부름 등록]
 insert into errand values(errand_seq.nextval, 1, '2021-10-11', '바퀴벌레 잡아 주실 분ㅠㅠ', '집에 바퀴벌레가 너무 많아요ㅠㅠ 처리 가능한 용자분 찾습니다!', '벌레', '서울시 강서구 등촌로 223', '2021-10-11', 5000, 3, '2021-10-12');

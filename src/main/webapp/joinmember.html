@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lnag="ko">
+<html lang="ko">
     <head>
         <meta charset="UTF-8">
-        <title>동네히어로 : 회원가입</title>
-        <!-- <link rel="stylesheet" href="new_main.css"> -->
+        <title>네이버 : 회원가입</title>
+        <link rel="stylesheet" href="new_main.css">
     </head>
     
     
@@ -16,7 +16,6 @@ html {
     height: 100%;
 }
 
-body {
     margin: 0;
     height: 100%;
     background: color:white;
@@ -30,7 +29,7 @@ body {
 }
 
 #header {
-    padding-top: 30px;
+    padding-top: 100px;
     padding-bottom: 0px;
     text-align: center;
 }
@@ -261,7 +260,7 @@ select {
                 <div>
                     <h3 class="join_title"><label for="pswd1">비밀번호</label></h3>
                     <span class="box int_pass">
-                        <input type="text" id="pswd1" class="int" maxlength="16" name="password">
+                        <input type="password" id="pswd1" class="int" maxlength="16" name="password">
                         <span id="alertTxt">사용불가</span>
                         <img src="images/m_icon_pass.png" id="pswd1_img1" class="pswdImg">
                     </span>
@@ -272,7 +271,7 @@ select {
                 <div>
                     <h3 class="join_title"><label for="pswd2">비밀번호 확인</label></h3>
                     <span class="box int_pass_check">
-                        <input type="text" id="pswd2" class="int" maxlength="16" name="password">
+                        <input type="password" id="pswd2" class="int" maxlength="16" name="password">
                         <img src="images/m_icon_check_disable.png" id="pswd2_img1" class="pswdImg">
                     </span>
                     <span class="error_next_box"></span>
@@ -296,14 +295,14 @@ select {
                         <!-- BIRTH_YY -->
                         <div id="bir_yy">
                             <span class="box">
-                                <input type="text" id="yy" class="int" maxlength="4" placeholder="년(4자)" name="yyyy">
+                                <input type="text" id="yy" class="int" maxlength="4" placeholder="년(4자)" name="birth_year">
                             </span>
                         </div>
 
                         <!-- BIRTH_MM -->
                         <div id="bir_mm">
                             <span class="box">
-                                <select id="mm" class="sel" name="mm">
+                                <select id="mm" class="sel" name="birth_month">
                                     <option>월</option>
                                     <option value="01">1</option>
                                     <option value="02">2</option>
@@ -324,7 +323,7 @@ select {
                          <!-- BIRTH_dd -->
 						<div id="bir_dd">
                             <span class="box">
-                                <select id="dd" class="sel" name="dd">
+                                <select id="dd" class="sel" name="birth_day">
                                     <option>일</option>
                                     <option value="01">1</option>
                                     <option value="02">2</option>
@@ -382,7 +381,7 @@ select {
                 <div>
                     <h3 class="join_title"><label for="gender">성별</label></h3>
                     <span class="box gender_code">
-                        <select id="gender" class="sel">
+                        <select id="gender" class="sel" name="gender">
                             <option>성별</option>
                             <option value="M">남자</option>
                             <option value="F">여자</option>
@@ -422,37 +421,42 @@ select {
 				
 				<!-- specialty -->
                 <div>
-                    <h3 class="join_title"><label for="spe1">전문분야</label></h3>
+                    <h3 class="join_title"><label for="spe1">당신의 능력</label></h3>
                     <div id="spe_wrap">
                     
                         <!-- specialty1 -->
                         <div id="specialty1">
                             <span class="box">
                                 <select id="spe1" class="sel" name="specialty1">
-                                    <option>선택1</option>
+                                    <option>필수</option>
                                     <option value="01">배달/장보기</option>
                                     <option value="02">청소/집안일</option>
                                     <option value="03">설치/조립/운반</option>
                                     <option value="04">돌봄/동행</option>
                                     <option value="05">과외/공부</option>
-                                    <option value="06">벌레/쥐잡기</option>
-                                    <option value="07">기타</option>
+                                    <option value="06">역할대행</option>
+                                    <option value="07">운전/카풀</option>
+                                    <option value="08">벌레/쥐잡기</option>
+                                    <option value="09">기타</option>
                                 </select>
                             </span>
+                            <span class="error_next_box">하나는 필수 선택.</span>
                         </div>
                         
                         <!-- specialty2 -->
                         <div id="specialty2">
                             <span class="box">
                                 <select id="spe2" class="sel" name="specialty2">
-                                    <option>선택2</option>
+                                    <option>선택</option>
                                     <option value="01">배달/장보기</option>
                                     <option value="02">청소/집안일</option>
                                     <option value="03">설치/조립/운반</option>
                                     <option value="04">돌봄/동행</option>
                                     <option value="05">과외/공부</option>
-                                    <option value="06">벌레/쥐잡기</option>
-                                    <option value="07">기타</option>
+                                    <option value="06">역할대행</option>
+                                    <option value="07">운전/카풀</option>
+                                    <option value="08">벌레/쥐잡기</option>
+                                    <option value="09">기타</option>
                                 </select>
                             </span>
                         </div>
@@ -461,14 +465,16 @@ select {
                         <div id="specialty3">
                             <span class="box">
                                 <select id="spe3" class="sel" name="specialty3">
-                                    <option>선택3</option>
+                                    <option>선택</option>
                                     <option value="01">배달/장보기</option>
                                     <option value="02">청소/집안일</option>
                                     <option value="03">설치/조립/운반</option>
                                     <option value="04">돌봄/동행</option>
                                     <option value="05">과외/공부</option>
-                                    <option value="06">벌레/쥐잡기</option>
-                                    <option value="07">기타</option>
+                                    <option value="06">역할대행</option>
+                                    <option value="07">운전/카풀</option>
+                                    <option value="08">벌레/쥐잡기</option>
+                                    <option value="09">기타</option>
                                 </select>
                             </span>
                         </div>
@@ -488,6 +494,6 @@ select {
 		
         </div> 
         <!-- wrapper -->
-    <script src="js/test.js" type=text/javascript></script>
+    <script src="js/joinmember.js"></script>
     </body>
 </html>

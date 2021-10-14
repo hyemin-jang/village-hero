@@ -29,11 +29,13 @@ public class Member {
 	
 	private String password;
 	
-	private String password2;
-	
 	private String nickname;
 	
-	private int age;
+	private int birthYear;
+	
+	private int birthMonth;
+	
+	private int birthDay;
 	
 	private char gender;
 	
@@ -46,8 +48,6 @@ public class Member {
 	private String specialty2;
 	
 	private String specialty3;
-	
-	private String picture;
 	
 	private int score;
 	

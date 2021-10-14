@@ -23,6 +23,8 @@ var phone = document.querySelector('#phone');
 
 var address = document.querySelector('#address');
 
+var spe1 = document.querySelector('#spe1');
+
 var error = document.querySelectorAll('.error_next_box');
 
 
@@ -46,6 +48,13 @@ gender.addEventListener("focusout", function() {
 })
 phone.addEventListener("focusout", checkPhoneNum);
 address.addEventListener("focusout", isAddressCorrect);
+spe1.addEventListener("focusout", function() {
+	if(spe1.value === "필수") {
+		error[8].style.display = "block";
+	} else {
+		error[8].style.display = "none";
+	}
+})
 
 
 
@@ -121,7 +130,9 @@ function checkNickname() {
         error[3].innerHTML = "3~10자 한글 or 3~20자 영문 사용(특수기호, 공백 X).";
         error[3].style.display = "block";
     } else {
-        error[3].style.display = "none";
+    	error[3].innerHTML = "유효한 닉네임입니다!";
+    	error[3].style.color = "#08A600";
+        error[3].style.display = "block";
     }
 }
 
@@ -135,7 +146,6 @@ function isBirthCompleted() {
     } else {
         isMonthSelected();
     }
-
 
     function isMonthSelected() {
         if(mm.value === "월") {
@@ -154,8 +164,6 @@ function isBirthCompleted() {
     }
 }
 
-
-
 function isBirthRight() {
     var datePattern = /\d{1,2}/;
     if(!datePattern.test(dd.value) || Number(dd.value)<1 || Number(dd.value)>31) {
@@ -170,7 +178,7 @@ function checkAge() {
         error[4].innerHTML = "정말이세요?";
         error[4].style.display = "block";
     } else if(Number(yy.value) > 2022) {
-        error[4].innerHTML = "미래에서 오셨군요!?";
+        error[4].innerHTML = "미래에서 오셨군요!";
         error[4].style.display = "block";
     } else if(Number(yy.value) > 2005) {
         error[4].innerHTML = "만 14세 미만의 어린이는 보호자의 동의가 필요합니다.";
@@ -191,20 +199,19 @@ function checkPhoneNum() {
         error[6].style.display = "block";
     } else {
         error[6].style.display = "none";
-    }
-
-function isAddressCorrect() {
-    var addressPattern = /[a-z0-9]{2,}@[a-z0-9-]{2,}\.[a-z0-9]{2,}/;
-
-    if(address.value === ""){ 
-    	error[8].innerHTML = "필수 정보입니다.";
-        error[8].style.display = "block"; 
-    } else if(!addressPattern.test(address.value)) {
-    	error[8].innerHTML = "형식에 맞지 않는 주소입니다 .";
-        error[8].style.display = "block";
-    } else {
-        error[8].style.display = "none"; 
-    }
+	}
 }
 
+function isAddressCorrect() {
+    var addressPattern = //;
+
+    if(address.value === "") { 
+    	error[7].innerHTML = "필수 정보입니다.";
+        error[7].style.display = "block"; 
+    } else if(!addressPattern.test(address.value)) {
+    	error[7].innerHTML = "형식에 맞지 않는 주소입니다.";
+        error[7].style.display = "block";
+    } else {
+        error[7].style.display = "none"; 
+    }
 }
