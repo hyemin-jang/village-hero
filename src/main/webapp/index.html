@@ -12,7 +12,7 @@
 	<template id="header">
 		<div>		
 			<a href="errandBoard/list.html">모든 심부름</a>
-			<a href="#">회원가입</a>
+			<a href="joinmember.html">회원가입</a>
 			<a href="login.html">로그인</a>
 			<a href="myerrands.html">내 심부름</a>
 			<a href="mypage.html">마이페이지</a>			
@@ -28,8 +28,7 @@
 
 	<template id="main">
 		<div>					
-			<div id="side" v-for="errand in allErrands" style="border:1px solid;">
-				<img class="picture" src="#">
+			<div id="side" v-for="errand in allErrands" style="border:1px solid;">				
 				<div class="title">{{errand.title}}</div>
 				<div class="reqLoc">{{errand.reqLocation}}</div>
 				<div class="help"><a href="#">도와줄게요</a></div>

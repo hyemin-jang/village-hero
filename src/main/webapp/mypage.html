@@ -17,15 +17,14 @@
 	<template id="profile">
 		<div>					
 			<div v-bind="logInMember">
-				{{logInMember.nickname}}의 마이페이지
-				<img src="{{logInMember.picture}}">
-				<div class="req_count">
+				{{logInMember.nickname}}의 마이페이지				
+				<div class="req_count" v-bind="reqCnt">
 					심부름 요청<br>
-					?번
+					{{reqCnt}}번
 				</div>
-				<div class="done_count">
+				<div class="done_count" v-bind="completionCnt">
 					수행 완료<br>
-					?번
+					{{completionCnt}}번
 				</div>
 			</div>
 			<a href="#">회원정보 수정하기</a>
@@ -33,32 +32,33 @@
 	</template>
 	
 	<template id="list">
-		<div>
-			<div v-bind="logInMember">{{logInMember.nickname}} {{logInMember.memberId}}</div>
+		<div>			
 			<div class="menu">
-				<span @click="">요청 내역</span>
-				<span>수행 내역</span>
-				<table id="reqList">
+				<button @click="showReqList">요청 내역</button>
+				<button @click="showDoneList">수행 내역</button>
+
+				<table id="reqList"  v-if="show=='req'">
 					<thead>
 						<tr>
-							<th>등록일</th><th>심부름 제목</th><th>분류</th><th>도와준 히어로</th><th>완료일</th>
+							<th>등록일</th><th>심부름 제목</th><th>분류</th><th>완료일</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="info in reqList">
-							<td>{{info.createdAt}}</td><td>{{info.title}}</td><td>{{info.category}}</td><td>{{info.hero}}</td><td>?</td>
+						<tr v-for="v in reqList">
+							<td>{{v.createdAt}}</td><td>{{v.title}}</td><td>{{v.category}}</td><td>{{v.completedAt}}</td>
 						</tr>
 					</tbody>
 				</table>
-				<table id="doneList">
+
+				<table id="completionList"  v-if="show=='completion'">
 					<thead>
 						<tr>
 							<th>완료일</th><th>작성자</th><th>심부름 제목</th><th>분류</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td></td><td></td><td></td><td></td>
+						<tr v-for="v in completionList">
+							<td>{{v.completedAt}}</td><td>{{v.writer}}</td><td>{{v.title}}</td><td>{{v.category}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -83,7 +83,9 @@
 			template: "#profile",
 			data: function(){
 				return {
-					logInMember: ""	
+					logInMember: ""	,
+					reqCnt: 0,
+					completionCnt: 0
 				}
 			},
 			created : function(){
@@ -93,13 +95,21 @@
 				}).then(resData => {						      			
 					this.logInMember = resData.data;   						
 					sessionStorage.setItem("logInMember", JSON.stringify(this.logInMember));
+					
 				}).catch(error => {
 					console.log("error", error);
-				});  			
-				
+				});  
+
+				eventBus.$on("reqCnt", this.addReqCnt);
+				eventBus.$on("completionCnt", this.addCompletionCnt);
 			}, 
 			methods: {				
-				
+				addReqCnt: function(data){
+					this.reqCnt = data;
+				},
+				addCompletionCnt: function(data){
+					this.completionCnt = data;
+				}
 			}				
 		});
 		
@@ -107,39 +117,45 @@
 		Vue.component("list-com", {
 			template: "#list",
 			data: function(){
-				return {
-					logInMember: "",  // memberId
+				return {					 
 					reqList: [],
-					doneList: [],
+					completionList: [],
+					reqCnt: 0,
+					completionCnt: 0,
 					show: "req"
 				}
 			},
 			created : function(){		
-				
-				// 이벤트버스로부터 로그인한 회원 정보 공유받아서 사용
-				//eventBus.$on("logInMember", this.addLogInMember);	
-				console.log("세션스토리지: " + sessionStorage.getItem("logInMember").memberId);
+				// 내 요청 내역 데이터 받아오는 비동기			
 				axios({
 					method: "get",
-					url: "http://localhost:8088/my-req-done?memberId="+JSON.parse(sessionStorage.getItem("logInMember")).memberId					
+					url: "http://localhost:8088/mypage/req?memberId="+JSON.parse(sessionStorage.getItem("logInMember")).memberId					
 				}).then(resData => {									      			
-					this.reqList = resData.data;  									
+					this.reqList = resData.data;  	
+					this.reqCnt = resData.data.length;
+					eventBus.$emit("reqCnt", this.reqCnt);								
 				}).catch(error => {
 					console.log("error", error);
-				}); 
-				
+				}); 	
+
+				// 내 수행 내역 데이터 받아오는 비동기			
+				axios({
+					method: "get",
+					url: "http://localhost:8088/mypage/completion?memberId="+JSON.parse(sessionStorage.getItem("logInMember")).memberId					
+				}).then(resData => {									      			
+					this.completionList = resData.data;  
+					this.completionCnt = resData.data.length;
+					eventBus.$emit("completionCnt", this.completionCnt);											
+				}).catch(error => {
+					console.log("error", error);
+				}); 								
 			},				
 			methods: {
-				addLogInMember: function(v){
-					console.log("이벤트버스에서 받아온 데이터: " + v);
-					this.logInMember = v;
+				showReqList: function(){
+					this.show = "req";
 				},
-				changeList: function(){
-					if (show == "req"){
-						show = "done"
-					}else{
-						show = "req"
-					}
+				showDoneList: function(){
+					this.show = "completion";				
 				}
 			}				
 		});
