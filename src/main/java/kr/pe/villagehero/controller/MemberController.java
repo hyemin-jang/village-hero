@@ -3,6 +3,8 @@ package kr.pe.villagehero.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.criteria.Join;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,16 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import kr.pe.villagehero.dao.MemberRepository;
 import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.service.ApplyService;
 import kr.pe.villagehero.service.ErrandService;
 import kr.pe.villagehero.service.MemberService;
+import net.bytebuddy.build.Plugin.Engine.Dispatcher.Materializable.ForTransformedElement;
 
 @RestController
 @SessionAttributes({"loginMember"})  //loginMember 라는 이름으로 서버 메모리에 client 정보 저장하겠다는 설정 
 public class MemberController {
+	
+	@Autowired
+	private MemberRepository dao;
 	
 	@Autowired
 	private MemberService service;
@@ -40,12 +47,16 @@ public class MemberController {
 	@Autowired
 	private ApplyService service3;
 	
+// 	회원가입 메소드
 	@PostMapping("addMember")
-	public String addMember(    ) {
+	public RedirectView insertMember(MemberDTO.Join newMember) {
+		System.out.println(newMember);
+		service.insertMember(newMember);
 		
+		return new RedirectView("index.html");
 	}
-	
-	// 로그인 메소드
+
+//	로그인 메소드
 	@PostMapping("/login")
 	public RedirectView logIn(Model model, MemberDTO.Login loginData) {		
 		MemberDTO.Get member = service.logIn(loginData.getEmail()); 

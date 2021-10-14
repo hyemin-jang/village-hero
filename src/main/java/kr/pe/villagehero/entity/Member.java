@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -53,6 +54,23 @@ public class Member {
 	
 	@Column(name="member_status")
 	private int memberStatus;
+
+	public Member(String email, String password, String nickname, int birthYear, int birthMonth, int birthDay,
+			char gender, String phone, String address, String specialty1, String specialty2, String specialty3) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.nickname = nickname;
+		this.birthYear = birthYear;
+		this.birthMonth = birthMonth;
+		this.birthDay = birthDay;
+		this.gender = gender;
+		this.phone = phone;
+		this.address = address;
+		this.specialty1 = specialty1;
+		this.specialty2 = specialty2;
+		this.specialty3 = specialty3;
+	}
 	
 //	@OneToMany(mappedBy="memberId")
 //	List<Errand> errands = new ArrayList<>();

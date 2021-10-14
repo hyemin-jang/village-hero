@@ -54,7 +54,7 @@
 						<label for="pswd2">비밀번호 확인</label>
 					</h3>
 					<span class="box int_pass_check"> <input type="password"
-						id="pswd2" class="int" maxlength="16" name="password"> <img
+						id="pswd2" class="int" maxlength="16" name="password2"> <img
 						src="images/m_icon_check_disable.png" id="pswd2_img1"
 						class="pswdImg">
 					</span> <span class="error_next_box"></span>
@@ -81,14 +81,14 @@
 						<!-- BIRTH_YY -->
 						<div id="bir_yy">
 							<span class="box"> <input type="text" id="yy" class="int"
-								maxlength="4" placeholder="년(4자)" name="birth_year">
+								maxlength="4" placeholder="년(4자)" name="birthYear">
 							</span>
 						</div>
 
 						<!-- BIRTH_MM -->
 						<div id="bir_mm">
 							<span class="box"> <select id="mm" class="sel"
-								name="birth_month">
+								name="birthMonth">
 									<option>월</option>
 									<option value="01">1</option>
 									<option value="02">2</option>
@@ -109,7 +109,7 @@
 						<!-- BIRTH_dd -->
 						<div id="bir_dd">
 							<span class="box"> <select id="dd" class="sel"
-								name="birth_day">
+								name="birthDay">
 									<option>일</option>
 									<option value="01">1</option>
 									<option value="02">2</option>
@@ -219,16 +219,16 @@
 						<div id="specialty1">
 							<span class="box"> <select id="spe1" class="sel"
 								name="specialty1">
-									<option>필수</option>
-									<option value="01">배달/장보기</option>
-									<option value="02">청소/집안일</option>
-									<option value="03">설치/조립/운반</option>
-									<option value="04">돌봄/동행</option>
-									<option value="05">과외/공부</option>
-									<option value="06">역할대행</option>
-									<option value="07">운전/카풀</option>
-									<option value="08">벌레/쥐잡기</option>
-									<option value="09">기타</option>
+									<option>필수선택</option>
+									<option value="배달/장보기">배달/장보기</option>
+									<option value="청소/집안일">청소/집안일</option>
+									<option value="설치/조립/운반">설치/조립/운반</option>
+									<option value="돌봄/동행">돌봄/동행</option>
+									<option value="과외/공부">과외/공부</option>
+									<option value="역할대행">역할대행</option>
+									<option value="운전/카풀">운전/카풀</option>
+									<option value="벌레/쥐잡기">벌레/쥐잡기</option>
+									<option value="기타">기타</option>
 							</select>
 							</span> <span class="error_next_box">하나는 필수 선택.</span>
 						</div>
@@ -237,16 +237,16 @@
 						<div id="specialty2">
 							<span class="box"> <select id="spe2" class="sel"
 								name="specialty2">
-									<option>선택</option>
-									<option value="01">배달/장보기</option>
-									<option value="02">청소/집안일</option>
-									<option value="03">설치/조립/운반</option>
-									<option value="04">돌봄/동행</option>
-									<option value="05">과외/공부</option>
-									<option value="06">역할대행</option>
-									<option value="07">운전/카풀</option>
-									<option value="08">벌레/쥐잡기</option>
-									<option value="09">기타</option>
+									<option></option>
+									<option value="배달/장보기">배달/장보기</option>
+									<option value="청소/집안일">청소/집안일</option>
+									<option value="설치/조립/운반">설치/조립/운반</option>
+									<option value="돌봄/동행">돌봄/동행</option>
+									<option value="과외/공부">과외/공부</option>
+									<option value="역할대행">역할대행</option>
+									<option value="운전/카풀">운전/카풀</option>
+									<option value="벌레/쥐잡기">벌레/쥐잡기</option>
+									<option value="기타">기타</option>
 							</select>
 							</span>
 						</div>
@@ -255,16 +255,16 @@
 						<div id="specialty3">
 							<span class="box"> <select id="spe3" class="sel"
 								name="specialty3">
-									<option>선택</option>
-									<option value="01">배달/장보기</option>
-									<option value="02">청소/집안일</option>
-									<option value="03">설치/조립/운반</option>
-									<option value="04">돌봄/동행</option>
-									<option value="05">과외/공부</option>
-									<option value="06">역할대행</option>
-									<option value="07">운전/카풀</option>
-									<option value="08">벌레/쥐잡기</option>
-									<option value="09">기타</option>
+									<option></option>
+									<option value="배달/장보기">배달/장보기</option>
+									<option value="청소/집안일">청소/집안일</option>
+									<option value="설치/조립/운반">설치/조립/운반</option>
+									<option value="돌봄/동행">돌봄/동행</option>
+									<option value="과외/공부">과외/공부</option>
+									<option value="역할대행">역할대행</option>
+									<option value="운전/카풀">운전/카풀</option>
+									<option value="벌레/쥐잡기">벌레/쥐잡기</option>
+									<option value="기타">기타</option>
 							</select>
 							</span>
 						</div>
@@ -273,7 +273,7 @@
 
 				<!-- JOIN BTN-->
 				<div class="btn_area">
-					<button type="button" id="btnJoin">
+					<button type="submit" id="btnJoin">
 						<span>가입하기</span>
 					</button>
 				</div>

@@ -56,4 +56,24 @@ public class MemberDTO {
 		private String email;	
 		private String password;
 	}
+	
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Getter
+	@Setter
+	public static class Join {	// 회원가입 정보 넘겨주는 DTO
+		private String email;
+		private String password;
+		private String password2;
+		private String nickname;
+		private int birthYear;
+		private int birthMonth;
+		private int birthDay;
+		private char gender;
+		private String phone;
+		private String address;
+		private String specialty1;
+		private String specialty2;
+		private String specialty3;
+	}
 }
