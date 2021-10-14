@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.pe.villagehero.dao.ErrandRepository;
 import kr.pe.villagehero.dao.MemberRepository;
@@ -38,7 +39,38 @@ public class ErrandService {
 		ErrandDTO errand = new ErrandDTO(dao.findById(id).get());		
 		return errand;
 	}
+	
+	//심부름 수정
+	public String updateErrand(ErrandDTO.updateErrand errand) {
+		System.out.println("심부름 수정시도");
+//		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+//		Date reqDate = new SimpleDateFormat("yyyy-MM-dd").parse(errand.getReqDate());
+		long errandId = errand.getErrandId();
+		//int pay = errand.getPay();
+	
+		Errand updateErrand = dao.findById(errandId).get();
+		System.out.println(updateErrand);
+		//System.out.println(errand.getContent());
+		String a = "여기여기";
 
+		System.out.println(updateErrand.getReqDate());
+		System.out.println(errand.getTitle());
+		
+//		updateErrand.setTitle(errand.getTitle());
+//		updateErrand.setReqLocation(a);
+//		updateErrand.setPay(9999);
+//		updateErrand.setCategory(errand.getCategory());
+//		updateErrand.setReqDate(errand.getReqDate());
+//		updateErrand.setContent("asdfad");
+
+		//createAt - 작성시간 - 수정시간으로 수정?
+
+		dao.save(updateErrand);
+
+		return "심부름 요청 수정 성공";
+	}
+
+	//새로운 심부름 저장
 	public String insertErrand(long id, ErrandDTO newErrand) {
 		System.out.println("심부름 요청 등록시도");
 		
@@ -57,6 +89,7 @@ public class ErrandService {
 
     	Errand errand = new Errand(writer, pay, createdAt, title, content, category, reqLocation, reqDate, errandStatus);
 
+    	System.out.println(createdAt);
 		dao.save(errand);
 		return "심부름 요청 저장 성공";
 	}
@@ -70,8 +103,6 @@ public class ErrandService {
 		all.sort(new PayComparator());
 		return all;
 	}
-
-	
 }
 
 class PayComparator implements Comparator<ErrandDTO> {

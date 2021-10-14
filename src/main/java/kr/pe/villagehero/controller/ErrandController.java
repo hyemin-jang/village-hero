@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -23,11 +24,20 @@ public class ErrandController {
 
 	@Autowired
 	private ErrandService service;
+	
+	//심부름 수정
+	@PutMapping("updateErrand")
+	public String updateWriter(ErrandDTO.updateErrand errand) {
+		System.out.println(errand);
+		service.updateErrand(errand);
+		
+		
+		return "성공";
+	}
 
 	// 심부름 등록 
 	@PostMapping("errand")
 	public RedirectView insertErrand(Model model, ErrandDTO newErrand) {
-		model.getAttribute("loginMember");
 		MemberDTO.Get loginMember = (Get) model.getAttribute("loginMember");
 		long id = loginMember.getMemberId();
 
@@ -35,25 +45,33 @@ public class ErrandController {
 		return new RedirectView("/errandBoard/list.html");
 	}
 
-	// 모든 심부름 조회
-
-//	@GetMapping("getErrandDetail/{id}")
-//	public RedirectView getNewErrand(@PathVariable long id, Model model) {
-//		
-//
-//		return new RedirectView("/errandBoard/detail.html");
-//	}
-
+	//상세페이지로 이동
 	@GetMapping("getErrandDetail/{id}")
-	public RedirectView getNewErrand(@PathVariable long id, RedirectAttributes attr) {
+	public RedirectView getErrandId(@PathVariable long id, RedirectAttributes attr) {
 		attr.addAttribute("errandId", id);
 		return new RedirectView("/errandBoard/detail.html");		
 	}
+	
 
 	@GetMapping("/errandDetail")
 	public ErrandDTO errandDetail(long errandId) {
 		System.out.println(errandId);
 		ErrandDTO errand = service.getOneErrand(errandId);
+		return errand;
+	}
+	
+	//수정페이지로 이동
+	@GetMapping("getErrandDetail2/{id}")
+	public RedirectView getErrandId2(@PathVariable long id, RedirectAttributes attr) {
+		attr.addAttribute("errandId2", id);
+		return new RedirectView("/errandBoard/update.html");		
+	}
+	
+	
+	@GetMapping("/errandDetail2")
+	public ErrandDTO errandDetail2(long errandId2) {
+		System.out.println(errandId2);
+		ErrandDTO errand = service.getOneErrand(errandId2);
 		return errand;
 	}
 

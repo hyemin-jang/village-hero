@@ -53,5 +53,3 @@ CREATE TABLE apply (
 ALTER TABLE errand ADD FOREIGN KEY (writer) REFERENCES MEMBER (member_id);
 ALTER TABLE apply ADD FOREIGN KEY (member_id) REFERENCES MEMBER (member_id);
 ALTER TABLE apply ADD FOREIGN KEY (errand_id) REFERENCES errand (errand_id);
-
-
