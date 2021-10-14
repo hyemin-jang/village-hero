@@ -10,13 +10,13 @@
 	<template id="form">
 		<div>
 			<h3>로그인</h3>
-			<form>
-				<input type="text" name="email" v-model:value="email">
-				<input type="password" name="password" v-model:value="password">
+	<!-- 		<form action="login" method="post"> -->
+				<input type="text" v-model="email">
+				<input type="password" v-model="password">
 				<input type="submit" value="로그인" @click="login"><br>
 				<div>비밀번호가 일치하지 않습니다.</div>
 				<div>존재하지 않는 계정입니다.</div>
-			</form>
+			<!-- </form> -->
 		</div>
 	</template>
 
@@ -30,30 +30,29 @@
 			template: "#form",
 			data: function(){
 				return {
-					email: "",
-					password: "",
-					logInMember:""
+					logInTry: "",
+					logInMember: "",
+					email: "gh@google.com",
+					password: "222"
 				}
 			},
-			created : function(){				
-							
-			}, 
 			methods: {				
 				login: function(){					
 					axios({
 						method: "get",
-						url: "http://localhost:8088/login",
-						params : {
+						url: "http://localhost:8088/login,
+						param: {
 							email: this.email,
 							password: this.password
-						}
-					}).then(resData => {						
-						this.logInMember = JSON.stringify(resData.data);   						
-						sessionStorage.setItem("logInMember", this.logInMember);
-						window.location.href = "http://localhost:8088/index.html"
+						},
+					}).then(resData => {		
+						this.logInMember = resData.data;   				
+						sessionStorage.setItem("logInMember", JSON.stringify(this.logInMember));
+						document.location.href = '/';
 					}).catch(error => {
-						alert(error.response.data);
-					}); 	
+						alert("비동기안됨");
+						console.log("error", error);
+					});  
 				}
 			}				
 		});

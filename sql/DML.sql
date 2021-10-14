@@ -1,3 +1,4 @@
+   
 -- [회원]
 insert into member values(member_seq.nextval, 'se@google.com', '111', '세으니', '1997', '01', '01', 'F', '010-1111-1111', '파주', '배달', NULL, NULL, 0, 0);
 insert into member values(member_seq.nextval, 'gh@google.com', '222', '기화니', '1995', '10', '10', 'M', '010-2222-2222', '용인', '청소', NULL, NULL, 0, 0);
@@ -17,4 +18,3 @@ insert into apply values(apply_seq.nextval, 2, 3, '마당있는 전원주택입니다^^반려
 insert into apply values(apply_seq.nextval, 4, 2, '우와 강아지야 내가 태워줄게', '2021-10-15', 1);
 
 commit;
-
