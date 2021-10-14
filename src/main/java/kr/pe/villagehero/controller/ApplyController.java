@@ -45,6 +45,6 @@ public class ApplyController {
 		System.out.println(memberId);
 		service.addApply(memberId, message);
 		
-		return new RedirectView("/errandBoard/list.html");
+		return new RedirectView("");
 	}
 }
