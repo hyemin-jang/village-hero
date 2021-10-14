@@ -42,7 +42,7 @@ public class ErrandService {
 		return errand;
 	}
 
-	public Errand insertErrand(long id, ErrandDTO newErrand) {
+	public String insertErrand(long id, ErrandDTO newErrand) {
 		System.out.println("심부름 요청 등록시도");
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
@@ -61,7 +61,7 @@ public class ErrandService {
     	Errand errand = new Errand(writer, pay, createdAt, title, content, category, reqLocation, reqDate, errandStatus);
 
 		dao.save(errand);
-		return errand;
+		return "심부름 요청 저장 성공";
 	}
 
 	// 존재하는 모든 심부름을 가격순(내림차순)으로 return
@@ -73,6 +73,7 @@ public class ErrandService {
 		all.sort(new PayComparator());
 		return all;
 	}
+
 	
 	//멤버 id 값으로 저장된 모든 심부름 find
 	public List<MyPageDTO.ErrandDTO2> getAllMyErrands(Long memberId){
