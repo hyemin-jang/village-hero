@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -39,8 +40,9 @@ public class ApplyController {
 	}
 	
 	// 도와줄게요 (심부름 지원하기)
-	@PostMapping("/apply")
-	public RedirectView apply(Model model, String message) {
+	@PostMapping("/errandBoard/apply")
+	public RedirectView apply(Model model, long errandId, String message) {
+		System.out.println(errandId);
 		model.getAttribute("loginMember");
 		MemberDTO.Get loginMember = (Get) model.getAttribute("loginMember");
 		long memberId = loginMember.getMemberId();

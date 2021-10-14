@@ -1,9 +1,9 @@
 package kr.pe.villagehero.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -54,12 +54,14 @@ public class MemberController {
 	//로그인 메소드
 	@GetMapping("/login")
 	public MemberDTO.Get logIn(Model model, MemberDTO.Login loginData) {
+		System.out.println(" --===== " + loginData);
 		MemberDTO.Get member = service.logIn(loginData.getEmail());
 		
 		// 로그인 성공시
 		if (member.getPassword().equals(loginData.getPassword())) {
 			model.addAttribute("loginMember", member); // 세션에 현재 로그인한 회원의 정보 저장
-		// 로그인 실패시 (비밀번호 오류)
+
+			// 로그인 실패시 (비밀번호 오류)
 		} else {
 			return null;
 		}
@@ -68,10 +70,11 @@ public class MemberController {
 	
 
 
-	@GetMapping("/logout")
-	public RedirectView logOut(Model model, SessionStatus status) {
-		status.setComplete();
-		System.out.println(model.getAttribute("loginMember"));
+	@GetMapping("logout")
+	public RedirectView logOut(SessionStatus session, Model model) {		
+		session.setComplete();
+		model.addAttribute(null);
+		
 		return new RedirectView("/index.html");
 	}
 }

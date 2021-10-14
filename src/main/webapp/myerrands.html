@@ -19,9 +19,9 @@
 			<table v-if="myReqBool">
 				<tr><th></th><th>No.</th><th>심부름 제목</th><th>상태</th></tr>
 				<tr v-for="v,index in myReq" v-if="v.errandStatus!=3">
-				<td>심부름 취소</td>
+				<td>취소</td>
 				<td>{{index}}</td>
-				<td>{{v.title}}</td>
+				<td v-for="k in errands" v-if="v.title==k.title"><a v-bind:href="urlPart1+k.errandId">{{v.title}}</a></td>
 				<td v-if="v.errandStatus==0">지원자 대기중</td>
 				<td v-if="v.errandStatus==1">매칭 대기중</td>
 				<td v-if="v.errandStatus==2">취소됨</td>
@@ -32,13 +32,16 @@
 				<tr v-for="v,index in myApply">
 				<td>지원 취소</td>
 				<td>{{index}}</td>
-				<td>{{v.title}}</td>
+				<td v-for="k in errands" v-if="v.title==k.title"><a v-bind:href="urlPart1+k.errandId">{{v.title}}</a></td>
 				<td v-if="v.matchStatus==0">수락 대기중</td>
 				<td v-if="v.matchStatus==2">다른사람한테 매칭됨</td>
 				<td v-if="v.matchStatus==3">취소됨</td>
 				</tr>
 			</table>
+			<br><hr>
+			<button @click="gotomain()">메인으로 이동</button>
 		</div>
+		
 	</template>
 	
 <script>
@@ -52,7 +55,9 @@
 				myReq:[],
 				myReqBool : true,
 				myApply : [],
-				myApplyBool : false
+				myApplyBool : false,
+				errands : [],
+				urlPart1 : "http://localhost:8088/getErrandDetail/"
 			}
 		},
 		created : function(){
@@ -73,7 +78,16 @@
 				this.myReq = resData.data; 
 			}).catch(error => {
 				console.log("error", error);
-			}); 
+			});
+			
+			axios({
+                method : "get",
+                url : "http://localhost:8088/errands"
+            }).then( resData => {
+                return this.errands = resData.data;
+            }).catch(errorData => {
+            	return console.log(errorData);
+            });
 		},
 		methods: {
 			getmyerrands : function(){
@@ -99,6 +113,9 @@
 	            }).catch(errorData => {
 	            	return console.log(errorData);
 	            })
+	    	},
+	    	gotomain : function(){
+	    		document.location.href="/";
 	    	}
 		}
 	})

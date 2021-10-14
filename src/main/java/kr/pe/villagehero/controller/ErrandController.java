@@ -36,17 +36,9 @@ public class ErrandController {
 	}
 
 	// 모든 심부름 조회
-
-//	@GetMapping("getErrandDetail/{id}")
-//	public RedirectView getNewErrand(@PathVariable long id, Model model) {
-//		
-//
-//		return new RedirectView("/errandBoard/detail.html");
-//	}
-
 	@GetMapping("getErrandDetail/{id}")
 	public RedirectView getNewErrand(@PathVariable long id, RedirectAttributes attr) {
-		attr.addAttribute("errandId", id);
+		attr.addAttribute("errandId", id);  // detail.html로 리다이렉트 할때 ?errandId=id 쿼리스트링을 붙인다
 		return new RedirectView("/errandBoard/detail.html");		
 	}
 

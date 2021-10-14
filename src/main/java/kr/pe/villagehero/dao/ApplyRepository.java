@@ -25,7 +25,7 @@ public interface ApplyRepository extends CrudRepository<Apply, Long>{
 	List<Apply> findMyCompletion(Member member);
 	
 
-	@Query("select a from Apply a where a.applicant=:member and a.matchStatus!=1")
+	@Query("select a from Apply a where a.applicant=:member and a.matchStatus!=1 and a.matchStatus!=3")
 	List<Apply> findMyApply(Member member);
 	// 도와줄게요 (심부름 지원하기)
 	
