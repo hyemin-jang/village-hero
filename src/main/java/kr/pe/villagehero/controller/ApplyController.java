@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
+import kr.pe.villagehero.dto.ApplyDTO;
 import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.service.ApplyService;
 import kr.pe.villagehero.service.ErrandService;
@@ -44,8 +45,15 @@ public class ApplyController {
 	
 	//내 심부름 - 내가 지원한 심부름 목록 로딩
 	@GetMapping("myerrands/apply")
-	public List<MyPageDTO.MyApply> getAllMyApply(Long memberId){
-		
+	public List<MyPageDTO.MyApply> getAllMyApply(Long memberId){		
 		return service.getMyApply(memberId);
 	}
+	
+	// 심부름 상세페이지에서 모든 지원자 목록 조회
+	@GetMapping("applicants")
+	public List<ApplyDTO.Form> getAllApplicants(long errandId) {
+		System.out.println("지원자조회: 심부름아이디- " + errandId);
+		return service.getAllApplicants(errandId);
+	}
+	
 }

@@ -16,13 +16,12 @@ public class ApplyDTO {
 	public static class Form {
 		private long memberId;
 		private String nickname;
-		private int age;
-		private char gender;
+		private int birthYear;
 		private String phone;
 		private String specialty1;
 		private String specialty2;
 		private String specialty3;
 		private int score;
 	}
-
+	
 }

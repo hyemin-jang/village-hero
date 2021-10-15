@@ -2,8 +2,10 @@ package kr.pe.villagehero.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,10 +38,10 @@ public class ErrandController {
 
 	// 심부름 등록 
 	@PostMapping("errand")
-	public RedirectView insertErrand(Model model, ErrandDTO newErrand) {
-		MemberDTO.Get loginMember = (Get) model.getAttribute("loginMember");
+	public RedirectView insertErrand(HttpSession session, ErrandDTO newErrand) {
+		MemberDTO.Get loginMember = (Get) session.getAttribute("loginMember");
 		long id = loginMember.getMemberId();
-
+		
 		service.insertErrand(id, newErrand);
 		return new RedirectView("/errandBoard/list.html");
 	}
@@ -47,9 +49,8 @@ public class ErrandController {
 	//심부름 삭제
 	@GetMapping("errandDelete/{id}")
 	public RedirectView deleteErrand(@PathVariable long id) {
-		System.out.println("삭제시도");
 		service.deleteErrand(id);
-		
+
 		return new RedirectView("/errandBoard/list.html");
 	}
 
@@ -60,10 +61,9 @@ public class ErrandController {
 		return new RedirectView("/errandBoard/detail.html");		
 	}
 
-	//@RequestMapping(value="/errandDetail", method=RequestMethod.DELETE)
+	// 심부름 상세페이지 - 1개 심부름 정보 출력
 	@GetMapping("/errandDetail")
 	public ErrandDTO errandDetail(long errandId) {
-		System.out.println(errandId);
 		ErrandDTO errand = service.getOneErrand(errandId);
 		return errand;
 	}

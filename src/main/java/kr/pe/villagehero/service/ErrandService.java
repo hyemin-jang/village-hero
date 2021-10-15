@@ -42,10 +42,8 @@ public class ErrandService {
 	}
 	
 	//심부름 삭제
-	public String deleteErrand(long id) {
-		System.out.println("삭제시도2");
+	public void deleteErrand(long id) {
 		errandDAO.deleteById(id);
-		return "삭제성공";
 	}
 	
 	//심부름 수정
@@ -128,7 +126,6 @@ public class ErrandService {
 		
 		e.setErrandStatus('1');
 		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));
-		e.setCompletedAt(e.getCompletedAt().replace(" 00:00:00", ""));
 		e.setReqDate(e.getReqDate().replace(" 00:00:00", ""));
 		
 		errandDAO.save(e);
