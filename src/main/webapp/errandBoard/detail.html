@@ -46,6 +46,8 @@
 				</div>
 				
 				<div class="form-group">
+					<a v-if="errands.writer==idCheck" v-bind:href="urlPart1+errands.errandId" >수정하기</a> 
+					<a v-if="errands.writer==idCheck" v-bind:href="urlPart2+errands.errandId" >삭제하기</a> 
 					<a href="list.html" class="btn btn-secondary float-left">목록으로</a>
 					<button @click="showForm" v-if="logInMemberId!=errands.writerId">도와줄게요</button>
 				</div>
@@ -86,7 +88,10 @@
 					errands :"",
 					applcantList: "",
 					logInMemberId: JSON.parse(sessionStorage.getItem("logInMember")).memberId,					
-					form: false
+					form: false,
+					idCheck :"",
+		        	urlPart1 :"http://localhost:8088/getErrandDetail2/",
+		        	urlPart2 :"http://localhost:8088/errandDelete/"
 				}
 	        },
 	        created :function(){	        	

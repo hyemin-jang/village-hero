@@ -4,9 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -19,11 +24,21 @@ import kr.pe.villagehero.dto.MemberDTO.Get;
 import kr.pe.villagehero.service.ErrandService;
 
 @RestController
-@SessionAttributes({ "loginMember" })
+//@SessionAttributes({ "loginMember" })
 public class ErrandController {
 
 	@Autowired
 	private ErrandService service;
+	
+	//심부름 수정
+	@PutMapping("updateErrand")
+	public String updateWriter(ErrandDTO.updateErrand errand) {
+		System.out.println(errand);
+
+		service.updateErrand(errand);
+		
+		return "성공";
+	}
 
 	// 심부름 등록 
 	@PostMapping("errand")
@@ -34,6 +49,15 @@ public class ErrandController {
 		service.insertErrand(id, newErrand);
 		return new RedirectView("/errandBoard/list.html");
 	}
+	
+	//심부름 삭제
+	@DeleteMapping("errandDelete/{id}")
+	public RedirectView deleteErrand(@PathVariable long id) {
+		System.out.println("삭제시도");
+		service.deleteErrand(id);
+		
+		return new RedirectView("/errandBoard/list.html");
+	}
 
 	// 모든 심부름 내역에서 상세페이지로 이동
 	@GetMapping("getErrandDetail/{id}")
@@ -42,10 +66,26 @@ public class ErrandController {
 		return new RedirectView("/errandBoard/detail.html");		
 	}
 
+	//@RequestMapping(value="/errandDetail", method=RequestMethod.DELETE)
 	@GetMapping("/errandDetail")
 	public ErrandDTO errandDetail(long errandId) {
 		System.out.println(errandId);
 		ErrandDTO errand = service.getOneErrand(errandId);
+		return errand;
+	}
+	
+	//수정페이지로 이동
+	@GetMapping("getErrandDetail2/{id}")
+	public RedirectView getErrandId2(@PathVariable long id, RedirectAttributes attr) {
+		attr.addAttribute("errandId2", id);
+		return new RedirectView("/errandBoard/update.html");		
+	}
+	
+	
+	@GetMapping("/errandDetail2")
+	public ErrandDTO errandDetail2(long errandId2) {
+		System.out.println(errandId2);
+		ErrandDTO errand = service.getOneErrand(errandId2);
 		return errand;
 	}
 

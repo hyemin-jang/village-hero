@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class ErrandDTO {	
+public class ErrandDTO {
 	private long errandId;
 	private long writerId;
 	private String writer;
@@ -24,7 +24,7 @@ public class ErrandDTO {
 	private String reqLocation;
 	private String reqDate;
 	private char errandStatus;
-	
+
 	// entity 객체를 받아서 DTO로 변환해주는 생성자
 	public ErrandDTO(Errand entity) {
 		this.errandId = entity.getErrandId();
@@ -39,6 +39,19 @@ public class ErrandDTO {
 		this.reqDate = entity.getReqDate();
 		this.errandStatus = entity.getErrandStatus();
 	}
-
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Getter
+	@Setter
+	public static class updateErrand { // 로그인한 정보 넘겨줄때 필요한 DTO 클래스
+		private long errandId;
+		private String title;
+		private String reqLocation;
+		private int pay;
+		private String category;
+		private String reqDate;
+		private String content;
+	}
 }
 
+	

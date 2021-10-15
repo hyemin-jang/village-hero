@@ -15,4 +15,5 @@ public interface ErrandRepository extends CrudRepository<Errand, Long>{
 	
 	@Query("select e from Errand e where e.writer=:member and e.errandStatus!=3 and e.errandStatus!=2")
 	List<Errand> findAllMyReq(Member member);
+
 }

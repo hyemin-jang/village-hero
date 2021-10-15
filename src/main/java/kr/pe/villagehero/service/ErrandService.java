@@ -1,6 +1,5 @@
 package kr.pe.villagehero.service;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -41,7 +40,42 @@ public class ErrandService {
 		ErrandDTO errand = new ErrandDTO(errandDAO.findById(id).get());		
 		return errand;
 	}
+	
+	//심부름 삭제
+	public String deleteErrand(long id) {
+		System.out.println("삭제시도2");
+		errandDAO.deleteById(id);
+		return "삭제성공";
+	}
+	
+	//심부름 수정
+	public String updateErrand(ErrandDTO.updateErrand errand) {
+		System.out.println("심부름 수정시도");
+		
+		long errandId = errand.getErrandId();
+		Errand updateErrand = errandDAO.findById(errandId).get();
 
+		try {
+		updateErrand.setTitle(errand.getTitle());
+		updateErrand.setReqLocation(errand.getReqLocation());
+		updateErrand.setPay(errand.getPay());
+		updateErrand.setCategory(errand.getCategory());
+		updateErrand.setReqDate(errand.getReqDate().replace(" 00:00:00", ""));
+		updateErrand.setContent(errand.getContent());
+		
+		//날짜 포멧 맞춰주기
+		updateErrand.setCreatedAt(updateErrand.getCreatedAt().replace(" 00:00:00", ""));
+		updateErrand.setCompletedAt(updateErrand.getCompletedAt().replace(" 00:00:00", ""));
+		
+		errandDAO.save(updateErrand);
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "심부름 요청 수정 성공";
+	}
+
+	//새로운 심부름 저장
 	public String insertErrand(long id, ErrandDTO newErrand) {
 		System.out.println("심부름 요청 등록시도");
 		
@@ -73,7 +107,6 @@ public class ErrandService {
 		all.sort(new PayComparator());
 		return all;
 	}
-
 	
 	
 	//멤버 id 값으로 저장된 모든 심부름 find
@@ -89,7 +122,6 @@ public class ErrandService {
 		return myreqlist;
 	}
 	
-	
 	// 심부름 지원 (도와줄게요) - 심부름 상태 1 (매칭대기중)으로 변경
 	public void updateErrandStatus(long errandId) {
 		Errand e = errandDAO.findById(errandId).get();
@@ -101,7 +133,6 @@ public class ErrandService {
 		
 		errandDAO.save(e);
 	}
-	
 }
 
 
