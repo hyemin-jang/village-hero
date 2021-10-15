@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -49,7 +51,7 @@ public class ErrandController {
 	}
 	
 	//심부름 삭제
-	@GetMapping("errandDelete/{id}")
+	@DeleteMapping("errandDelete/{id}")
 	public RedirectView deleteErrand(@PathVariable long id) {
 		System.out.println("삭제시도");
 		service.deleteErrand(id);
@@ -65,6 +67,7 @@ public class ErrandController {
 	}
 	
 
+	//@RequestMapping(value="/errandDetail", method=RequestMethod.DELETE)
 	@GetMapping("/errandDetail")
 	public ErrandDTO errandDetail(long errandId) {
 		System.out.println(errandId);

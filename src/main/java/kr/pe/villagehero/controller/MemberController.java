@@ -155,14 +155,5 @@ public class MemberController {
 		}
 		return myapply;
 	}
-	
-	//현제 세션에 저장된 회원의 아이디값 뽑기
-//	@GetMapping("idCheck")
-//	public long insertErrand(Model model) {
-//		MemberDTO.Get loginMember = (Get) model.getAttribute("loginMember");
-//		long id = loginMember.getMemberId();
-//
-//		return id;
-//	} 
 
 }

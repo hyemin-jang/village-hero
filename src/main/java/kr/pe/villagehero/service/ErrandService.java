@@ -51,31 +51,27 @@ public class ErrandService {
 	//심부름 수정
 	public String updateErrand(ErrandDTO.updateErrand errand) {
 		System.out.println("심부름 수정시도");
-//		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
-//		Date reqDate = new SimpleDateFormat("yyyy-MM-dd").parse(errand.getReqDate());
-		long errandId = errand.getErrandId();
-		//int pay = errand.getPay();
-	
-		Errand updateErrand = dao.findById(errandId).get();
-		System.out.println(updateErrand);
-		//System.out.println(errand.getContent());
-		String a = "여기여기";
-
-		System.out.println(updateErrand.getReqDate());
-		System.out.println(errand.getTitle());
 		
-//		updateErrand.setTitle(errand.getTitle());
-//		updateErrand.setReqLocation(a);
-//		updateErrand.setPay(9999);
-//		updateErrand.setCategory(errand.getCategory());
-//		updateErrand.setReqDate(errand.getReqDate());
-//		updateErrand.setContent("asdfad");
+		long errandId = errand.getErrandId();
+		Errand updateErrand = dao.findById(errandId).get();
 
-		//createAt - 작성시간 - 수정시간으로 수정?
-
-//		dao.save(updateErrand);
-		//dao.update(updateErrand);
-
+		try {
+		updateErrand.setTitle(errand.getTitle());
+		updateErrand.setReqLocation(errand.getReqLocation());
+		updateErrand.setPay(errand.getPay());
+		updateErrand.setCategory(errand.getCategory());
+		updateErrand.setReqDate(errand.getReqDate().replace(" 00:00:00", ""));
+		updateErrand.setContent(errand.getContent());
+		
+		//날짜 포멧 맞춰주기
+		updateErrand.setCreatedAt(updateErrand.getCreatedAt().replace(" 00:00:00", ""));
+		updateErrand.setCompletedAt(updateErrand.getCompletedAt().replace(" 00:00:00", ""));
+		
+		dao.save(updateErrand);
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return "심부름 요청 수정 성공";
 	}
 

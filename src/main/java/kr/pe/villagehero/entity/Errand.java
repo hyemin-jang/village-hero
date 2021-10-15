@@ -19,6 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Builder
+
 @Entity
 @SequenceGenerator(name="errand_seq", sequenceName="errand_seq", initialValue=1, allocationSize=1)
 public class Errand {
