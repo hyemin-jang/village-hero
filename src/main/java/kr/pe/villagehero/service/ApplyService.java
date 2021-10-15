@@ -119,7 +119,7 @@ public class ApplyService {
 
 	
 	// 심부름 상세페이지에서 모든 지원자들 내역 조회
-	public void getAllApplicants(long errandId) {
+	public List<ApplyDTO.Form> getAllApplicants(long errandId) {
 		List<ApplyDTO.Form> applyList = new ArrayList<ApplyDTO.Form>();
 		
 		Errand e = errandDAO.findById(errandId).get();
@@ -132,6 +132,6 @@ public class ApplyService {
 														v.getApplicant().getSpecialty2(),
 														v.getApplicant().getSpecialty3(),
 														v.getApplicant().getScore())));
-		
+		return applyList;
 	}
 }
