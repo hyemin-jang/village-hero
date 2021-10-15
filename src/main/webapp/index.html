@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>동네히어로</title>
@@ -8,28 +8,177 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
 
-<link rel="stylesheet" href="/css/index.css" />
-</head>
-<body>	
-	<template id="header">
-		<div class="header">	
-			<div class="menu-logo">
-				동네히어로
-			</div>	
-			<div class="menu-left">
-				<a href="errandBoard/list.html">모든 심부름 보기</a>
-				<a href="myerrands.html" v-if="logInCheck">내 심부름</a>
-			</div>
-			<div class="menu-right">
-				<a href="joinmember.html" v-if="!logInCheck">회원가입</a>
-				<a href="login.html" v-if="!logInCheck">로그인</a>				
-				<a href="mypage.html" v-if="logInCheck">마이페이지</a>			
-				<a href="logout" @click="logout()" v-if="logInCheck">로그아웃</a>
-			</div>			
-		</div>
-	</template>
+<!-- <link rel="stylesheet" href="/css/index.css" /> -->
+
+<style>
+	
+	/**
+	* 레이아웃
+	*/
+	* {margin: 0; padding: 0; box-sizing: border-box;}
+
+	/**
+	* 랩
+	*/
+	#wrap {width: 100%; height: 1000px;}
+	#header-wrap {width: 100%; background-color: red;}
+	#nav-wrap {width: 100%; background-color: yellow;}
+	#side-wrap {float: left; width:30%; height: 300px; background-color: yellow;}
+	#content-wrap {float: left; width: 100%; background-color: white;}
+	#footer-wrap {float: left; width: 100%; background-color: black;}
+	
+	/**
+	* 컨테이너
+	*/
+	.header-container {width: 1200px; height: 150px; margin: 0 auto; background-color: black; position: relative;}
+	.nav-container {width: 1000px; height: 50px; margin: 0 auto; background-color: grey;}
+	.side-container {width: 300px; height: 750px; margin: 0 auto; background-color: yellow;}
+	.content-container {width: 700px; height: 750px; margin: 0 auto; background-color: white;}
+	.footer-container {width: 1000px; height: 100px; margin: 0 auto; background-color: white;}
+	
+	/**
+	* 헤더 버튼
+	*/
+	.btn-header-title {
+	width: 400px;
+	border: 0;
+	color: #07c8ff;
+	background-color: yellow;
+	
+	font-size: 80px;
+	font-weight: 600;
+	font-family: 'MaruBuri-Bold';
+	cursor: pointer;
+	
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%);
+	top: 15%;
+	}
+	
+	.btn-header-login {
+	width: 90px;
+	border: 0;
+	color: #07c8ff;
+	background-color: blue;
+	
+	font-size: 25px;
+	font-weight: 600;
+	font-family: 'MaruBuri-Bold';
+	cursor: pointer;
+	
+	position: absolute;
+	right: 15%;
+	top: 65%;
+	}
+	
+	.btn-header-join {
+	width: 100px;
+	border: 0;
+	color: #07c8ff;
+	background-color: purple;
+	font-size: 25px;
+	font-weight: 600;
+	font-family: 'MaruBuri-Bold';
+	cursor: pointer;
+	
+	position: absolute;
+	right: 5%;
+	top: 65%;
+	}
+	
+	.btn-header-allErrand {
+	width: 140px;
+	border: 0;
+	color: #07c8ff;
+	background-color: purple;
+	font-size: 25px;
+	font-weight: 600;
+	font-family: 'MaruBuri-Bold';
+	cursor: pointer;
+	
+	position: absolute;
+	left: 5%;
+	top: 65%;
+	}
+	
 	
 
+	/**
+	* 이미지
+	*/
+	.pic-header-hero {
+	height: 120px;
+	width: auto;
+	position: absolute;
+	right: 8%;
+	top: 8%;
+	}
+	
+	
+</style>
+
+</head>
+<body>
+	<!-- Header -->
+	<template id="header">
+	<div id="wrap">
+		<div id="header-wrap">
+			<div class="header-container">
+			
+				<div>
+					<img src="images/womenhero.png" class="pic-header-hero">
+				</div>
+			
+				<div>
+					<button type="button" class="btn-header-title"
+							onclick="location.href='http://localhost:8088';">
+							<span>동네히어로</span>
+					</button>
+				</div>
+				
+				<div>
+					<button type="button" class="btn-header-login"
+							onclick="location.href='http://localhost:8088/login.html';"
+							v-if="!logInCheck">
+							<span>로그인</span>
+					</button>
+				</div>
+			
+				<div>
+					<button type="button" class="btn-header-join"
+							onclick="location.href='http://localhost:8088/joinmember.html';"
+							v-if="!logInCheck">
+							<span>회원가입</span>
+					</button>
+				</div>
+				
+				<div>
+					<button type="button" class="btn-header-allErrand"
+							onclick="location.href='http://localhost:8088/errandBoard/list.html';"
+							v-if="!logInCheck">
+							<span>모든 심부름</span>
+					</button>
+				</div>
+				
+				<!-- <div>
+					<button type="button" class="btn-login-title"
+							onclick="location.href='http://localhost:8088/mypage.html';"
+							v-if="!logInCheck">
+							<span>마이페이지</span>
+					</button>
+				</div> -->
+				
+				<a href="myerrands.html" v-if="logInCheck">내 심부름</a>
+				<a href="mypage.html" v-if="logInCheck">마이페이지</a>
+			
+				<a href="logout" @click="logout()" v-if="logInCheck">로그아웃</a>
+			</div>		
+		</div>
+	</div>
+	</template>
+
+	<!-- container -->
 	<template id="container">
 		<div class="container">	
 			<div class="side">		
@@ -45,8 +194,10 @@
 			</div>
 		</div>
 	</template>
-	
+	<!-- container -->
 
+
+	<!-- component -->
 	<div id="app">
 		<header-com></header-com>
 		<container-com></container-com>					
@@ -145,7 +296,6 @@
 				});  				
 			},
 		});
-		
 
 		new Vue({
             el: "#app"            
