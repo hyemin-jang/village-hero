@@ -13,7 +13,7 @@
 </div>
 	
 	<template id="myerrand">
-		<div v-bind="logInMember">
+		<div>
 		<button @click="getmyerrands()">내가 요청한 심부름 목록</button>
 		<button @click="getmyapplies()">내가 지원한 심부름 목록(진행중인)</button>
 			<table v-if="myReqBool">
@@ -50,8 +50,7 @@
 	Vue.component("mycom",{
 		template : "#myerrand",
 		data : function(){
-			return{
-				logInMember:"",
+			return{				
 				myReq:[],
 				myReqBool : true,
 				myApply : [],
@@ -61,15 +60,6 @@
 			}
 		},
 		created : function(){
-			axios({
-					method: "get",
-					url: "http://localhost:8088/login"		
-				}).then(resData => {						      			
-					this.logInMember = resData.data;   						
-					sessionStorage.setItem("logInMember", JSON.stringify(this.logInMember));
-				}).catch(error => {
-					console.log("error", error);
-				});
 			
 			axios({
 				method: "get",

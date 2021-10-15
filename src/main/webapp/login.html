@@ -26,10 +26,9 @@
 			template: "#form",
 			data: function(){
 				return {
-					logInTry: "",
 					logInMember: "",
-					email: "",
-					password: ""
+					email: "hm@google.com",
+					password: "123"
 				}
 			},
 			methods: {				
@@ -52,7 +51,7 @@
 						}
 						
 					}).catch(error => {
-						alert("비동기안됨");
+						alert("비동기실패");
 						console.log("error", error);
 					});  
 				}

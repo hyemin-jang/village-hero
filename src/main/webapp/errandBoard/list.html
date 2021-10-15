@@ -34,7 +34,10 @@
 				<td>{{v.reqlocation}}</td>
 				<td>{{v.reqDate}}</td>
 				<td>{{v.pay}}</td>
-				<td>{{v.errandStatus}}</td>
+				<td v-if="v.errandStatus==0">지원자 대기중</td>
+				<td v-if="v.errandStatus==1">수락 대기중</td>
+				<td v-if="v.errandStatus==2">매칭완료</td>
+				<td v-if="v.errandStatus==3">수행완료</td>
 			</tr>
 		</table>
 	</div>

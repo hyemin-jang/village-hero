@@ -79,9 +79,8 @@ public class ApplyService {
 	}
 	
 	// 도와줄게요 (심부름 지원 등록)
-	public void addApply(long memberId, String message) {
-		
-		Errand errand = errandDAO.findById(1L).get();  // 받아와야함
+	public void addApply(long errandId, long memberId, String message) {		
+		Errand errand = errandDAO.findById(errandId).get();  
 		Member applicant = memberDAO.findById(memberId).get();
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
