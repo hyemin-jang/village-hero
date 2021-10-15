@@ -1,10 +1,12 @@
 package kr.pe.villagehero.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -17,7 +19,7 @@ import kr.pe.villagehero.service.ErrandService;
 import kr.pe.villagehero.service.MemberService;
 
 @RestController
-@SessionAttributes({"loginMember"})  //loginMember 라는 이름으로 서버 메모리에 client 정보 저장하겠다는 설정 
+@SessionAttributes({ "loginMember" }) // loginMember 라는 이름으로 서버 메모리에 client 정보 저장하겠다는 설정
 public class MemberController {
 
 	@Autowired
@@ -56,13 +58,18 @@ public class MemberController {
 	public MemberDTO.Get logIn(Model model, MemberDTO.Login loginData) {
 		System.out.println(" --===== " + loginData);
 		MemberDTO.Get member = service.logIn(loginData.getEmail());
-		
-		// 로그인 성공시
-		if (member.getPassword().equals(loginData.getPassword())) {
-			model.addAttribute("loginMember", member); // 세션에 현재 로그인한 회원의 정보 저장
 
-			// 로그인 실패시 (비밀번호 오류)
-		} else {
+		if (member != null) {
+			// 로그인 성공시
+			if (member.getPassword().equals(loginData.getPassword())) {
+				model.addAttribute("loginMember", member); // 세션에 현재 로그인한 회원의 정보 저장
+				System.out.println("----------------------------");
+
+				// 로그인 실패시 (비밀번호 오류)
+			} else {
+				return null;
+			}
+		}else {
 			return null;
 		}
 		return member;
@@ -74,7 +81,6 @@ public class MemberController {
 	public RedirectView logOut(SessionStatus session, Model model) {		
 		session.setComplete();
 		model.addAttribute(null);
-		
 		return new RedirectView("/index.html");
 	}
 }
