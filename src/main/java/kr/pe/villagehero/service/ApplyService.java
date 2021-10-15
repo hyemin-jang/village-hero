@@ -108,6 +108,7 @@ public class ApplyService {
 			List<Apply> sub = applyDAO.findMyApply(member);
 			
 			sub.forEach(v -> all.add(new MyPageDTO.MyApply(v.getErrand().getTitle(),
+															v.getErrand().getWriter().getNickname(),
 															v.getMatchStatus())));
 		});
 		return all;

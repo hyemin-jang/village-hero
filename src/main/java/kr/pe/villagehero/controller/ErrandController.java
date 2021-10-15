@@ -51,10 +51,8 @@ public class ErrandController {
 
 	// 모든 심부름 조회
 	@GetMapping("errands")
-	public List<ErrandDTO> getAllErrands() {
-		
+	public List<ErrandDTO> getAllErrands() {		
 		List<ErrandDTO> all = service.getAllErrands();
-		System.out.println(all.get(0).getErrandStatus());
 		return all;
 	}
 

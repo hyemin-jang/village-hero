@@ -17,7 +17,8 @@
 				동네히어로
 			</div>	
 			<div class="menu-left">
-				<a href="errandBoard/list.html">모든 심부름 보기</a>
+				<a href="errandBoard/list.html" v-if="logInCheck">모든 심부름 보기</a>
+				<a href="login.html" v-if="!logInCheck">모든 심부름 보기</a>
 				<a href="myerrands.html" v-if="logInCheck">내 심부름</a>
 			</div>
 			<div class="menu-right">

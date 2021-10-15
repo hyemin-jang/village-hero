@@ -42,10 +42,7 @@ public class ApplyController {
 	
 	// 도와줄게요 (심부름 지원하기)
 	@PostMapping("/apply2")
-	public RedirectView apply(long errandId, long memberId, String message) {
-		System.out.println("실행?");
-		System.out.println("심부름아이디" + errandId + " 멤버아이디" + memberId);
-		
+	public RedirectView apply(long errandId, long memberId, String message) {		
 		
 		service.addApply(errandId, memberId, message);  // apply 테이블에 지원내역 추가
 		errandService.updateErrandStatus(errandId);  // 해당 심부름 상태 1 (지원자대기중) 으로 변경
