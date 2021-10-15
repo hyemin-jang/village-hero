@@ -22,7 +22,7 @@ import kr.pe.villagehero.dto.MemberDTO.Get;
 import kr.pe.villagehero.service.ErrandService;
 
 @RestController
-@SessionAttributes({ "loginMember" })
+//@SessionAttributes({ "loginMember" })
 public class ErrandController {
 
 	@Autowired
