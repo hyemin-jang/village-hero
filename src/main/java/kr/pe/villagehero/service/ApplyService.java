@@ -83,8 +83,10 @@ public class ApplyService {
 		Errand errand = errandDAO.findById(errandId).get();  
 		Member applicant = memberDAO.findById(memberId).get();
 		
+		
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
-		Date time = new Date();
+		Date time = new Date();		
+		
 		applyDAO.save(new Apply(errand, applicant, message, dateFormat.format(time), '0'));		
 	}
 

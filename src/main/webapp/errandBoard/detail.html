@@ -51,6 +51,7 @@
 				</div>
 			</div>
 
+			
 			<div id="applyForm" v-if="form">
 				<h2>도와줄게요!</h2>	
 				<form action="../apply2" method="post">
@@ -63,6 +64,10 @@
 	
 					<button type="submit">보내기</button>		
 				</form>
+			</div>
+
+			<div id="applicantList">
+
 			</div>
 		</div>
 	</template>
@@ -79,6 +84,7 @@
 				return {
 					resData : false,
 					errands :"",
+					applcantList: "",
 					logInMemberId: JSON.parse(sessionStorage.getItem("logInMember")).memberId,					
 					form: false
 				}
@@ -91,6 +97,16 @@
 	            	this.resData=true;
 	                this.errands = resData.data;
 					console.log(this.errands);
+	            }).catch(errorData => {
+	            	return console.log(errorData);
+	            });
+
+				axios({
+	                method : "get",
+	                url : "http://localhost:8088/applcants" + location.search
+	            }).then( resData => {
+	                this.applicants = resData.data;
+					console.log(this.applcantList[0]);
 	            }).catch(errorData => {
 	            	return console.log(errorData);
 	            });
