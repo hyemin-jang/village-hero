@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import kr.pe.villagehero.dto.ApplyDTO;
 import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.dto.MemberDTO.Get;
+import kr.pe.villagehero.service.ApplyService;
 import kr.pe.villagehero.service.ErrandService;
 
 @RestController
@@ -30,6 +32,8 @@ public class ErrandController {
 	@Autowired
 	private ErrandService service;
 	
+	@Autowired
+	private ApplyService applyservice;
 	//심부름 수정
 	@PutMapping("updateErrand")
 	public String updateWriter(ErrandDTO.updateErrand errand) {
@@ -111,8 +115,15 @@ public class ErrandController {
 	
 	//내 심부름 목록 뿌려주기 -> 삭제버튼/count/title/status 뿌려줄 것임.
 	@GetMapping("myerrands/req")
-	public List<MyPageDTO.ErrandDTO2> getAllMyErrands(Long memberId){
+	public List<ErrandDTO> getAllMyErrands(Long memberId){
 
 		return service.getAllMyErrands(memberId);
 	}
+	
+	//내 심부름 - 내가 지원한 심부름 목록 로딩
+	@GetMapping("myerrands/apply")
+	public List<ApplyDTO> getAllMyApply(Long memberId){		
+		return applyservice.getMyApply(memberId);
+	}
+	
 }

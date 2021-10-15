@@ -110,14 +110,14 @@ public class ErrandService {
 	
 	
 	//멤버 id 값으로 저장된 모든 심부름 find
-	public List<MyPageDTO.ErrandDTO2> getAllMyErrands(Long memberId){
+	public List<ErrandDTO> getAllMyErrands(Long memberId){
 		Optional<Member> m = memberDAO.findById(memberId);
-		List<MyPageDTO.ErrandDTO2> myreqlist = new ArrayList<>();
+		List<ErrandDTO> myreqlist = new ArrayList<>();
 		
 		m.ifPresent(member ->{
 			List<Errand> sub = errandDAO.findAllMyReq(member);
 			
-			sub.forEach(v -> myreqlist.add(new MyPageDTO.ErrandDTO2(v.getTitle(),v.getErrandStatus())));
+			sub.forEach(v -> myreqlist.add(new ErrandDTO(v)));
 		});
 		return myreqlist;
 	}
@@ -135,6 +135,8 @@ public class ErrandService {
 		
 		errandDAO.save(e);
 	}
+	
+	
 }
 
 

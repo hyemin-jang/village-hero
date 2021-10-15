@@ -95,18 +95,23 @@ public class ApplyService {
 		return result;
 	}
 
+
 	// 내 심부름 -> 내가 지원한 심부름 목록
-	public List<MyPageDTO.MyApply> getMyApply(Long memberId) {
-		Optional<Member> m = memberDAO.findById(memberId);
-		List<MyPageDTO.MyApply> all = new ArrayList<>();
-		m.ifPresent(member -> {
-			List<Apply> sub = applyDAO.findMyApply(member);
-			sub.forEach(v -> all.add(new MyPageDTO.MyApply(v.getErrand().getTitle(),v.getErrand().getWriter().getNickname(),v.getMatchStatus())));
-		});
-		return all;
-	}
-
-
+		public List<ApplyDTO> getMyApply(Long memberId) {
+			Optional<Member> m = memberDAO.findById(memberId);
+			List<ApplyDTO> all = new ArrayList<>();
+			m.ifPresent(member -> {
+				List<Apply> sub = applyDAO.findMyApply(member);
+				sub.forEach(v -> all.add(new ApplyDTO(v.getApplyId(),
+						v.getErrand().getErrandId(),
+						v.getApplicant().getMemberId(),
+						v.getMessage(),
+						v.getAppliedAt(),
+						v.getMatchStatus())));
+			});
+			return all;
+		}
+		
 	// 내 심부름 -> 해당 지원목록 취소
 	public void cancel(Long memberId, Long errandId) {
 

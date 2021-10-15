@@ -24,8 +24,8 @@
 				</tr>
 				<tr v-for="v,index in myReq" v-if="v.errandStatus!=3">
 					<td>{{index}}</td>
-					<td v-for="k in errands" v-if="v.title==k.title"><a
-						v-bind:href="urlPart1+k.errandId">{{v.title}}</a></td>
+					<td v-for="k in errands" v-if="v.title==k.title">
+					<a v-bind:href="urlPart1+k.errandId">{{v.title}}</a></td>
 					<td v-if="v.errandStatus==0">지원자 대기중</td>
 					<td v-if="v.errandStatus==1">매칭 대기중</td>
 					<td v-if="v.errandStatus==2">취소됨</td>
