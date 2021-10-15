@@ -30,8 +30,8 @@
 				return {
 					logInTry: "",
 					logInMember: "",
-					email: "",
-					password: ""
+					email: "gh@google.com",
+					password: "222"
 				}
 			},
 		
@@ -40,14 +40,11 @@
 					axios({
 						method: "get",
 						url: "http://localhost:8088/login?email="+this.email+"&password="+this.password,
-						data: {
-							email: this.email,
-							password: this.password
-						},
 					}).then(resData => {		
 						this.logInMember = resData.data;   				
 						sessionStorage.setItem("logInMember", JSON.stringify(this.logInMember));
 						if(this.logInMember==""){
+							console.log("비밀번호 및 이메일 입력 실패시 요청 잘옴?")
 							alert("비밀번호 혹은 이메일을 확인해주세요.");
 						}else{
 							alert("환영합니다.");
