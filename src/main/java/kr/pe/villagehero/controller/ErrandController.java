@@ -66,10 +66,9 @@ public class ErrandController {
 		return new RedirectView("/errandBoard/detail.html");		
 	}
 
-	//@RequestMapping(value="/errandDetail", method=RequestMethod.DELETE)
+	// 심부름 상세페이지 - 1개 심부름 정보 출력
 	@GetMapping("/errandDetail")
 	public ErrandDTO errandDetail(long errandId) {
-		System.out.println(errandId);
 		ErrandDTO errand = service.getOneErrand(errandId);
 		return errand;
 	}

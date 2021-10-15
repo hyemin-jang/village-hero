@@ -1,5 +1,6 @@
 package kr.pe.villagehero.service;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,10 +9,16 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.servlet.view.RedirectView;
 
 import kr.pe.villagehero.dao.ApplyRepository;
 import kr.pe.villagehero.dao.ErrandRepository;
 import kr.pe.villagehero.dao.MemberRepository;
+import kr.pe.villagehero.dto.ApplyDTO.Form;
+import kr.pe.villagehero.dto.ApplyDTO;
+import kr.pe.villagehero.dto.MemberDTO;
+import kr.pe.villagehero.dto.MemberDTO.Get;
 import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.entity.Apply;
 import kr.pe.villagehero.entity.Errand;
@@ -73,10 +80,12 @@ public class ApplyService {
 	public void addApply(long errandId, long memberId, String message) {		
 		Errand errand = errandDAO.findById(errandId).get();  
 		Member applicant = memberDAO.findById(memberId).get();
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date time = new Date();
-		applyDAO.save(new Apply(errand, applicant, message, dateFormat.format(time), '0'));
+		
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+		Date time = new Date();		
+		
+		applyDAO.save(new Apply(errand, applicant, message, dateFormat.format(time), '0'));		
 	}
 
 	public List joinTest(long memberId) {
@@ -97,6 +106,7 @@ public class ApplyService {
 		return all;
 	}
 
+
 	// 내 심부름 -> 해당 지원목록 취소
 	public void cancel(Long memberId, Long errandId) {
 
@@ -110,6 +120,23 @@ public class ApplyService {
 		sub.setMatchStatus('3');
 		applyDAO.save(sub);
 //		cancel = new MyPageDTO.MyApply(e.getTitle(), sub.getMatchStatus());
+	}
+
+	
+	// 심부름 상세페이지에서 모든 지원자들 내역 조회
+	public List<ApplyDTO.Form> getAllApplicants(long errandId) {
+		List<ApplyDTO.Form> applyList = new ArrayList<ApplyDTO.Form>();
 		
+		Errand e = errandDAO.findById(errandId).get();
+		List<Apply> all = applyDAO.findByErrand(e);
+		all.forEach(v -> applyList.add(new ApplyDTO.Form(v.getApplicant().getMemberId(),
+														v.getApplicant().getNickname(),
+														v.getApplicant().getBirthYear(),
+														v.getApplicant().getPhone(),
+														v.getApplicant().getSpecialty1(),
+														v.getApplicant().getSpecialty2(),
+														v.getApplicant().getSpecialty3(),
+														v.getApplicant().getScore())));
+		return applyList;
 	}
 }
