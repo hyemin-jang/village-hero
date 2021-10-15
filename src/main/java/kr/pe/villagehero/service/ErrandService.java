@@ -74,6 +74,7 @@ public class ErrandService {
 		//createAt - 작성시간 - 수정시간으로 수정?
 
 //		dao.save(updateErrand);
+		dao.update(updateErrand);
 
 		return "심부름 요청 수정 성공";
 	}
