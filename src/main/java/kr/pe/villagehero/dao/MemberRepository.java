@@ -1,10 +1,8 @@
 package kr.pe.villagehero.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.entity.Member;
 
 @Repository

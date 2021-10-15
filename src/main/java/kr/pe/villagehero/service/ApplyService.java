@@ -1,6 +1,5 @@
 package kr.pe.villagehero.service;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,15 +8,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.servlet.view.RedirectView;
 
 import kr.pe.villagehero.dao.ApplyRepository;
 import kr.pe.villagehero.dao.ErrandRepository;
 import kr.pe.villagehero.dao.MemberRepository;
-import kr.pe.villagehero.dto.ApplyDTO.Form;
-import kr.pe.villagehero.dto.MemberDTO;
-import kr.pe.villagehero.dto.MemberDTO.Get;
 import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.entity.Apply;
 import kr.pe.villagehero.entity.Errand;
@@ -75,9 +69,9 @@ public class ApplyService {
 	}
 
 	// 도와줄게요 (심부름 지원 등록)
-	public void addApply(long memberId, String message) {
 
-		Errand errand = errandDAO.findById(1L).get(); // 받아와야함
+	public void addApply(long errandId, long memberId, String message) {		
+		Errand errand = errandDAO.findById(errandId).get();  
 		Member applicant = memberDAO.findById(memberId).get();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -98,8 +92,7 @@ public class ApplyService {
 		List<MyPageDTO.MyApply> all = new ArrayList<>();
 		m.ifPresent(member -> {
 			List<Apply> sub = applyDAO.findMyApply(member);
-
-			sub.forEach(v -> all.add(new MyPageDTO.MyApply(v.getErrand().getTitle(), v.getMatchStatus())));
+			sub.forEach(v -> all.add(new MyPageDTO.MyApply(v.getErrand().getTitle(),v.getErrand().getWriter().getNickname(),v.getMatchStatus())));
 		});
 		return all;
 	}

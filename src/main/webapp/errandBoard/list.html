@@ -16,25 +16,30 @@
 		<button @click="session()">세션값 저장</button>
 		<table v-if="resData">
 			<tr>
-				<th>errandId</th>
-				<th>createdAt</th>
-				<th>title</th>
-				<th>category</th>
-				<th>reqLocation</th>
-				<th>reqDate</th>
-				<th>pay</th>
-				<th>errandStatus</th>
+				<th>no.</th>
+				<th>작성자</th>
+				<th>작성일</th>
+				<th>분류</th>
+				<th>제목</th>
+				<th>요청 위치</th>
+				<th>요청 일시</th>
+				<th>금액</th>
+				<th>상태</th>
 			</tr>
 			
-			<tr v-for="v in errands">				
+			<tr v-for="v in errands">	
 				<td>{{v.errandId}}</td>
+				<td>{{v.writer}}</td>
 				<td>{{v.createdAt}}</td>
-			 	<td> <a v-bind:href="urlPart1+v.errandId">{{v.title}}</a></td>
 				<td>{{v.category}}</td>
+			 	<td> <a v-bind:href="urlPart1+v.errandId">{{v.title}}</a></td>
 				<td>{{v.reqlocation}}</td>
 				<td>{{v.reqDate}}</td>
 				<td>{{v.pay}}</td>
-				<td>{{v.errandStatus}}</td>
+				<td v-if="v.errandStatus==0">지원자 대기중</td>
+				<td v-if="v.errandStatus==1">수락 대기중</td>
+				<td v-if="v.errandStatus==2">매칭완료</td>
+				<td v-if="v.errandStatus==3">수행완료</td>
 			</tr>
 		</table>
 	</div>
