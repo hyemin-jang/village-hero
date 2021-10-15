@@ -108,21 +108,23 @@ public class ErrandService {
 	
 	
 	//멤버 id 값으로 저장된 모든 심부름 find
-	public List<MyPageDTO.ErrandDTO2> getAllMyErrands(Long memberId){
+	public List<ErrandDTO> getAllMyErrands(Long memberId){
 		Optional<Member> m = memberDAO.findById(memberId);
-		List<MyPageDTO.ErrandDTO2> myreqlist = new ArrayList<>();
+		List<ErrandDTO> myreqlist = new ArrayList<>();
 		
 		m.ifPresent(member ->{
 			List<Errand> sub = errandDAO.findAllMyReq(member);
 			
-			sub.forEach(v -> myreqlist.add(new MyPageDTO.ErrandDTO2(v.getTitle(),v.getErrandStatus())));
+			sub.forEach(v -> myreqlist.add(new ErrandDTO(v)));
 		});
 		return myreqlist;
 	}
 	
 	// 심부름 지원 (도와줄게요) - 심부름 상태 1 (매칭대기중)으로 변경
 	public void updateErrandStatus(long errandId) {
+		System.out.println("실행안됨");
 		Errand e = errandDAO.findById(errandId).get();
+		System.out.println("실행됨" + e);
 		
 		e.setErrandStatus('1');
 		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));
@@ -130,6 +132,8 @@ public class ErrandService {
 		
 		errandDAO.save(e);
 	}
+	
+	
 }
 
 
