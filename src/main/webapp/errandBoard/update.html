@@ -13,7 +13,7 @@
 
 	<div id="detail">
 		<div v-bind="errands">
-			<form class="updateErrand" action="/updateErrand" method="POST">
+			<form class="updateErrand" action="/updateErrand" method="POST" contetn->
 				<input type="hidden" name="_method" value="PUT"> 
 				<input type="hidden" class="form-control" id="errandId" name="errandId"
 					v-bind:value="errands.errandId">

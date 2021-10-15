@@ -44,9 +44,9 @@
 				</div>
 
 				<div class="form-group">
-					<a v-bind:href="urlPart+errands.errandId"
-						v-if="errands.writer==idCheck">수정하기</a> <a href="#"
-						v-if="errands.writer==idCheck">삭제하기</a> <a href="list.html">목록으로</a>
+					<a v-if="errands.writer==idCheck" v-bind:href="urlPart1+errands.errandId" >수정하기</a> 
+					<a v-if="errands.writer==idCheck" v-bind:href="urlPart2+errands.errandId" >삭제하기</a> 
+					<a href="list.html">목록으로</a>
 					<a href="apply.html">도와줄게요</a>
 				</div>
 			</div>
@@ -60,7 +60,8 @@
 	        	resData : false,
 	        	errands :"",
 	        	idCheck :"",
-	        	urlPart :"http://localhost:8088/getErrandDetail2/",
+	        	urlPart1 :"http://localhost:8088/getErrandDetail2/",
+	        	urlPart2 :"http://localhost:8088/errandDelete/"
 	        },
 	        created :function(){
 	        	console.log(location.search);

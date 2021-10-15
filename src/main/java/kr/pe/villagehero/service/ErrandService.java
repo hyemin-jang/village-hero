@@ -41,6 +41,13 @@ public class ErrandService {
 		return errand;
 	}
 	
+	//심부름 삭제
+	public String deleteErrand(long id) {
+		System.out.println("삭제시도2");
+		dao.deleteById(id);
+		return "삭제성공";
+	}
+	
 	//심부름 수정
 	public String updateErrand(ErrandDTO.updateErrand errand) {
 		System.out.println("심부름 수정시도");
@@ -66,7 +73,7 @@ public class ErrandService {
 
 		//createAt - 작성시간 - 수정시간으로 수정?
 
-		dao.save(updateErrand);
+//		dao.save(updateErrand);
 
 		return "심부름 요청 수정 성공";
 	}
@@ -117,7 +124,6 @@ public class ErrandService {
 		});
 		return myreqlist;
 	}
-	
 }
 
 class PayComparator implements Comparator<ErrandDTO> {

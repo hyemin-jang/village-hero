@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -30,8 +32,8 @@ public class ErrandController {
 	@PutMapping("updateErrand")
 	public String updateWriter(ErrandDTO.updateErrand errand) {
 		System.out.println(errand);
+
 		service.updateErrand(errand);
-		
 		
 		return "성공";
 	}
@@ -43,6 +45,15 @@ public class ErrandController {
 		long id = loginMember.getMemberId();
 
 		service.insertErrand(id, newErrand);
+		return new RedirectView("/errandBoard/list.html");
+	}
+	
+	//심부름 삭제
+	@GetMapping("errandDelete/{id}")
+	public RedirectView deleteErrand(@PathVariable long id) {
+		System.out.println("삭제시도");
+		service.deleteErrand(id);
+		
 		return new RedirectView("/errandBoard/list.html");
 	}
 
