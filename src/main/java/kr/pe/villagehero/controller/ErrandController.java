@@ -4,27 +4,21 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MemberDTO;
-import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.dto.MemberDTO.Get;
+import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.service.ErrandService;
 
 @RestController
-//@SessionAttributes({ "loginMember" })
 public class ErrandController {
 
 	@Autowired
@@ -51,7 +45,7 @@ public class ErrandController {
 	}
 	
 	//심부름 삭제
-	@DeleteMapping("errandDelete/{id}")
+	@GetMapping("errandDelete/{id}")
 	public RedirectView deleteErrand(@PathVariable long id) {
 		System.out.println("삭제시도");
 		service.deleteErrand(id);

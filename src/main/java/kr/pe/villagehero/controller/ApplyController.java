@@ -13,7 +13,6 @@ import kr.pe.villagehero.service.ApplyService;
 import kr.pe.villagehero.service.ErrandService;
 
 @RestController
-//@SessionAttributes({"loginMember"})
 public class ApplyController {
 
 	@Autowired
