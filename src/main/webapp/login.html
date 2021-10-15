@@ -1,68 +1,126 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<link rel="stylesheet" href="css/joinmember.css">
 </head>
+
+<!-- 바디 -->
 <body>
-	<template id="form">
-		<div>
-			<h3>로그인</h3>
-	<!-- 		<form action="login" method="post"> -->
-				<input type="text" v-model="email">
-				<input type="password" v-model="password">
-				<input type="submit" value="로그인" @click="logInCheck"><br>
-			<!-- </form> -->
-		</div>
-	</template>
+   <!-- header -->
+   <div id="header">
+      <h1 class="login_title">
+         <label for="email">로그인</label><br>
+         <!-- <img src="images/villagehero.png"> -->
+      </h1>
+      <h3>Welcome! 동네히어로에 오신 것을 환영합니다.</h3>
+   </div>
 
-	<div id="app">
-		<form-com></form-com>
-	</div>
-	
+   <!-- wrapper -->
+   <div id="wrapper">
 
-	<script>
-		Vue.component("form-com", {
-			template: "#form",
-			data: function(){
-				return {
-					logInTry: "",
-					logInMember: "",
-					email: "gh@google.com",
-					password: "222"
-				}
-			},
-		
-			methods: {				
-				logInCheck: function(){
-					axios({
-						method: "get",
-						url: "http://localhost:8088/login?email="+this.email+"&password="+this.password,
-					}).then(resData => {		
-						this.logInMember = resData.data;   				
-						sessionStorage.setItem("logInMember", JSON.stringify(this.logInMember));
-						if(this.logInMember==""){
-							console.log("비밀번호 및 이메일 입력 실패시 요청 잘옴?")
-							alert("비밀번호 혹은 이메일을 확인해주세요.");
-						}else{
-							alert("환영합니다.");
-							document.location.href = '/';
-						}
-						
-					}).catch(error => {
-						alert(2);
-						console.log("error", error);
-					});  
-				}
-			}				
-		});
+      <!-- content -->
+      <div id="content">
 
-		new Vue({
+         <!-- template -->
+         <template id="form">
+            <div>
+               <!-- email -->
+               <h3 class="login_title">
+                  <label for="email">이메일</label>
+               </h3>
+               <span class="box int_id"> <input type="text" id="email"
+                  v-model="email" class="int" maxlength="50"> <span
+                  class="step_url">@</span>
+               </span>
+
+               <!-- password -->
+               <h3 class="login_title">
+                  <label for="password">암호</label>
+               </h3>
+               <span class="box int_id"> <input type="password"
+                  id="password" v-model="password" class="int" maxlength="16">
+                  <span class="step_url">****</span>
+               </span>
+
+               <!-- Login BTN-->
+               <div class="btn_area">
+                  <input type="submit" id="btnJoin" value="로그인" @click="logInCheck">
+                  <br>
+                  <br>
+                  <button type="button" id="btnJoin"
+                     onclick="location.href='http://localhost:8088/joinmember.html';">
+                     <span>회원가입</span>
+                  </button>
+               </div>
+
+            </div>
+         </template>
+         <!-- template -->
+         
+         <!-- component -->
+         <div id="app">
+            <form-com></form-com>
+         </div>
+
+      </div>
+      <!-- content -->
+
+   </div>
+   <!-- wrapper -->
+
+
+
+
+
+
+   <!-- Vue -->
+   <script>
+      Vue.component("form-com", {
+         template: "#form",
+         data: function(){
+            return {
+               logInTry: "",
+               logInMember: "",
+               email: "",
+               password: ""
+            }
+         },
+      
+         methods: {            
+            logInCheck: function(){
+               axios({
+                  method: "get",
+                  url: "http://localhost:8088/login?email="+this.email+"&password="+this.password,
+                  data: {
+                     email: this.email,
+                     password: this.password
+                  },
+               }).then(resData => {      
+                  this.logInMember = resData.data;               
+                  sessionStorage.setItem("logInMember", JSON.stringify(this.logInMember));
+                  if(this.logInMember==""){
+                     alert("이메일 또는 이메일을 확인해주세요.");
+                  }else{
+                     alert("환영합니다.");
+                     document.location.href = '/';
+                  }
+                  
+               }).catch(error => {
+                  alert("이메일 또는 비밀번호를 확인하세요.");
+                  console.log("error", error);
+               });  
+            }
+         }            
+      });
+
+      new Vue({
             el: "#app"            
         });
-	</script>
+   </script>
 
 </body>
 </html>
