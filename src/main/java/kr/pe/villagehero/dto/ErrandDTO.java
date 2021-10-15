@@ -39,6 +39,7 @@ public class ErrandDTO {
 		this.reqDate = entity.getReqDate();
 		this.errandStatus = entity.getErrandStatus();
 	}
+	
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@Getter

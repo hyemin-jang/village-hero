@@ -35,7 +35,7 @@ public class ApplyController {
 	}
 	
 	// 도와줄게요 (심부름 지원하기)
-	@PostMapping("/apply2")
+	@PostMapping("/apply")
 	public RedirectView apply(long errandId, long memberId, String message) {		
 		
 		service.addApply(errandId, memberId, message);  // apply 테이블에 지원내역 추가
@@ -52,7 +52,7 @@ public class ApplyController {
 	
 	// 심부름 상세페이지에서 모든 지원자 목록 조회
 	@GetMapping("applicants")
-	public List<ApplyDTO.Form> getAllApplicants(long errandId) {
+	public List<ApplyDTO.List> getAllApplicants(long errandId) {
 		System.out.println("지원자조회: 심부름아이디- " + errandId);
 		return service.getAllApplicants(errandId);
 	}

@@ -49,14 +49,16 @@
 					<a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart1+errands.errandId" >수정하기</a> 
 					<a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart2+errands.errandId" >삭제하기</a> 
 					<a href="list.html" class="btn btn-secondary float-left">목록으로</a>
-					<button @click="showForm" v-if="logInMemberId!=errands.writerId">도와줄게요</button>
+					<!-- 도와줄게요 버튼 출력 조건 : 다른 사람이 등록한 심부름일때 / 심부름 상태가 지원자 대기중(0)일때만 -->
+					<button @click="showForm" v-if="logInMemberId!=errands.writerId & errands.errandStatus==0">도와줄게요</button>
+					<button @click="showApplicants">지원자 보기</button>
 				</div>
 			</div>
 
 			
 			<div id="applyForm" v-if="form">
 				<h2>도와줄게요!</h2>	
-				<form action="../apply2" method="post">
+				<form action="../apply" method="post">
 					<input type="hidden" name="errandId" v-bind:value="errands.errandId">
 					<input type="hidden" name="memberId" v-bind:value="logInMemberId">
 					<label for="title">간단한 자기소개와 메세지를 남겨주세요.</label>
@@ -68,8 +70,29 @@
 				</form>
 			</div>
 
-			<div id="applicantList">
-
+			<div id="applicantList" v-if="list">
+				<table>
+					<tr>
+						<td>지원자</td>
+						<td>성별</td>
+						<td>나이</td>
+						<td>전문분야1</td>
+						<td>전문분야2</td>
+						<td>전문분야3</td>
+						<td>연락처</td>
+						<td>메세지</td>
+					</tr>
+					<tr v-for="v in applicants">
+						<td>{{v.nickname}}</td>
+						<td>{{v.gender}}</td>
+						<td>{{v.birthYear}}</td>
+						<td>{{v.specialty1}}</td>
+						<td>{{v.specialty2}}</td>
+						<td>{{v.specialty3}}</td>
+						<td>{{v.phone}}</td>
+						<td>{{v.message}}</td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</template>
@@ -86,9 +109,10 @@
 				return {
 					resData : false,
 					errands :"",
-					applcantList: "",
+					applicants: "",
 					logInMemberId: JSON.parse(sessionStorage.getItem("logInMember")).memberId,					
 					form: false,
+					list: false,
 		        	urlPart1 :"http://localhost:8088/getErrandDetail2/",
 		        	urlPart2 :"http://localhost:8088/errandDelete/"
 				}
@@ -102,23 +126,33 @@
 	                this.errands = resData.data;
 	            }).catch(errorData => {
 	            	return console.log(errorData);
-	            });				
-	        },
-			mounted: function(){
+	            });	
+				
 				// 모든 지원자 내역 가져오기
 				axios({
 	                method : "get",
 	                url : "http://localhost:8088/applicants" + location.search
 	            }).then( resData => {
 	                this.applicants = resData.data;
-					console.log("지원자내역" + this.resData.data[0]);
+					console.log(this.applicants[0]);
 	            }).catch(errorData => {
 	            	return console.log(errorData);
 	            });
-			},
+	        },			
 			methods: {
 				showForm: function(){
-					this.form = true;
+					if (this.form == false){
+						this.form = true;
+					}else{
+						this.form = false;
+					}
+				},
+				showApplicants: function(){
+					if (this.list == false){
+						this.list = true;
+					}else{
+						this.list = false;
+					}
 				}
 			}
 	    });

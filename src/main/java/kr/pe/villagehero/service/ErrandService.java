@@ -127,9 +127,8 @@ public class ErrandService {
 		Errand e = errandDAO.findById(errandId).get();
 		
 		e.setErrandStatus('1');
-		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));
-		e.setCompletedAt(e.getCompletedAt().replace(" 00:00:00", ""));
-		e.setReqDate(e.getReqDate().replace(" 00:00:00", ""));
+		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));		
+		e.setReqDate(e.getReqDate().replace(" 00:00:00", ""));		
 		
 		errandDAO.save(e);
 	}
