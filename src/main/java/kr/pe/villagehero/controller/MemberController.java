@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -23,7 +25,7 @@ import kr.pe.villagehero.service.ErrandService;
 import kr.pe.villagehero.service.MemberService;
 
 @RestController
-@SessionAttributes({"loginMember"})  //loginMember 라는 이름으로 서버 메모리에 client 정보 저장하겠다는 설정 
+@SessionAttributes({ "loginMember" }) // loginMember 라는 이름으로 서버 메모리에 client 정보 저장하겠다는 설정
 public class MemberController {
 
 	@Autowired
@@ -75,13 +77,17 @@ public class MemberController {
 		System.out.println(" --===== " + loginData);
 		MemberDTO.Get member = service.logIn(loginData.getEmail());
 
-		// 로그인 성공시
-		if (member.getPassword().equals(loginData.getPassword())) {
-			model.addAttribute("loginMember", member); // 세션에 현재 로그인한 회원의 정보 저장
-			System.out.println("----------------------------");
+		if (member != null) {
+			// 로그인 성공시
+			if (member.getPassword().equals(loginData.getPassword())) {
+				model.addAttribute("loginMember", member); // 세션에 현재 로그인한 회원의 정보 저장
+				System.out.println("----------------------------");
 
-			// 로그인 실패시 (비밀번호 오류)
-		} else {
+				// 로그인 실패시 (비밀번호 오류)
+			} else {
+				return null;
+			}
+		}else {
 			return null;
 		}
 		System.out.println("==================== " + member);
@@ -107,9 +113,8 @@ public class MemberController {
 			System.out.println("로그아웃 성공");
 		}
 		System.out.println("헷갈리니까 적은 없앤 후 세션");
+		model.addAttribute("loginMember", null);
 		System.out.println(model.getAttribute("loginMember"));
-//		session.invalidate();
-//		session=null;
 		return new RedirectView("/index.html");
 	}
 	/*
