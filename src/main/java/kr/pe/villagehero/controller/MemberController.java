@@ -109,11 +109,5 @@ public class MemberController {
 		System.out.println("헷갈리니까 적은 없앤 후 세션");
 		return new RedirectView("/index.html");
 	}
-	/*
-	 * 
-	 */
-//	@PostMapping("addUser")
-//	public String addUser(    ) {
-//		
-//	}
+
 }
