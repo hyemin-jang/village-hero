@@ -102,11 +102,11 @@ public class ApplyService {
 
 		Member m = memberDAO.findById(memberId).get();
 		Errand e = errandDAO.findById(errandId).get();
-
+		
 		MyPageDTO.MyApply cancel;
-
+		
 		Apply sub = applyDAO.findCancelApply(m, e);
-
+		sub.setAppliedAt(sub.getAppliedAt().replace(" 00:00:00", ""));
 		sub.setMatchStatus('3');
 		applyDAO.save(sub);
 //		cancel = new MyPageDTO.MyApply(e.getTitle(), sub.getMatchStatus());

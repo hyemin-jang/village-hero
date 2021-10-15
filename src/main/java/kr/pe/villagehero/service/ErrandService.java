@@ -124,7 +124,9 @@ public class ErrandService {
 	
 	// 심부름 지원 (도와줄게요) - 심부름 상태 1 (매칭대기중)으로 변경
 	public void updateErrandStatus(long errandId) {
+		System.out.println("실행안됨");
 		Errand e = errandDAO.findById(errandId).get();
+		System.out.println("실행됨" + e);
 		
 		e.setErrandStatus('1');
 		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));

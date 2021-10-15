@@ -17,7 +17,6 @@
 			<button @click="getmyerrands()">내가 요청한 심부름 목록</button>
 			<button @click="getmyapplies()">내가 지원한 심부름 목록(진행중인)</button>
 			<table v-if="myReqBool">
-				<<<<<<< HEAD
 				<tr>
 					<th>No.</th>
 					<th>심부름 제목</th>
@@ -51,8 +50,7 @@
 						v-bind:href="urlPart1+k.errandId">{{v.title}}</a></td>
 					<td v-if="v.matchStatus==0">수락 대기중</td>
 					<td v-if="v.matchStatus==2">다른사람한테 매칭됨</td>
-					<td v-if="v.matchStatus==3">취소됨</td> >>>>>>>
-					af259128ae38c21d29f4c1ce8e516d8b2f4af44f
+					<td v-if="v.matchStatus==3">취소됨</td>
 				</tr>
 			</table>
 			<br>
