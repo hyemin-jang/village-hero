@@ -54,4 +54,11 @@ public class ApplyController {
 		
 		return service.getMyApply(memberId);
 	}
+	
+	//내 심부름 - 해당 지원내역 취소
+	@GetMapping("applycancel")
+	public RedirectView cancel(Long memberId,Long errandId) {
+		service.cancel(memberId, errandId);
+		return new RedirectView();
+	}
 }

@@ -21,6 +21,7 @@ import lombok.Setter;
 @SequenceGenerator(name="member_seq", sequenceName="member_seq", initialValue=1, allocationSize=1)
 public class Member {
 	
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="member_seq")
 	@Column(name="member_id")

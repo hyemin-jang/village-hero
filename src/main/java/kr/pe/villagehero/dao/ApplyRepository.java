@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 
 import kr.pe.villagehero.entity.Apply;
+import kr.pe.villagehero.entity.Errand;
 import kr.pe.villagehero.entity.Member;
 
 public interface ApplyRepository extends CrudRepository<Apply, Long>{
@@ -29,5 +29,6 @@ public interface ApplyRepository extends CrudRepository<Apply, Long>{
 	List<Apply> findMyApply(Member member);
 	// 도와줄게요 (심부름 지원하기)
 	
-
+	@Query("select a from Apply a where a.applicant=:member and a.errand=:errand")
+	Apply findCancelApply(Member member,Errand errand);
 }
