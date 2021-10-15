@@ -21,7 +21,7 @@ import kr.pe.villagehero.entity.Member;
 public class ErrandService {
 
 	@Autowired
-	private ErrandRepository dao;
+	private ErrandRepository errandDAO;
 	
 	@Autowired
 	private MemberRepository memberDAO;
@@ -29,7 +29,7 @@ public class ErrandService {
 	// 존재하는 모든 심부름을 DTO객체로 return
 	public List<ErrandDTO> getAllErrands() {
 		List<ErrandDTO> errandList = new ArrayList<ErrandDTO>();
-		List<Errand> errands = (List<Errand>) dao.findAll();
+		List<Errand> errands = (List<Errand>) errandDAO.findAll();
 
 		errands.forEach(v -> errandList.add(new ErrandDTO(v)));
 
@@ -37,14 +37,14 @@ public class ErrandService {
 	}
 
 	public ErrandDTO getOneErrand(long id) {
-		ErrandDTO errand = new ErrandDTO(dao.findById(id).get());		
+		ErrandDTO errand = new ErrandDTO(errandDAO.findById(id).get());		
 		return errand;
 	}
 	
 	//심부름 삭제
 	public String deleteErrand(long id) {
 		System.out.println("삭제시도2");
-		dao.deleteById(id);
+		errandDAO.deleteById(id);
 		return "삭제성공";
 	}
 	
@@ -53,7 +53,7 @@ public class ErrandService {
 		System.out.println("심부름 수정시도");
 		
 		long errandId = errand.getErrandId();
-		Errand updateErrand = dao.findById(errandId).get();
+		Errand updateErrand = errandDAO.findById(errandId).get();
 
 		try {
 		updateErrand.setTitle(errand.getTitle());
@@ -67,7 +67,7 @@ public class ErrandService {
 		updateErrand.setCreatedAt(updateErrand.getCreatedAt().replace(" 00:00:00", ""));
 		updateErrand.setCompletedAt(updateErrand.getCompletedAt().replace(" 00:00:00", ""));
 		
-		dao.save(updateErrand);
+		errandDAO.save(updateErrand);
 		
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -94,20 +94,20 @@ public class ErrandService {
 
     	Errand errand = new Errand(writer, pay, createdAt, title, content, category, reqLocation, reqDate, errandStatus);
 
-    	System.out.println(createdAt);
-		dao.save(errand);
+    	errandDAO.save(errand);
 		return "심부름 요청 저장 성공";
 	}
 
 	// 존재하는 모든 심부름을 가격순(내림차순)으로 return
 	public List<ErrandDTO> getAllErrandsPayDes() {
 		List<ErrandDTO> all = new ArrayList<ErrandDTO>();
-		List<Errand> all2 = (List<Errand>) dao.findAll();
+		List<Errand> all2 = (List<Errand>) errandDAO.findAll();
 
 		all2.forEach(v -> all.add(new ErrandDTO(v)));
 		all.sort(new PayComparator());
 		return all;
 	}
+	
 	
 	//멤버 id 값으로 저장된 모든 심부름 find
 	public List<MyPageDTO.ErrandDTO2> getAllMyErrands(Long memberId){
@@ -115,13 +115,26 @@ public class ErrandService {
 		List<MyPageDTO.ErrandDTO2> myreqlist = new ArrayList<>();
 		
 		m.ifPresent(member ->{
-			List<Errand> sub = dao.findAllMyReq(member);
+			List<Errand> sub = errandDAO.findAllMyReq(member);
 			
 			sub.forEach(v -> myreqlist.add(new MyPageDTO.ErrandDTO2(v.getTitle(),v.getErrandStatus())));
 		});
 		return myreqlist;
 	}
+	
+	// 심부름 지원 (도와줄게요) - 심부름 상태 1 (매칭대기중)으로 변경
+	public void updateErrandStatus(long errandId) {
+		Errand e = errandDAO.findById(errandId).get();
+		
+		e.setErrandStatus('1');
+		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));
+		e.setCompletedAt(e.getCompletedAt().replace(" 00:00:00", ""));
+		e.setReqDate(e.getReqDate().replace(" 00:00:00", ""));
+		
+		errandDAO.save(e);
+	}
 }
+
 
 class PayComparator implements Comparator<ErrandDTO> {
 	@Override

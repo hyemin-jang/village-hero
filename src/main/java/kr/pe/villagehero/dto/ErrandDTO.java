@@ -14,7 +14,8 @@ import lombok.Setter;
 @Builder
 public class ErrandDTO {
 	private long errandId;
-	private long writer;
+	private long writerId;
+	private String writer;
 	private int pay;
 	private String createdAt;
 	private String title;
@@ -27,7 +28,8 @@ public class ErrandDTO {
 	// entity 객체를 받아서 DTO로 변환해주는 생성자
 	public ErrandDTO(Errand entity) {
 		this.errandId = entity.getErrandId();
-		this.writer = entity.getWriter().getMemberId();
+		this.writerId = entity.getWriter().getMemberId();
+		this.writer = entity.getWriter().getNickname();
 		this.pay = entity.getPay();
 		this.createdAt = entity.getCreatedAt();
 		this.title = entity.getTitle();

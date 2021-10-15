@@ -10,6 +10,7 @@
 
 <!-- 바디 -->
 <body>
+<<<<<<< HEAD
    <!-- header -->
    <div id="header">
       <h1 class="login_title">
@@ -118,6 +119,60 @@
       });
 
       new Vue({
+=======
+	<template id="form">
+		<div>
+			<h3>로그인</h3>
+				<input type="text" v-model="email">
+				<input type="password" v-model="password">
+				<input type="submit" value="로그인" @click="login"><br>
+		</div>
+	</template>
+
+	<div id="app">
+		<form-com></form-com>
+	</div>
+	
+
+	<script>
+		Vue.component("form-com", {
+			template: "#form",
+			data: function(){
+				return {
+					logInMember: "",
+					email: "hm@google.com",
+					password: "123"
+				}
+			},
+			methods: {				
+				login: function(){					
+					axios({
+						method: "get",
+						url: "http://localhost:8088/login",
+						params: {
+							email: this.email,
+							password: this.password
+						},
+					}).then(resData => {		
+						this.logInMember = resData.data;   				
+						sessionStorage.setItem("logInMember", JSON.stringify(this.logInMember));
+						if(this.logInMember==""){
+							alert("비밀번호 혹은 이메일을 확인해주세요.");
+						}else{
+							alert("환영합니다.");
+							document.location.href = '/';
+						}
+						
+					}).catch(error => {
+						alert("비동기실패");
+						console.log("error", error);
+					});  
+				}
+			}				
+		});
+
+		new Vue({
+>>>>>>> 756e3286f59a92d41de3c154f93f551d27079f25
             el: "#app"            
         });
    </script>

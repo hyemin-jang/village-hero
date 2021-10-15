@@ -3,93 +3,115 @@
 <head>
 <meta charset="UTF-8">
 <title>심부름 상세페이지</title>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-	<div class="form">
-	
-		<div id="title" class="py-5 text-center">
-			<h2>심부름 상세페이지</h2>
-		</div>
-
-		<div id="detail">
+	<template id="detail">
+		<div>
+			<div id="title" class="py-5 text-center">
+				<h2>심부름 상세페이지</h2>
+			</div>	
+			
 			<div v-bind="errands">
-
 				<div class="form-group">
 					<p id="title">
-						<span>{{errands.title}}</span> <br> 심부름 상태: <span>{{errands.errandStatus}}</span>
+					<span>{{errands.title}}</span> <br>
+					심부름 상태: <span v-if="errands.errandStatus==1">매칭대기중</span>
 					</p>
 				</div>
 				<hr>
-
+				
 				<div class="form-group">
 					<p id="username">
-						작성자: <span>{{errands.writer}}</span> <br> 요청위치: <span>{{errands.reqLocation}}</span>
+						작성자: <span>{{errands.writer}}</span> <br>
+						요청위치: <span>{{errands.reqLocation}}</span>
 					</p>
 				</div>
 				<hr>
-
+				
 				<div class="form-group">
 					<p id="content1">
-						가격: <span>{{errands.pay}}</span> <br> 분류: <span>{{errands.category}}</span>
-						<br> 요청일시: <span>{{errands.reqDate}}</span> <br>
+						가격: <span>{{errands.pay}}</span> <br>
+						분류: <span>{{errands.category}}</span> <br>
+						요청일시: <span>{{errands.reqDate}}</span> <br>
 					</p>
 				</div>
 				<hr>
 				<div class="form-group">
 					<p id="content2">
-						상세내용 <br> <span>{{errands.content}}</span>
+						상세내용 <br>
+						<span>{{errands.content}}</span>
 					</p>
 				</div>
-
+				
 				<div class="form-group">
 					<a v-if="errands.writer==idCheck" v-bind:href="urlPart1+errands.errandId" >수정하기</a> 
 					<a v-if="errands.writer==idCheck" v-bind:href="urlPart2+errands.errandId" >삭제하기</a> 
-					<a href="list.html">목록으로</a>
-					<a href="apply.html">도와줄게요</a>
+					<a href="list.html" class="btn btn-secondary float-left">목록으로</a>
+					<button @click="showForm" v-if="logInMemberId!=errands.writerId">도와줄게요</button>
 				</div>
 			</div>
-		</div>
-	</div>
 
-	<script>
-		new Vue({
-	        el:"#detail",
-	        data : {
-	        	resData : false,
-	        	errands :"",
-	        	idCheck :"",
-	        	urlPart1 :"http://localhost:8088/getErrandDetail2/",
-	        	urlPart2 :"http://localhost:8088/errandDelete/"
+			<div id="applyForm" v-if="form">
+				<h2>도와줄게요!</h2>	
+				<form action="../apply2" method="post">
+					<input type="hidden" name="errandId" v-bind:value="errands.errandId">
+					<input type="hidden" name="memberId" v-bind:value="logInMemberId">
+					<label for="title">간단한 자기소개와 메세지를 남겨주세요.</label>
+					<div>
+						<textarea name="message" required></textarea>
+					</div>
+	
+					<button type="submit">보내기</button>		
+				</form>
+			</div>
+		</div>
+	</template>
+	
+
+	<div id="app">
+		<detail-com></detail-com>
+	</div>
+	
+ 	<script>
+		Vue.component("detail-com", {
+			template: "#detail",       
+	        data : function(){
+				return {
+					resData : false,
+					errands :"",
+					logInMemberId: JSON.parse(sessionStorage.getItem("logInMember")).memberId,					
+					form: false,
+					idCheck :"",
+		        	urlPart1 :"http://localhost:8088/getErrandDetail2/",
+		        	urlPart2 :"http://localhost:8088/errandDelete/"
+				}
 	        },
-	        created :function(){
-	        	console.log(location.search);
+	        created :function(){	        	
 	        	axios({
 	                method : "get",
 	                url : "http://localhost:8088/errandDetail" + location.search
 	            }).then( resData => {
 	            	this.resData=true;
-	                return this.errands = resData.data;
+	                this.errands = resData.data;
+					console.log(this.errands);
 	            }).catch(errorData => {
 	            	return console.log(errorData);
 	            });
-	        	
-	        	//로그인한 회원의 id 받아오는 비동기 - 그냥 세션스토리지에 있는거로???
-	        	axios({
-	                method : "get",
-	                url : "http://localhost:8088/idCheck"
-	            }).then( resData => {
-	               this.resData=true;
-	               this.idCheck = resData.data;
-	            }).catch(errorData => {
-	            	return console.log(errorData);
-	            });
-	        }
-
+	        },
+			methods: {
+				showForm: function(){
+					this.form = true;
+				}
+			}
 	    });
-	</script>
 
+		new Vue({
+            el: "#app"            
+        });
+	</script>
+	
 </body>
 
 

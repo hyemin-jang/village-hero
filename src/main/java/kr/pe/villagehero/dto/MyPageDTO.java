@@ -77,6 +77,7 @@ public class MyPageDTO {
 	@Builder
 	public static class MyApply{
 		private String title;
+		private String writer;
 		private char matchStatus;
 	}
 	

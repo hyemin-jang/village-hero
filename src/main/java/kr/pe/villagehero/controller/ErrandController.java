@@ -59,13 +59,12 @@ public class ErrandController {
 		return new RedirectView("/errandBoard/list.html");
 	}
 
-	//상세페이지로 이동
+	// 모든 심부름 내역에서 상세페이지로 이동
 	@GetMapping("getErrandDetail/{id}")
-	public RedirectView getErrandId(@PathVariable long id, RedirectAttributes attr) {
-		attr.addAttribute("errandId", id);
+	public RedirectView getNewErrand(@PathVariable long id, RedirectAttributes attr) {
+		attr.addAttribute("errandId", id);  // detail.html로 리다이렉트 할때 ?errandId=id 쿼리스트링을 붙인다
 		return new RedirectView("/errandBoard/detail.html");		
 	}
-	
 
 	//@RequestMapping(value="/errandDetail", method=RequestMethod.DELETE)
 	@GetMapping("/errandDetail")
@@ -90,10 +89,11 @@ public class ErrandController {
 		return errand;
 	}
 
-	// json객체 배열로 errand 테이블의 모든 값
+	// 모든 심부름 조회
 	@GetMapping("errands")
-	public List<ErrandDTO> getAllErrands() {
-		return service.getAllErrands();
+	public List<ErrandDTO> getAllErrands() {		
+		List<ErrandDTO> all = service.getAllErrands();
+		return all;
 	}
 
 	// 심부름 1개 조회
