@@ -26,8 +26,6 @@ public class ErrandController {
 	@Autowired
 	private ErrandService service;
 	
-	@Autowired
-	private ApplyService applyservice;
 	//심부름 수정
 	@PutMapping("updateErrand")
 	public String updateWriter(ErrandDTO.updateErrand errand) {
@@ -111,12 +109,6 @@ public class ErrandController {
 	public List<ErrandDTO> getAllMyErrands(Long memberId){
 
 		return service.getAllMyErrands(memberId);
-	}
-	
-	//내 심부름 - 내가 지원한 심부름 목록 로딩
-	@GetMapping("myerrands/apply")
-	public List<ApplyDTO> getAllMyApply(Long memberId){		
-		return applyservice.getMyApply(memberId);
 	}
 	
 }

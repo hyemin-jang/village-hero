@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.pe.villagehero.dao.MemberRepository;
+import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.dto.MemberDTO.Get;
+import kr.pe.villagehero.entity.Errand;
 import kr.pe.villagehero.entity.Member;
 
 @Service
@@ -54,4 +56,24 @@ public class MemberService {
 		return loginMember;
 	}
 
+	public String updateMember(long id, MemberDTO.update member) {
+		System.out.println("회원 정보 수정 시도2");
+		Member updateMember = dao.findById(id).get();
+
+		try {
+			updateMember.setNickname(member.getNickname());
+			updateMember.setPhone(member.getPhone());
+			updateMember.setAddress(member.getAddress());
+			updateMember.setSpecialty1(member.getSpecialty1());
+			updateMember.setSpecialty2(member.getSpecialty2());
+			updateMember.setSpecialty3(member.getSpecialty3());
+		
+			dao.save(updateMember);
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "회원 정보 수정 성공";
+	}
+		
 }

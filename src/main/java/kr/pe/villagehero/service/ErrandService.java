@@ -63,7 +63,6 @@ public class ErrandService {
 		
 		//날짜 포멧 맞춰주기
 		updateErrand.setCreatedAt(updateErrand.getCreatedAt().replace(" 00:00:00", ""));
-		updateErrand.setCompletedAt(updateErrand.getCompletedAt().replace(" 00:00:00", ""));
 		
 		errandDAO.save(updateErrand);
 		
@@ -123,7 +122,6 @@ public class ErrandService {
 	// 심부름 지원 (도와줄게요) - 심부름 상태 1 (매칭대기중)으로 변경
 	public void updateErrandStatusToWaiting(long errandId) {
 		Errand e = errandDAO.findById(errandId).get();
-		System.out.println("실행됨" + e);
 		
 		e.setErrandStatus('1');
 		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));

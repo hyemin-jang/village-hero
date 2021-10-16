@@ -80,7 +80,7 @@
 								{{v.message}}
 							</div>
 							<div class="submit">
-								<button @click="accept($event)" v-if="v.matchStatus=='0'">{{v.memberId}}</button>
+								<button @click="accept(this.value, $event)" v-bind:value="v.memberId" v-if="v.matchStatus=='0'">수락하기</button>
 								<span v-if="v.matchStatus=='1'" style="background-color: rgb(192, 252, 180); color:rgb(3, 63, 1)">수락한 지원자</span>
 							</div>						
 						</div>
@@ -163,8 +163,8 @@
 	            });
 	        },			
 			methods: {
-				accept: function(event){
-					this.memberIdForAccept = event.currentTarget.innerText;
+				accept: function(id, event){
+					this.memberIdForAccept = event.target.value;
 					console.log(this.memberIdForAccept);
 
 					axios({
