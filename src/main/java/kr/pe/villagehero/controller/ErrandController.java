@@ -28,6 +28,7 @@ public class ErrandController {
 	
 	@Autowired
 	private ApplyService applyservice;
+	
 	//심부름 수정
 	@PutMapping("updateErrand")
 	public String updateWriter(ErrandDTO.updateErrand errand) {

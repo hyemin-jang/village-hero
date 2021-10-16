@@ -18,8 +18,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
-
 @Entity
 @SequenceGenerator(name="errand_seq", sequenceName="errand_seq", initialValue=1, allocationSize=1)
 public class Errand {
@@ -71,68 +71,7 @@ public class Errand {
 		this.errandStatus = errandStatus;
 	}
 
-
-	public void setErrandId(long errandId) {
-		this.errandId = errandId;
-	}
-
-
-	public void setWriter(Member writer) {
-		this.writer = writer;
-	}
-
-
-	public void setCreatedAt(String createdAt) {
-		this.createdAt = createdAt;
-	}
-
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-
-	public void setReqLocation(String reqLocation) {
-		this.reqLocation = reqLocation;
-	}
-
-
-	public void setReqDate(String reqDate) {
-		this.reqDate = reqDate;
-	}
-
-
-	public void setPay(int pay) {
-		this.pay = pay;
-	}
-
-
-	public void setErrandStatus(char errandStatus) {
-		this.errandStatus = errandStatus;
-	}
-
-
-	public void setCompletedAt(String completedAt) {
-		this.completedAt = completedAt;
-	}
-
-	
-
-
-
 //	@OneToMany(mappedBy = "errandId")
 //	List<Apply> applicants = new ArrayList<Apply>();
-	
-	
 	
 }

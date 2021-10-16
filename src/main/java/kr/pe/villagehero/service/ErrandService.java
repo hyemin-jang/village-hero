@@ -63,7 +63,6 @@ public class ErrandService {
 		
 		//날짜 포멧 맞춰주기
 		updateErrand.setCreatedAt(updateErrand.getCreatedAt().replace(" 00:00:00", ""));
-		updateErrand.setCompletedAt(updateErrand.getCompletedAt().replace(" 00:00:00", ""));
 		
 		errandDAO.save(updateErrand);
 		
