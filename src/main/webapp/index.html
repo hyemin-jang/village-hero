@@ -9,447 +9,197 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<!-- <link rel="stylesheet" href="/css/index.css" /> -->
-
-<style>
-
-/**
-	* 레이아웃
-	*/
-	
-html {
-    height: 100%;
-    width: 100%;
-    font-family: 'MaruBuri-Bold';
-}
-
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-/**
-	* 랩
-	*/
-#header-wrap {
-	width: 100%;
-	background-color: red;
-}
-
-/* #nav-wrap {
-	width: 100%;
-	background-color: yellow;
-} */
-
-/* #side-wrap {
-	width: 30%;
-	background-color: yellow;
-} */
-
-#content-wrap {
-	width: 100%;
-	background-color: green;
-}
-
-#footer-wrap {
-	float: left;
-	width: 100%;
-	background-color: black;
-}
-
-/**
-	* 컨테이너
-	*/
-.header-container {
-	width: 1200px;
-	height: 150px;
-	margin: 0 auto;
-	background-color: black;
-	position: relative;
-}
-
-.nav-container {
-	width: 700px;
-	height: 50px;
-	margin: 0 auto;
-	background-color: grey;
-}
-
-.side-container {
-	width: 300px;
-	height: 300px;
-	margin: 0 auto;
-	background-color: red;
-}
-
-.content-container {
-	width: 900px;
-	height: 200px;
-	margin: 0 auto;
-	background-color: yellow;
-	float: right;
-}
-
-.footer-container {
-	width: 1000px;
-	height: 100px;
-	margin: 0 auto;
-	background-color: white;
-}
-
-/**
-	* 헤더 버튼
-	*/
-.btn-header-title {
-	width: 400px;
-	border: 0;
-	color: #07c8ff;
-	background-color: yellow;
-	font-size: 80px;
-	font-weight: 600;
-	cursor: pointer;
-	position: absolute;
-	left: 50%;
-	transform: translate(-50%);
-	top: 15%;
-}
-
-.btn-header-login {
-	width: 90px;
-	border: 0;
-	color: #07c8ff;
-	background-color: blue;
-	font-size: 25px;
-	font-weight: 600;
-	cursor: pointer;
-	position: absolute;
-	right: 15%;
-	top: 65%;
-}
-
-.btn-header-mypage {
-	width: 130px;
-	border: 0;
-	color: #07c8ff;
-	background-color: blue;
-	font-size: 25px;
-	font-weight: 600;
-	cursor: pointer;
-	position: absolute;
-	right: 15%;
-	top: 65%;
-}
-
-.btn-header-join {
-	width: 100px;
-	border: 0;
-	color: #07c8ff;
-	background-color: purple;
-	font-size: 25px;
-	font-weight: 600;
-	cursor: pointer;
-	position: absolute;
-	right: 5%;
-	top: 65%;
-}
-
-.btn-header-logout {
-	width: 100px;
-	border: 0;
-	color: #07c8ff;
-	background-color: purple;
-	font-size: 25px;
-	font-weight: 600;
-	cursor: pointer;
-	position: absolute;
-	right: 5%;
-	top: 65%;
-}
-
-.btn-header-ErrandList {
-	width: 100px;
-	border: 0;
-	color: #07c8ff;
-	background-color: purple;
-	font-size: 25px;
-	font-weight: 600;
-	cursor: pointer;
-	position: absolute;
-	left: 2%;
-	top: 65%;
-}
-
-.btn-header-ErrandReq {
-	width: 110px;
-	border: 0;
-	color: #07c8ff;
-	background-color: blue;
-	font-size: 25px;
-	font-weight: 600;
-	cursor: pointer;
-	position: absolute;
-	left: 11%;
-	top: 65%;
-}
-
-.btn-header-myErrand {
-	width: 110px;
-	border: 0;
-	color: #07c8ff;
-	background-color: green;
-	font-size: 25px;
-	font-weight: 600;
-	cursor: pointer;
-	position: absolute;
-	left: 21%;
-	top: 65%;
-}
-
-/**
-	* 이미지
-	*/
-.pic-header-heroMan {
-	height: 120px;
-	width: auto;
-	position: absolute;
-	left: 10%;
-	top: 8%;
-}
-
-.pic-header-heroWomen {
-	height: 120px;
-	width: auto;
-	position: absolute;
-	right: 8%;
-	top: 8%;
-}
-</style>
-
+<link rel="stylesheet" href="/css/index.css" />
 </head>
 <body>
 	<!-- Header -->
-	<template id="header">
-		
-			<div id="header-wrap">
-				<div class="header-container">
-				
-					<div>
-						<img src="images/manhero.png" class="pic-header-heroMan">
-					</div>
-
-					<div>
-						<img src="images/womenhero.png" class="pic-header-heroWomen">
-					</div>
-
-					<div>
-						<button type="button" class="btn-header-title"
-							onclick="location.href='http://localhost:8088';">
-							<span>동네히어로</span>
-						</button>
-					</div>
-
-					<div>
-						<button type="button" class="btn-header-login"
-							onclick="location.href='http://localhost:8088/login.html';"
-							v-if="!logInCheck">
-							<span>로그인</span>
-						</button>
-					</div>
-
-					<div>
-						<button type="button" class="btn-header-join"
-							onclick="location.href='http://localhost:8088/joinmember.html';"
-							v-if="!logInCheck">
-							<span>회원가입</span>
-						</button>
-					</div>
-
-					<div>
-						<button type="button" class="btn-header-ErrandList"
-							onclick="location.href='http://localhost:8088/login.html';"
-							v-if="!logInCheck">
-							<span>도와줘!</span>
-						</button>
-					</div>
-
-					<div>
-						<button type="button" class="btn-header-ErrandList"
-							onclick="location.href='http://localhost:8088/errandBoard/list.html';"
-							v-if="logInCheck">
-							<span>도와줘!</span>
-						</button>
-					</div>
-
-					<div>
-						<button type="button" class="btn-header-ErrandReq"
-							onclick="location.href='http://localhost:8088/login.html';"
-							v-if="!logInCheck">
-							<span>도와줄게!</span>
-						</button>
-					</div>
-
-					<div>
-						<button type="button" class="btn-header-ErrandReq"
-							onclick="location.href='http://localhost:8088/errandBoard/registration.html';"
-							v-if="logInCheck">
-							<span>도와줄게!</span>
-						</button>
-					</div>
-
-					<div>
-						<button type="button" class="btn-header-myErrand"
-							onclick="location.href='http://localhost:8088/myerrands.html';"
-							v-if="logInCheck">
-							<span>내 심부름</span>
-						</button>
-					</div>
-
-					<div>
-						<button type="button" class="btn-header-mypage"
-							onclick="location.href='http://localhost:8088/mypage.html';"
-							v-if="logInCheck">
-							<span>마이페이지</span>
-						</button>
-					</div>
-
-					<div>
-						<button type="button" class="btn-header-logout"
-							onclick="location.href='http://localhost:8088';"
-							@click="logout()" v-if="logInCheck">
-							<span>로그아웃</span>
-						</button>
-					</div>
-					
+	<template id="header">		
+		<div id="header-wrap">
+			<div class="header-container">	
+				<div class="left">
+					<button type="button" class="header-button"
+						onclick="location.href='http://localhost:8088/login.html';"
+						v-if="!logInCheck">
+						<span>모든 심부름 보기</span>
+					</button>
+					<button type="button" class="header-button"
+						onclick="location.href='http://localhost:8088/errandBoard/list.html';"
+						v-if="logInCheck">
+						<span>모든 심부름 보기</span>
+					</button>
+					<button type="button" class="header-button"
+						onclick="location.href='http://localhost:8088/myerrands.html';"
+						v-if="logInCheck">
+						<span>내 심부름</span>
+					</button>
 				</div>
+
+				<div class="middle">
+					<img src="images/manhero.png" class="pic-header-heroMan">
+					<button class="header-logo" onclick="'http://localhost:8088'"><b>동네히어로</b></button>						
+					<img src="images/womenhero.png" class="pic-header-heroWomen">
+				</div>	
+
+				<div class="right">
+					<button type="button" class="header-button" 
+						onclick="location.href='http://localhost:8088/login.html';"
+						v-if="!logInCheck">
+						로그인
+					</button>
+					<button type="button" class="header-button"
+						onclick="location.href='http://localhost:8088/joinmember.html';"
+						v-if="!logInCheck">
+						회원가입
+					</button>	
+					<button type="button" class="header-button"
+						onclick="location.href='http://localhost:8088/mypage.html';"
+						v-if="logInCheck">
+						<span>마이페이지</span>
+					</button>		
+					<button type="button" class="header-button"
+						onclick="location.href='http://localhost:8088';"
+						@click="logout()" v-if="logInCheck">
+						<span>로그아웃</span>
+					</button>		
+				</div>		
 			</div>
-			
-	</template>
-	
-	<template id="container">
-		<div id="content-wrap">
-				<div class="side-container" v-for="errand in allErrands">
-				
-					<div class="title">{{errand.title}}</div>
+		</div>		
+</template>
+
+<template id="container">
+	<div id="content-wrap">
+		<div class="side-container">
+			<div class="side-title">지금 당신‍을 기다리는 심부름</div>
+			<div class="side-content">
+				<div class="errand" v-for="errand in allErrands">		
+					<div class="title"><b>{{errand.title}}</b></div>
 					<div class="reqLoc">{{errand.reqLocation}}</div>
-					<div class="#">
-						<a href="errandBoard/apply.html">도와줄게요</a>
-					</div>
+					<br>
+					<div style="text-align:right;"><a href="#">자세히 보기</a></div>
 				</div>
-				
-			<div class="content-container">
-				<div id="map" style="width: 900px; height:900px;"></div>					
 			</div>
-			
 		</div>
-	</template>	
+			
+		<div class="content-container">
+			<div id="map" style="height:800px;"></div>					
+		</div>
+	</div>	
+</template>	
 
 
 
-	<!-- component -->
-	<div id="app">
-		<header-com></header-com>
-		<container-com></container-com>
-	</div>
+<!-- component -->
+<div id="app">
+	<header-com></header-com>
+	<container-com></container-com>
+</div>
 
 
-	<script>
-		// header 컴포넌트
-		Vue.component("header-com", {
-			template: "#header",
-			data: function(){
-				return {
-					logInCheck: sessionStorage.getItem("logInMember")
-				}
-			},
-			methods:{
-				logout : function(){
-					sessionStorage.removeItem("logInMember");
-				}
+<script>
+	// header 컴포넌트
+	Vue.component("header-com", {
+		template: "#header",
+		data: function(){
+			return {
+				logInCheck: sessionStorage.getItem("logInMember")
 			}
-		});		
-		
-		
-		// container 컴포넌트
-		Vue.component("container-com", {
-			template: "#container",
-			data: function(){
-				return {
-					allErrands: [],		
-					errandLocations: []			
-				}
-			},			
-			created: function(){				
-				axios({
-					method: "get",
-					url: "http://localhost:8088/errands"		
-				}).then(resData => {						      			
-					this.allErrands = resData.data;   
+		},
+		methods:{
+			logout : function(){
+				sessionStorage.removeItem("logInMember");
+			}
+		}
+	});		
+	
+	
+	// container 컴포넌트
+	Vue.component("container-com", {
+		template: "#container",
+		data: function(){
+			return {
+				allErrands: [],		
+				errandCoords: [],
+				errandTitles: []					
+			}
+		},	
+		created: function(){				
+			axios({
+				method: "get",
+				url: "http://localhost:8088/errands"		
+			}).then(resData => {						      			
+				this.allErrands = resData.data;   
 
-					/*** 지도 생성하기 ***/
-					var mapContainer = document.getElementById("map"); // 지도를 표시할 div 				
-					var mapOption = { 
-						center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-						level: 4 // 지도의 확대 레벨
-					};				
-					var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 표시할 div와 지도 옵션으로 지도를 생성
+				/*** 지도 생성하기 ***/
+				var mapContainer = document.getElementById("map"); // 지도를 표시할 div 				
+				var mapOption = { 
+					center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+					level: 4 // 지도의 확대 레벨
+				};				
+				var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 표시할 div와 지도 옵션으로 지도를 생성
 
-					if (navigator.geolocation) {					
-						navigator.geolocation.getCurrentPosition(function(position) { // GeoLocation을 이용해서 현 접속 위치 가져오기				
-							var lat = position.coords.latitude; // 위도
-							var	lon = position.coords.longitude; // 경도						
-							var locPosition = new kakao.maps.LatLng(lat, lon); 		
+				if (navigator.geolocation) {					
+					navigator.geolocation.getCurrentPosition(function(position) { // GeoLocation을 이용해서 현 접속 위치 가져오기				
+						var lat = position.coords.latitude; // 위도
+						var	lon = position.coords.longitude; // 경도						
+						var locPosition = new kakao.maps.LatLng(lat, lon); 		
 
-							map.setCenter(locPosition); // 지도 중심위치를 현 접속위치로 변경						
+						map.setCenter(locPosition); // 지도 중심위치를 현 접속위치로 변경						
+					});
+				}					
+
+				/*** 지도에 마커 표시 ***/				
+				var geocoder = new kakao.maps.services.Geocoder(); // 주소-좌표 변환 객체를 생성
+				
+				this.allErrands.forEach((errand) => {				
+					// 인포윈도우에 표시할 내용 정의
+					var iwContent = `
+						<div style="padding:10px; width:300px;">
+							<b style="font-size:20px;">${errand.title}</b><br>
+							${errand.reqLocation}
+						</div>
+					`
+
+
+					// 문자열 주소를 좌표로 변환하는 함수
+					geocoder.addressSearch(errand.reqLocation, function(result, status) {	
+						if (status === kakao.maps.services.Status.OK) { 								
+							var coords = new kakao.maps.LatLng(result[0].y, result[0].x);  // 좌표로 변환된 위치
+						}
+
+						// 결과값으로 받은 위치를 마커로 표시
+						var marker = new kakao.maps.Marker({
+							map: map,
+							position: coords
+						});		
+
+						// 인포윈도우 생성
+						var infowindow = new kakao.maps.InfoWindow({													
+							content: iwContent
 						});
-					}					
-
-					/*** 지도에 마커 표시 ***/				
-					var geocoder = new kakao.maps.services.Geocoder(); // 주소-좌표 변환 객체를 생성
-					
-					for (var errand of this.allErrands){					
-						console.log("for문 최상단 " + errand.title);
-						// 심부름 주소를 좌표값으로 변환하기
-						geocoder.addressSearch(errand.reqLocation, function(result, status) {	
-							console.log("geocoder.addressSearch 함수내 " + errand.title);
-							if (status === kakao.maps.services.Status.OK) { 	
-								console.log("if블럭 내 " + errand.title);
-								// 좌표로 변환된 위치
-								var coords = new kakao.maps.LatLng(result[0].y, result[0].x);  
-								var title = errand.title;		
-							}
-
-							// 결과값으로 받은 위치를 마커로 표시
-							var marker = new kakao.maps.Marker({
-								map: map,
-								position: coords
-							});		
-							
-							// 인포윈도우 생성
-							var infowindow = new kakao.maps.InfoWindow({
-								position : coords, 
-								content : title
-							});
-
-							// 마커에 이벤트 등록
-							kakao.maps.event.addListener(marker, 'mouseover', function(){  
-								infowindow.open(map, marker);
-							});
-							kakao.maps.event.addListener(marker, 'mouseout', function(){
-								infowindow.close();
-							});
+						
+						// 마커에 이벤트 등록
+						kakao.maps.event.addListener(marker, 'mouseover', function(){  
+							infowindow.open(map, marker);
 						});
-					}
-				}).catch(error => {
-					console.log("error", error);
-				});  				
-			},
-		});
+						kakao.maps.event.addListener(marker, 'mouseout', function(){
+							infowindow.close();
+						});		
+						kakao.maps.event.addListener(marker, 'click', function() {
+							document.location.href=`http://localhost:8088/errandBoard/detail.html?errandId=${errand.errandId}`
+						});				
+					});									
+				})
+			}).catch(error => {
+				console.log("error", error);
+			});  				
+		},
+	});
 
-		new Vue({
-            el: "#app"            
-        });
-	</script>
+	new Vue({
+		el: "#app"            
+	});
+</script>
+
 
 </body>
 </html>
