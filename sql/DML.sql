@@ -17,6 +17,7 @@ insert into errand values(errand_seq.nextval, 1, '2021-10-16', '코드좀 대신 짜주
 
 -- [심부름 지원]
 insert into apply values(apply_seq.nextval, 3, 1, '파주지역 이거저거 배달 가능합니다! 불러주세요~', '2021-10-13', 0);
+INSERT INTO apply values(apply_seq.nextval, 3, 4, '제가함', '2021-10-13', 0);
 insert into apply values(apply_seq.nextval, 1, 2, '청소 및 모든 집안일 겁나 잘합니다ㅎㅎ', '2021-10-11', 2);
 insert into apply values(apply_seq.nextval, 1, 3, '등촌동 벌레잡이입니다. 맡겨주세요.', '2021-10-11', 1);
 insert into apply values(apply_seq.nextval, 2, 3, '마당있는 전원주택입니다^^반려친구들과 편하게 방문하세요^^', '2021-10-14', 2);
@@ -24,5 +25,3 @@ insert into apply values(apply_seq.nextval, 4, 2, '우와 강아지야 내가 태워줄게',
 
 commit;
 
-SELECT * FROM errand;
-SELECT * FROM APPLY a ;

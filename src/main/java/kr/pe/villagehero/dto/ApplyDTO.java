@@ -14,6 +14,7 @@ public class ApplyDTO {
 	@Setter
 	@Builder
 	public static class List {
+		private char matchStatus;
 		private long memberId;
 		private String nickname;
 		private char gender;

@@ -2,6 +2,9 @@ package kr.pe.villagehero.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -30,6 +33,15 @@ public interface ApplyRepository extends CrudRepository<Apply, Long>{
 	
 	// 심부름 상세페이지에서 모든 지원 내역 출력
 	List<Apply> findByErrand(Errand e);
-	
 
+	@Transactional
+	@Modifying
+	@Query(value="update Apply a set a.matchStatus=1 where a.errand=:e and a.applicant=:m", nativeQuery=false)
+	void updateMyApplyStatus(Errand e, Member m);
+
+	@Transactional
+	@Modifying
+	@Query(value="update Apply a set a.matchStatus=2 where a.errand=:e and a.applicant!=:m", nativeQuery=false)
+	void updateOtherApplyStatus(Errand e, Member m);
+	
 }

@@ -119,7 +119,8 @@ public class ApplyService {
 		Errand e = errandDAO.findById(errandId).get();
 		
 		List<Apply> all = applyDAO.findByErrand(e);
-		all.forEach(v -> applyList.add(new ApplyDTO.List(v.getApplicant().getMemberId(),
+		all.forEach(v -> applyList.add(new ApplyDTO.List(v.getMatchStatus(),
+														v.getApplicant().getMemberId(),
 														v.getApplicant().getNickname(),
 														v.getApplicant().getGender(),
 														v.getApplicant().getBirthYear(),
@@ -130,5 +131,16 @@ public class ApplyService {
 														v.getApplicant().getScore(),
 														v.getMessage())));
 		return applyList;
+	}
+
+	// 지원 수락
+	public void acceptApply(long errandId, long memberId) {
+		Errand e = errandDAO.findById(errandId).get();
+		Member m = memberDAO.findById(memberId).get();
+		System.out.println("서비스 e: " + e);
+		System.out.println("서비스 m: " + m);
+		
+		applyDAO.updateMyApplyStatus(e, m);
+		applyDAO.updateOtherApplyStatus(e, m);
 	}
 }
