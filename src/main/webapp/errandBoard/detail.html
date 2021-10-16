@@ -64,7 +64,7 @@
 				</div>
 
 				<!-- 지원자 내역 list -->
-				<div id="modal-wrap"  v-if="list">					
+				<div class="modal-wrap"  v-if="list">					
 					<div id="applicantList">
 						<div v-if="applicants.length==0">아직 지원자가 없습니다.</div>
 						<div v-else class="applicant" v-for="v in applicants">
@@ -80,7 +80,7 @@
 							<div class="message">
 								{{v.message}}
 							</div>
-							<div class="accept">
+							<div class="submit">
 								<button @click="accept($event)" v-if="v.matchStatus=='0'">{{v.memberId}}</button>
 								<span v-if="v.matchStatus=='1'" style="background-color: rgb(192, 252, 180); color:rgb(3, 63, 1)">수락한 지원자</span>
 							</div>						
@@ -92,18 +92,22 @@
 				</div>	
 				
 				<!-- 심부름 지원 폼 -->
-				<div id="applyForm" v-if="form">
-					<h2>도와줄게요!</h2>	
-					<form action="../apply" method="post">
-						<input type="hidden" name="errandId" v-bind:value="errands.errandId">
-						<input type="hidden" name="memberId" v-bind:value="logInMemberId">
-						<label for="title">간단한 자기소개와 메세지를 남겨주세요.</label>
-						<div>
-							<textarea name="message" required></textarea>
+				<div class="modal-wrap" v-if="form">
+					<div id="applyForm">
+						<h2>도와줄게요!</h2>	
+						<form action="../apply" method="post">
+							<input type="hidden" name="errandId" v-bind:value="errands.errandId">
+							<input type="hidden" name="memberId" v-bind:value="logInMemberId">
+							<label for="title">간단한 자기소개와 메세지를 남겨주세요.</label>
+							<div>
+								<textarea name="message" required></textarea>
+								<button type="submit">보내기</button>		
+							</div>	
+						</form>
+						<div class="submit">							
+							<span class="close" @click="closeForm" >닫기</span>
 						</div>
-
-						<button type="submit">보내기</button>		
-					</form>
+					</div>
 				</div>
 
 
@@ -174,11 +178,10 @@
 					});	
 				},
 				showForm: function(){
-					if (this.form == false){
-						this.form = true;
-					}else{
-						this.form = false;
-					}
+					this.form = true;
+				},
+				closeForm: function(){
+					this.form = false;
 				},
 				showApplicants: function(){					
 					this.list = true;					
