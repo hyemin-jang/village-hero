@@ -1,5 +1,7 @@
 package kr.pe.villagehero.dto;
 
+import javax.persistence.Id;
+
 import kr.pe.villagehero.entity.Apply;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -77,6 +79,7 @@ public class MyPageDTO {
 	@Builder
 	public static class MyApply{
 		private String title;
+		private String writer;
 		private char matchStatus;
 	}
 	

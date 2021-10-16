@@ -49,8 +49,7 @@
 					<!-- Login BTN-->
 					<div class="btn_area">
 						<input type="submit" id="btnJoin" value="로그인" @click="logInCheck">
-						<br>
-						<br>
+						<br> <br>
 						<button type="button" id="btnJoin"
 							onclick="location.href='http://localhost:8088/joinmember.html';">
 							<span>회원가입</span>
@@ -60,7 +59,7 @@
 				</div>
 			</template>
 			<!-- template -->
-			
+
 			<!-- component -->
 			<div id="app">
 				<form-com></form-com>
@@ -76,10 +75,9 @@
 
 
 
-
 	<!-- Vue -->
 	<script>
-		Vue.component("form-com", {
+	   Vue.component("form-com", {
 			template: "#form",
 			data: function(){
 				return {
@@ -95,15 +93,12 @@
 					axios({
 						method: "get",
 						url: "http://localhost:8088/login?email="+this.email+"&password="+this.password,
-						data: {
-							email: this.email,
-							password: this.password
-						},
 					}).then(resData => {		
 						this.logInMember = resData.data;   				
 						sessionStorage.setItem("logInMember", JSON.stringify(this.logInMember));
 						if(this.logInMember==""){
-							alert("이메일 또는 이메일을 확인해주세요.");
+							console.log("비밀번호 및 이메일 입력 실패시 요청 잘옴?")
+							alert("이메일 또는 비밀번호를 확인하세요.");
 						}else{
 							alert("환영합니다.");
 							document.location.href = '/';
@@ -116,11 +111,11 @@
 				}
 			}				
 		});
-
+	
 		new Vue({
-            el: "#app"            
-        });
-	</script>
+	       el: "#app"            
+	   });
+   </script>
 
 </body>
 </html>

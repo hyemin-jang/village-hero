@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 
 import kr.pe.villagehero.entity.Apply;
+import kr.pe.villagehero.entity.Errand;
 import kr.pe.villagehero.entity.Member;
 
 public interface ApplyRepository extends CrudRepository<Apply, Long>{
@@ -27,7 +27,10 @@ public interface ApplyRepository extends CrudRepository<Apply, Long>{
 
 	@Query("select a from Apply a where a.applicant=:member and a.matchStatus!=1 and a.matchStatus!=3")
 	List<Apply> findMyApply(Member member);
-	// 도와줄게요 (심부름 지원하기)
 	
-
+	// 심부름 상세페이지에서 모든 지원 내역 출력
+	List<Apply> findByErrand(Errand e);
+	
+	@Query("select a from Apply a where a.applicant=:member and a.errand=:errand")
+	Apply findCancelApply(Member member,Errand errand);
 }

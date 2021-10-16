@@ -36,7 +36,7 @@ CREATE TABLE errand (
 	   req_location		VARCHAR2(100) NOT NULL,
 	   req_date			DATE NOT NULL,
 	   pay				NUMBER(10) NOT NULL,
-	   errand_status	NUMBER(2) DEFAULT 0,
+	   errand_status	CHAR DEFAULT '0',
 	   completed_at		DATE
 );
 
@@ -50,6 +50,6 @@ CREATE TABLE apply (
 	   match_status		NUMBER(2) DEFAULT 0	   
 );
 
-ALTER TABLE errand ADD FOREIGN KEY (writer) REFERENCES MEMBER (member_id);
+ALTER TABLE errand ADD FOREIGN KEY (writer) REFERENCES MEMBER (member_id) ON DELETE CASCADE;
 ALTER TABLE apply ADD FOREIGN KEY (member_id) REFERENCES MEMBER (member_id);
-ALTER TABLE apply ADD FOREIGN KEY (errand_id) REFERENCES errand (errand_id);
+ALTER TABLE apply ADD FOREIGN KEY (errand_id) REFERENCES errand (errand_id) ON DELETE CASCADE;
