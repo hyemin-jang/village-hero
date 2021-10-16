@@ -120,10 +120,8 @@ public class ErrandService {
 	}
 	
 	// 심부름 지원 (도와줄게요) - 심부름 상태 1 (매칭대기중)으로 변경
-	public void updateErrandStatus(long errandId) {
-		System.out.println("실행안됨");
+	public void updateErrandStatusToWaiting(long errandId) {
 		Errand e = errandDAO.findById(errandId).get();
-		System.out.println("실행됨" + e);
 		
 		e.setErrandStatus('1');
 		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));
@@ -133,6 +131,16 @@ public class ErrandService {
 	}
 	
 	
+	// 지원 수락 - 심부름 상태 2로 변경
+	public void updateErrandStatusToMatched(long errandId) {
+		Errand e = errandDAO.findById(errandId).get();
+		
+		e.setErrandStatus('2');
+		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));		
+		e.setReqDate(e.getReqDate().replace(" 00:00:00", ""));		
+		
+		errandDAO.save(e);
+	}
 }
 
 
