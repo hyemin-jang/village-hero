@@ -42,8 +42,10 @@ public class ErrandService {
 	}
 	
 	//심부름 삭제
-	public void deleteErrand(long id) {
+	public String deleteErrand(long id) {
+		System.out.println("삭제시도2");
 		errandDAO.deleteById(id);
+		return "삭제성공";
 	}
 	
 	//심부름 수정
@@ -108,32 +110,39 @@ public class ErrandService {
 	
 	
 	//멤버 id 값으로 저장된 모든 심부름 find
-	public List<ErrandDTO> getAllMyErrands(Long memberId){
+	public List<MyPageDTO.ErrandDTO2> getAllMyErrands(Long memberId){
 		Optional<Member> m = memberDAO.findById(memberId);
-		List<ErrandDTO> myreqlist = new ArrayList<>();
+		List<MyPageDTO.ErrandDTO2> myreqlist = new ArrayList<>();
 		
 		m.ifPresent(member ->{
 			List<Errand> sub = errandDAO.findAllMyReq(member);
 			
-			sub.forEach(v -> myreqlist.add(new ErrandDTO(v)));
+			sub.forEach(v -> myreqlist.add(new MyPageDTO.ErrandDTO2(v.getTitle(),v.getErrandStatus())));
 		});
 		return myreqlist;
 	}
 	
 	// 심부름 지원 (도와줄게요) - 심부름 상태 1 (매칭대기중)으로 변경
-	public void updateErrandStatus(long errandId) {
-		System.out.println("실행안됨");
+	public void updateErrandStatusToWaiting(long errandId) {
 		Errand e = errandDAO.findById(errandId).get();
-		System.out.println("실행됨" + e);
 		
 		e.setErrandStatus('1');
-		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));
-		e.setReqDate(e.getReqDate().replace(" 00:00:00", ""));
+		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));		
+		e.setReqDate(e.getReqDate().replace(" 00:00:00", ""));		
 		
 		errandDAO.save(e);
 	}
 	
-	
+	// 지원 수락 - 심부름 상태 2로 변경
+	public void updateErrandStatusToMatched(long errandId) {
+		Errand e = errandDAO.findById(errandId).get();
+		
+		e.setErrandStatus('2');
+		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));		
+		e.setReqDate(e.getReqDate().replace(" 00:00:00", ""));		
+		
+		errandDAO.save(e);
+	}
 }
 
 

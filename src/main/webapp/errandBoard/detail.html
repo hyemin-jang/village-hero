@@ -5,45 +5,91 @@
 <title>심부름 상세페이지</title>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+	<link rel="stylesheet" href="/css/index.css" />
+	<link rel="stylesheet" href="/css/detail.css" />
+</head>
 </head>
 <body>
-	<template id="detail">
-		<div>
-			<div id="title" class="py-5 text-center">
-				<h2>심부름 상세페이지</h2>
-			</div>	
-			
-			<div v-bind="errands">
-				<div class="form-group">
-					<p id="title">
-					<span>{{errands.title}}</span> <br>
-					심부름 상태: <span v-if="errands.errandStatus==1">매칭대기중</span>
-					</p>
+	<template id="detail">		
+		<div>		
+			<div class="main-container">				
+						
+				<!-- 심부름 상세 내용 출력 -->
+				<div id="errandDetail">						
+					<div class="status" v-if="errands.errandStatus==0" style="background-color: rgb(228, 232, 236);">지원자 대기중</div>
+					<div class="status" v-if="errands.errandStatus==1" style="background-color:rgb(178, 222, 252); color:rgb(2, 64, 116)">매칭 대기중</div>
+					<div class="status" v-if="errands.errandStatus==2" style="background-color: rgb(192, 252, 180); color:rgb(3, 63, 1)">매칭 완료</div>
+					<div class="status" v-if="errands.errandStatus==3" style="background-color: rgb(253, 219, 230); color:rgb(63, 1, 11)">심부름 완료</div>
+					
+					<div v-bind="errands">
+						<div class="title">
+							{{errands.title}}
+						</div>
+						<div class="write-info">
+							<span class="category">
+								{{errands.category}}
+							</span>
+							<span class="writer">
+								<span>{{errands.writer}} ·</span>
+								<span>{{errands.createdAt}}</span>
+							</span>
+						</div>
+						<hr>
+						<div class="errand-info">
+							<div class="content">
+								{{errands.content}}
+							</div>
+							<div class="info">
+								<div class="info-each"><b>요청일시</b><span style="margin-left: 10px;">{{errands.reqDate}}</span></div>
+								<div class="info-each"><b>요청위치</b><span style="margin-left: 10px;">{{errands.reqLocation}}</span></div>	
+							</div>
+							<hr>
+							<div class="pay">
+								<b>{{errands.pay}}</b>원
+							</div>
+						</div>						
+					</div>
+					<div class="bottom">
+						<span class="left">
+							<button @click="showApplicants" v-if="errands.writerId == logInMemberId">지원자 보기</button>
+							<button @click="showForm" v-if="logInMemberId!=errands.writerId & errands.errandStatus==0"><b>도와줄게요!</b></button>
+						</span>
+						<span class="right">
+							<a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart1+errands.errandId" >수정하기</a> 
+							<a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart2+errands.errandId" >삭제하기</a> 
+							<a href="list.html" class="btn btn-secondary float-left">목록으로</a>
+						</span>
+					</div>
 				</div>
-				<hr>
-				
-				<div class="form-group">
-					<p id="username">
-						작성자: <span>{{errands.writer}}</span> <br>
-						요청위치: <span>{{errands.reqLocation}}</span>
-					</p>
-				</div>
-				<hr>
-				
-				<div class="form-group">
-					<p id="content1">
-						가격: <span>{{errands.pay}}</span> <br>
-						분류: <span>{{errands.category}}</span> <br>
-						요청일시: <span>{{errands.reqDate}}</span> <br>
-					</p>
-				</div>
-				<hr>
-				<div class="form-group">
-					<p id="content2">
-						상세내용 <br>
-						<span>{{errands.content}}</span>
-					</p>
-				</div>
+
+				<!-- 지원자 내역 list -->
+				<div class="modal-wrap"  v-if="list">					
+					<div id="applicantList">
+						<div v-if="applicants.length==0">아직 지원자가 없습니다.</div>
+						<div v-else class="applicant" v-for="v in applicants">
+							<div class="applicant-info">
+								<b style="color:black; font-size:20px;">{{v.nickname}}</b><br>
+								{{v.gender}} ·
+								{{v.birthYear}}년생 ·
+								{{v.specialty1}} 
+								{{v.specialty2}} 
+								{{v.specialty3}}<br>
+								{{v.phone}}
+							</div>
+							<div class="message">
+								{{v.message}}
+							</div>
+							<div class="submit">
+								<button @click="accept($event)" v-if="v.matchStatus=='0'">{{v.memberId}}</button>
+								<span v-if="v.matchStatus=='1'" style="background-color: rgb(192, 252, 180); color:rgb(3, 63, 1)">수락한 지원자</span>
+							</div>						
+						</div>
+						<div class="bottom">
+							<span class="close" @click="closeApplicants">닫기</span>
+						</div>
+					</div>
+				</div>	
 				
 				<div class="form-group">
 					<a v-if="errands.writerId==logInMemberId" v-bind:href="urlPart1+errands.errandId" >수정하기</a> 
@@ -52,47 +98,27 @@
 					<!-- 도와줄게요 버튼 출력 조건 : 다른 사람이 등록한 심부름일때 / 심부름 상태가 지원자 대기중(0)일때만 -->
 					<button @click="showForm" v-if="logInMemberId!=errands.writerId & errands.errandStatus==0">도와줄게요</button>
 					<button @click="showApplicants">지원자 보기</button>
-				</div>
-			</div>
-
-			
-			<div id="applyForm" v-if="form">
-				<h2>도와줄게요!</h2>	
-				<form action="../apply" method="post">
-					<input type="hidden" name="errandId" v-bind:value="errands.errandId">
-					<input type="hidden" name="memberId" v-bind:value="logInMemberId">
-					<label for="title">간단한 자기소개와 메세지를 남겨주세요.</label>
-					<div>
-						<textarea name="message" required></textarea>
+				<!-- 심부름 지원 폼 -->
+				<div class="modal-wrap" v-if="form">
+					<div id="applyForm">
+						<h2>도와줄게요!</h2>	
+						<form action="../apply" method="post">
+							<input type="hidden" name="errandId" v-bind:value="errands.errandId">
+							<input type="hidden" name="memberId" v-bind:value="logInMemberId">
+							<label for="title">간단한 자기소개와 메세지를 남겨주세요.</label>
+							<div>
+								<textarea name="message" required></textarea>
+								<button type="submit">보내기</button>		
+							</div>	
+						</form>
+						<div class="submit">							
+							<span class="close" @click="closeForm" >닫기</span>
+						</div>
 					</div>
-	
-					<button type="submit">보내기</button>		
-				</form>
-			</div>
+				</div>
 
-			<div id="applicantList" v-if="list">
-				<table>
-					<tr>
-						<td>지원자</td>
-						<td>성별</td>
-						<td>나이</td>
-						<td>전문분야1</td>
-						<td>전문분야2</td>
-						<td>전문분야3</td>
-						<td>연락처</td>
-						<td>메세지</td>
-					</tr>
-					<tr v-for="v in applicants">
-						<td>{{v.nickname}}</td>
-						<td>{{v.gender}}</td>
-						<td>{{v.birthYear}}</td>
-						<td>{{v.specialty1}}</td>
-						<td>{{v.specialty2}}</td>
-						<td>{{v.specialty3}}</td>
-						<td>{{v.phone}}</td>
-						<td>{{v.message}}</td>
-					</tr>
-				</table>
+
+				
 			</div>
 		</div>
 	</template>
@@ -110,11 +136,14 @@
 					resData : false,
 					errands :"",
 					applicants: "",
-					logInMemberId: JSON.parse(sessionStorage.getItem("logInMember")).memberId,					
+					logInMemberId: JSON.parse(sessionStorage.getItem("logInMember")).memberId,	
+					memberIdForAccept: "",
+					errandIdForAccept: "",				
 					form: false,
 					list: false,
 		        	urlPart1 :"http://localhost:8088/getErrandDetail2/",
-		        	urlPart2 :"http://localhost:8088/errandDelete/"
+		        	urlPart2 :"http://localhost:8088/errandDelete/",
+					//urlPart3 : "http://localhost:8088/accept?errandId="+this.errandId+"&memberId="+this.logInMemberId
 				}
 	        },
 	        created :function(){	        	
@@ -124,9 +153,11 @@
 	            }).then( resData => {
 	            	this.resData=true;
 	                this.errands = resData.data;
+					this.errandIdForAccept = resData.data.errandId;
 	            }).catch(errorData => {
 	            	return console.log(errorData);
 	            });	
+				
 				
 				// 모든 지원자 내역 가져오기
 				axios({
@@ -134,25 +165,36 @@
 	                url : "http://localhost:8088/applicants" + location.search
 	            }).then( resData => {
 	                this.applicants = resData.data;
-					console.log(this.applicants[0]);
+	                console.log(this.applicants[0]);
 	            }).catch(errorData => {
 	            	return console.log(errorData);
 	            });
 	        },			
 			methods: {
-				showForm: function(){
-					if (this.form == false){
-						this.form = true;
-					}else{
-						this.form = false;
-					}
+				accept: function(event){
+					this.memberIdForAccept = event.currentTarget.innerText;
+					console.log(this.memberIdForAccept);
+
+					axios({
+						method : "get",
+						url : "http://localhost:8088/accept?errandId="+this.errandIdForAccept+"&memberId="+this.memberIdForAccept
+					}).then( 
+						alert("수락이 완료되었습니다.")
+					).catch(errorData => {
+						return console.log(errorData);
+					});	
 				},
-				showApplicants: function(){
-					if (this.list == false){
-						this.list = true;
-					}else{
-						this.list = false;
-					}
+				showForm: function(){
+					this.form = true;
+				},
+				closeForm: function(){
+					this.form = false;
+				},
+				showApplicants: function(){					
+					this.list = true;					
+				},
+				closeApplicants: function(){
+					this.list = false;
 				}
 			}
 	    });

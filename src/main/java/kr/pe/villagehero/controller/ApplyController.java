@@ -14,6 +14,7 @@ import kr.pe.villagehero.service.ApplyService;
 import kr.pe.villagehero.service.ErrandService;
 
 @RestController
+//@SessionAttributes({"loginMember"})
 public class ApplyController {
 
 	@Autowired
@@ -38,22 +39,31 @@ public class ApplyController {
 	public RedirectView apply(long errandId, long memberId, String message) {		
 		
 		service.addApply(errandId, memberId, message);  // apply 테이블에 지원내역 추가
-		errandService.updateErrandStatus(errandId);  // 해당 심부름 상태 1 (지원자대기중) 으로 변경
+		errandService.updateErrandStatusToWaiting(errandId);  // 해당 심부름 상태 1 (지원자대기중) 으로 변경
 		
 		return new RedirectView("myerrands.html");
 	}
 	
-	//내 심부름 - 해당 지원내역 취소
-	@GetMapping("applycancel")
-	public RedirectView cancel(Long memberId,Long errandId) {
-		service.cancel(memberId, errandId);
-		return new RedirectView("myerrands.html");
+	//내 심부름 - 내가 지원한 심부름 목록 로딩
+	@GetMapping("myerrands/apply")
+	public List<MyPageDTO.MyApply> getAllMyApply(Long memberId){		
+		return service.getMyApply(memberId);
 	}
 	
 	// 심부름 상세페이지에서 모든 지원자 목록 조회
 	@GetMapping("applicants")
 	public List<ApplyDTO.List> getAllApplicants(long errandId) {
-		System.out.println("지원자조회: 심부름아이디- " + errandId);
 		return service.getAllApplicants(errandId);
 	}
+	
+	// 지원 수락하기
+	@GetMapping("accept")
+	public RedirectView acceptApply(long errandId, long memberId) {
+		System.out.println("수락 컨트롤러: " + errandId + memberId);
+		service.acceptApply(errandId, memberId);
+		errandService.updateErrandStatusToMatched(errandId);
+		
+		return new RedirectView("index.html");
+	}
+	
 }
