@@ -1,5 +1,7 @@
 package kr.pe.villagehero.dto;
 
+import javax.persistence.Id;
+
 import kr.pe.villagehero.entity.Apply;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

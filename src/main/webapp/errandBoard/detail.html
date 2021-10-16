@@ -91,6 +91,7 @@
 					</div>
 				</div>	
 				
+<<<<<<< HEAD
 				<!-- 심부름 지원 폼 -->
 				<div class="modal-wrap" v-if="form">
 					<div id="applyForm">
@@ -108,6 +109,15 @@
 							<span class="close" @click="closeForm" >닫기</span>
 						</div>
 					</div>
+=======
+				<div class="form-group">
+					<a v-if="errands.writerId==logInMemberId" v-bind:href="urlPart1+errands.errandId" >수정하기</a> 
+					<a v-if="errands.writerId==logInMemberId" v-bind:href="urlPart2+errands.errandId" >삭제하기</a> 
+					<a href="list.html" class="btn btn-secondary float-left">목록으로</a>
+					<!-- 도와줄게요 버튼 출력 조건 : 다른 사람이 등록한 심부름일때 / 심부름 상태가 지원자 대기중(0)일때만 -->
+					<button @click="showForm" v-if="logInMemberId!=errands.writerId & errands.errandStatus==0">도와줄게요</button>
+					<button @click="showApplicants">지원자 보기</button>
+>>>>>>> 78de21f93e47309b3d9646b3d20413c7fc2dba6b
 				</div>
 
 

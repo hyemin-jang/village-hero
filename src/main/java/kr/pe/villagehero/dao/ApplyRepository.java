@@ -44,4 +44,7 @@ public interface ApplyRepository extends CrudRepository<Apply, Long>{
 	@Query(value="update Apply a set a.matchStatus=2 where a.errand=:e and a.applicant!=:m", nativeQuery=false)
 	void updateOtherApplyStatus(Errand e, Member m);
 	
+	
+	@Query("select a from Apply a where a.applicant=:member and a.errand=:errand")
+	Apply findCancelApply(Member member,Errand errand);
 }

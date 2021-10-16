@@ -14,7 +14,6 @@ import kr.pe.villagehero.service.ApplyService;
 import kr.pe.villagehero.service.ErrandService;
 
 @RestController
-//@SessionAttributes({"loginMember"})
 public class ApplyController {
 
 	@Autowired
@@ -44,10 +43,11 @@ public class ApplyController {
 		return new RedirectView("myerrands.html");
 	}
 	
-	//내 심부름 - 내가 지원한 심부름 목록 로딩
-	@GetMapping("myerrands/apply")
-	public List<MyPageDTO.MyApply> getAllMyApply(Long memberId){		
-		return service.getMyApply(memberId);
+	//내 심부름 - 해당 지원내역 취소
+	@GetMapping("applycancel")
+	public RedirectView cancel(Long memberId,Long errandId) {
+		service.cancel(memberId, errandId);
+		return new RedirectView("myerrands.html");
 	}
 	
 	// 심부름 상세페이지에서 모든 지원자 목록 조회
