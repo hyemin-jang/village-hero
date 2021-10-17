@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
+
+<link rel="stylesheet" href="/css/index.css" />
+</head>
+<body>
+	<template id="header">
+		<div class="header">	
+			<div class="menu-logo">
+				동네히어로
+			</div>	
+			<div class="menu-left">
+				<a href="errandBoard/list.html" v-if="logInCheck">모든 심부름 보기</a>
+				<a href="login.html" v-if="!logInCheck">모든 심부름 보기</a>
+				<a href="myerrands.html" v-if="logInCheck">내 심부름</a>
+			</div>
+			<div class="menu-right">
+				<a href="joinmember.html" v-if="!logInCheck">회원가입</a>
+				<a href="login.html" v-if="!logInCheck">로그인</a>				
+				<a href="mypage.html" v-if="logInCheck">마이페이지</a>			
+				<a href="logout" @click="logout()" v-if="logInCheck">로그아웃</a>
+			</div>			
+		</div>
+	</template>
+	
+	<div id="app">
+		<header-com></header-com>
+	</div>
+	
+	<script>
+		// header 컴포넌트
+		Vue.component("header-com", {
+			template: "#header",
+			data: function(){
+				return {
+					logInCheck: sessionStorage.getItem("logInMember")
+				}
+			},
+			methods:{
+				logout : function(){
+					sessionStorage.removeItem("logInMember");
+				}
+			}
+		});	
+		
+		new Vue({
+            el: "#app"            
+        });
+	</script>
+
+</body>
+</html>

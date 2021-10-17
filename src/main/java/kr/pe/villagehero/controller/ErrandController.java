@@ -13,11 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import kr.pe.villagehero.dto.ApplyDTO;
 import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.dto.MemberDTO.Get;
-import kr.pe.villagehero.service.ApplyService;
 import kr.pe.villagehero.service.ErrandService;
 
 @RestController
