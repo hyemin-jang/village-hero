@@ -13,28 +13,37 @@
   
 <script src="js/headerTemplate.js"></script>
 
-<link rel="stylesheet" href="/css/list.html">
+<link rel="stylesheet" href="/css/mypage.css">
+<link rel="stylesheet" href="/css/list.css">
 </head>
 <body>		
 	<template id="mypage">
-		<div>					
-			<div v-bind="logInMember">
-				{{logInMember.nickname}}의 마이페이지				
-				<div class="req_count" v-bind="reqCnt">
-					심부름 요청<br>
-					{{reqCnt}}번
+		<div id="main">	
+			<div class="info-box">				
+				<div class="top" v-bind="logInMember">
+					<div class="my-info">
+						<span>{{logInMember.nickname}}</span>
+					</div>			
+					<div class="req-cnt" v-bind="reqCnt">
+						심부름 요청<br>
+						{{reqCnt}}번
+					</div>
+					<div class="completion-cnt" v-bind="completionCnt">
+						수행 완료<br>
+						{{completionCnt}}번
+					</div>
 				</div>
-				<div class="done_count" v-bind="completionCnt">
-					수행 완료<br>
-					{{completionCnt}}번
+				<div class="bottom">
+					<a href="updatemember.html">회원정보 수정하기</a> <br>
+					<a href="#">회원탈퇴</a>
 				</div>
 			</div>
-			<a href="updatemember.html">회원정보 수정하기</a> <br>
-			<a href="#">회원탈퇴</a>
-			<div class="menu">
-				<button @click="showReqList">요청 내역</button>
-				<button @click="showDoneList">수행 내역</button>
 
+			<div class="list-box">
+				<div class="menu-btn">
+					<button class="list-btn1" @click="showReqList">요청 내역</button>
+					<button class="list-btn2" @click="showCompletionList">수행 내역</button>
+				</div>
 				<table id="reqList"  v-if="show=='req'">
 					<thead>
 						<tr>
@@ -80,7 +89,8 @@
 					completionList: [],
 					reqCnt: 0,
 					completionCnt: 0,
-					show: "req"
+					show: "req",
+					btnColor: ""
 				}
 			},
 			created : function(){				
@@ -109,9 +119,11 @@
 			methods: {
 				showReqList: function(){
 					this.show = "req";
+					this.btnColor = true;
 				},
-				showDoneList: function(){
-					this.show = "completion";				
+				showCompletionList: function(){
+					this.show = "completion";	
+					this.btnColor = true;
 				}		
 			}				
 		});
