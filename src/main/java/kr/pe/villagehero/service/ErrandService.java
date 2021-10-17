@@ -110,7 +110,7 @@ public class ErrandService {
 	}
 	
 	
-	//내 심부름 - 멤버 id 값으로 저장된 모든 심부름 find
+	//멤버 id 값으로 저장된 모든 심부름 find
 	public List<ErrandDTO> getAllMyErrands(Long memberId){
 		Optional<Member> m = memberDAO.findById(memberId);
 		List<ErrandDTO> myreqlist = new ArrayList<>();
