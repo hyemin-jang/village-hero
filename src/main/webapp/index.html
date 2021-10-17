@@ -8,11 +8,16 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c2c65e47ff9efd53c90ebd6f14d04ecb&libraries=services,clusterer,drawing"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
+  
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+<script src="js/headerTemplate.js"></script>
+  
 <link rel="stylesheet" href="/css/index.css" />
 </head>
 <body>
-	<!-- Header -->
+	<!--
 	<template id="header">		
 		<div id="header-wrap">
 			<div class="header-container">	
@@ -64,11 +69,11 @@
 				</div>		
 			</div>
 		</div>		
-	</template>
+	</template> -->
 
 	
 	<template id="container">
-		<div id="content-wrap">
+		<div id="container-wrap">
 			<div class="side-container">
 				<div class="side-title">지금 당신‍을 기다리는 심부름</div>
 				<div class="side-content">
@@ -76,11 +81,10 @@
 						<div class="title"><b>{{errand.title}}</b></div>
 						<div class="reqLoc">{{errand.reqLocation}}</div>
 						<br>
-						<div style="text-align:right;"><a href="#">자세히 보기</a></div>
+						<div v-if="logInCheck" style="text-align:right;"><a v-bind:href="urlPart1+errand.errandId">자세히 보기</a></div>
 					</div>
 				</div>
-			</div>
-				
+			</div>	
 			<div class="content-container">
 				<div id="map" style="height:800px;"></div>					
 			</div>
@@ -89,37 +93,23 @@
 
 
 <!-- component -->
+<div id="headerBar"></div>
 <div id="app">
-	<header-com></header-com>
 	<container-com></container-com>
 </div>
 
 
-<script>
-	// header 컴포넌트
-	Vue.component("header-com", {
-		template: "#header",
-		data: function(){
-			return {
-				logInCheck: sessionStorage.getItem("logInMember")
-			}
-		},
-		methods:{
-			logout : function(){
-				sessionStorage.removeItem("logInMember");
-			}
-		}
-	});		
-	
-	
+<script>	
 	// container 컴포넌트
 	Vue.component("container-com", {
 		template: "#container",
 		data: function(){
 			return {
+				logInCheck: sessionStorage.getItem("logInMember"),
 				allErrands: [],		
 				errandCoords: [],
-				errandTitles: []					
+				errandTitles: [],
+				urlPart1 : "http://localhost:8088/getErrandDetail/"
 			}
 		},	
 		created: function(){				
@@ -184,9 +174,10 @@
 						kakao.maps.event.addListener(marker, 'mouseout', function(){
 							infowindow.close();
 						});		
-						kakao.maps.event.addListener(marker, 'click', function() {
+						if (this.logInCheck) {
+							kakao.maps.event.addListener(marker, 'click', function() {						
 							document.location.href=`http://localhost:8088/errandBoard/detail.html?errandId=${errand.errandId}`
-						});				
+						})};				
 					});									
 				})
 			}).catch(error => {

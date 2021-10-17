@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,11 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import kr.pe.villagehero.dto.ApplyDTO;
 import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.dto.MemberDTO.Get;
-import kr.pe.villagehero.service.ApplyService;
 import kr.pe.villagehero.service.ErrandService;
 
 @RestController
@@ -33,7 +32,7 @@ public class ErrandController {
 
 		service.updateErrand(errand);
 		
-		return "성공";
+		return "심부름 수정 성공";
 	}
 
 	// 심부름 등록 
@@ -47,11 +46,11 @@ public class ErrandController {
 	}
 	
 	//심부름 삭제
-	@GetMapping("errandDelete/{id}")
-	public RedirectView deleteErrand(@PathVariable long id) {
+	@DeleteMapping("errandDelete/{id}")
+	public String deleteErrand(@PathVariable long id) {
 		service.deleteErrand(id);
 
-		return new RedirectView("/errandBoard/list.html");
+		return "심부름 삭제성공";
 	}
 
 	// 모든 심부름 내역에서 상세페이지로 이동
