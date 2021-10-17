@@ -82,5 +82,29 @@ public class MemberService {
 		}
 		return result;
 	}
+
+	public boolean emailCheck(String newEmail) {
+		boolean result = true;
+		if(dao.findByEmail(newEmail) != null) {
+			result = false;
+		}
+		return result;
+	}
+	
+	public boolean nicknameCheck(String newNickname) {
+		boolean result = true;
+		if(dao.findByNickname(newNickname) != null) {
+			result = false;
+		}
+		return result;
+	}
+	
+	public boolean phoneCheck(String newPhone) {
+		boolean result = true;
+		if(dao.findByPhone(newPhone) != null) {
+			result = false;
+		}
+		return result;
+	}
 		
 }
