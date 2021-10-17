@@ -151,6 +151,19 @@ public class ApplyService {
 														v.getMessage())));
 		return applyList;
 	}
+	
+	// 심부름 상세페이지에서 로그인한 멤버가 이 심부름에 지원한 내역 조회 
+	public boolean getApplyHistory(long errandId, long memberId) {
+		Member m = memberDAO.findById(memberId).get();
+		Errand e = errandDAO.findById(errandId).get();
+		
+		Apply applyHistory = applyDAO.findCancelApply(m, e);
+		if (applyHistory != null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 
 	// 지원 수락
 	public void acceptApply(long errandId, long memberId) {
@@ -162,4 +175,5 @@ public class ApplyService {
 		applyDAO.updateMyApplyStatus(e, m);
 		applyDAO.updateOtherApplyStatus(e, m);
 	}
+	
 }

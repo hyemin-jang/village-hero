@@ -64,6 +64,13 @@ public class ErrandController {
 		}
 	}
 	
+	// 심부름 완료 처리
+	@PutMapping("complete")
+	public void completeErrand(long errandId) {
+		service.completeErrand(errandId);
+	}
+	
+	
 	//심부름 삭제
 	@DeleteMapping("errandDelete/{id}")
 	public String deleteErrand(@PathVariable long id) {

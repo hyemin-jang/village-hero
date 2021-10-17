@@ -3,16 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <title>동네히어로</title>
-</head>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
+<script src="../js/headerTemplate.js"></script>
+
 <link rel="stylesheet" href="/css/list.css">
 <link rel="stylesheet" href="/css/index.css">
+</head>
+
 <body>
+	<div id="headerBar"></div>
+	
 	<div id="content-wrap">
-		<div id="body">
-			
+		<div id="body">			
 			<div class="top">
 				<button class="sort-button" @click="getPayDesc()">금액 높은순 보기</button>				
 			</div>

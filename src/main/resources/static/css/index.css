@@ -27,19 +27,19 @@ html {
 	align-items: center;
 }
 	
-.header-container > .left {
+.header-left {
 	width: 30%;	
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
-.header-container > .middle {
+.header-middle {
 	width: 40%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
-.header-container > .right {
+.header-right {
 	width: 30%;	
 	display: flex;
 	align-items: center;
