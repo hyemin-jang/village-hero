@@ -114,6 +114,13 @@ public class ErrandController {
 		List<ErrandDTO> all = service.getAllErrands();
 		return all;
 	}
+	
+	// 홈화면에서 현재 진행중인 모든 심부름 조회
+	@GetMapping("errandsOngoing")
+	public List<ErrandDTO> getAllErrandsOngoing() {		
+		List<ErrandDTO> all = service.getAllErrandsOngoing();
+		return all;
+	}
 
 	// 심부름 1개 조회
 	@GetMapping("errand")

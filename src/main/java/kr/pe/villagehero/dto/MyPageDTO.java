@@ -20,6 +20,7 @@ public class MyPageDTO {
 	@Setter
 	@Builder
 	public static class Completion {  
+		private long errandId;
 		private String completedAt;
 		private String writer;
 		private String title;
@@ -32,6 +33,7 @@ public class MyPageDTO {
 	@Setter
 	@Builder
 	public static class Req {
+		private long errandId;
 		private String createdAt;
 		private String title;
 		private String category;

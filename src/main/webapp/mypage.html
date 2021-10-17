@@ -19,31 +19,36 @@
 <body>		
 	<template id="mypage">
 		<div id="main">	
-			<div class="info-box">				
-				<div class="top" v-bind="logInMember">
-					<div class="my-info">
-						<span>{{logInMember.nickname}}</span>
+			<div class="profile-box">				
+				<div class="profile-top">
+					<div class="my-profile" v-bind="logInMember">
+						<div v-if="logInMember.gender=='F'" class="profile-img-f"></div>
+						<div v-if="logInMember.gender=='M'" class="profile-img-m"></div>
+						<div class="profile-text">
+							<div class="profile-name">{{logInMember.nickname}}</div>	
+							<a href="../updatemember.html">수정하기&nbsp;&nbsp;</a> 
+							<a href="#"> 탈퇴하기</a> 						
+						</div>
 					</div>			
-					<div class="req-cnt" v-bind="reqCnt">
-						심부름 요청<br>
-						{{reqCnt}}번
+					<div class="req-cnt" v-bind="reqList">
+						<div class="cnt-title">심부름 요청</div>
+						<div class="cnt">{{reqList.length}}번</div>
 					</div>
-					<div class="completion-cnt" v-bind="completionCnt">
-						수행 완료<br>
-						{{completionCnt}}번
+					<div class="completion-cnt" v-bind="completionList">
+						<div class="cnt-title">심부름 수행</div>
+						<div class="cnt">{{completionList.length}}번</div>
 					</div>
-				</div>
-				<div class="bottom">
-					<a href="updatemember.html">회원정보 수정하기</a> <br>
-					<a @click="confirmDelete" style="cursor:pointer;">삭제하기</a>
 				</div>
 			</div>
 
 			<div class="list-box">
-				<div class="menu-btn">
-					<button class="list-btn1" @click="showReqList">요청 내역</button>
-					<button class="list-btn2" @click="showCompletionList">수행 내역</button>
-					<span v-if=confirm></span>
+				<div class="menu-btn" v-if="show=='req'">
+					<button class="list-btn" @click="showReqList" style="background-color:#ffd000;">요청 내역</button>
+					<button class="list-btn" @click="showCompletionList">수행 내역</button>
+				</div>
+				<div class="menu-btn" v-if="show=='completion'">
+					<button class="list-btn" @click="showReqList">요청 내역</button>
+					<button class="list-btn" @click="showCompletionList" style="background-color:#ffd000;">수행 내역</button>
 				</div>
 				<table id="reqList"  v-if="show=='req'">
 					<thead>
@@ -52,8 +57,11 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="v in reqList">
-							<td>{{v.createdAt}}</td><td>{{v.title}}</td><td>{{v.category}}</td><td>{{v.completedAt}}</td>
+						<tr class="tr-errand" v-for="v in reqList">
+							<td>{{v.createdAt}}</td>
+							<td><a v-bind:href="urlPart1+v.errandId">{{v.title}}</a></td>
+							<td>{{v.category}}</td>
+							<td>{{v.completedAt}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -66,7 +74,10 @@
 					</thead>
 					<tbody>
 						<tr v-for="v in completionList">
-							<td>{{v.writer}}</td><td>{{v.title}}</td><td>{{v.category}}</td><td>{{v.completedAt}}</td>
+							<td>{{v.writer}}</td>
+							<td><a v-bind:href="urlPart1+v.errandId">{{v.title}}</a></td>
+							<td>{{v.category}}</td>
+							<td>{{v.completedAt}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -88,11 +99,8 @@
 					logInMember: JSON.parse(sessionStorage.getItem("logInMember")),
 					reqList: [],
 					completionList: [],
-					reqCnt: 0,
-					completionCnt: 0,
-					confirm: "",
 					show: "req",
-					btnColor: ""
+					urlPart1 : "http://localhost:8088/getErrandDetail/"
 				}
 			},
 			created : function(){				
@@ -102,7 +110,6 @@
 					url: "http://localhost:8088/mypage/req?memberId="+this.logInMember.memberId					
 				}).then(resData => {									      			
 					this.reqList = resData.data;  	
-					this.reqCnt = resData.data.length;
 				}).catch(error => {
 					console.log("error", error);
 				}); 	
@@ -113,7 +120,6 @@
 					url: "http://localhost:8088/mypage/completion?memberId="+this.logInMember.memberId					
 				}).then(resData => {									      			
 					this.completionList = resData.data;  
-					this.completionCnt = resData.data.length;
 				}).catch(error => {
 					console.log("error", error);
 				}); 				
@@ -131,9 +137,14 @@
 						return console.log(errorData);
 					});	
 				},	
-				confirmDelete: function(){
-					this.confirm = confirm("동네히어로를 탈퇴하시겠습니까?");
+				showReqList: function(){
+					this.show = "req";
+					this.btnColor = true;
 				},
+				showCompletionList: function(){
+					this.show = "completion";	
+					this.btnColor = true;
+				}
 			}				
 		});
 				
