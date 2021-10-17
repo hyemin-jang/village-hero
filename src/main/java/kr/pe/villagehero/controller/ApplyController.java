@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 import kr.pe.villagehero.dto.ApplyDTO;
+import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.service.ApplyService;
 import kr.pe.villagehero.service.ErrandService;
@@ -63,6 +64,13 @@ public class ApplyController {
 		errandService.updateErrandStatusToMatched(errandId);
 
 		return new RedirectView("index.html");
+	}
+	
+	//내심부름 - 지원 취소
+	@GetMapping("applycancel")
+	public RedirectView cancel(Long memberId,Long errandId) {
+		service.cancel(memberId, errandId);
+		return new RedirectView("myerrands.html");
 	}
 	
 }
