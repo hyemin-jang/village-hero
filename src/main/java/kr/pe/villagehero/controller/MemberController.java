@@ -1,5 +1,9 @@
 package kr.pe.villagehero.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +34,20 @@ public class MemberController {
 
 	// 회원가입 메소드
 	@PostMapping("addMember")
-	public RedirectView insertMember(MemberDTO.Join newMember) {
-		System.out.println(newMember);
-		service.insertMember(newMember);
-
-		return new RedirectView("index.html");
+	public void insertMember(MemberDTO.Join newMember, HttpServletResponse response) {
+//		String new 
+		try {
+			boolean result = service.insertMember(newMember);
+			if(result == true) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('회원가입이 완료되었습니다.'); window.location = \"/index.html\"; </script>");
+				out.flush();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+		}
 	}
 	
 	//	로그인 메소드
@@ -63,22 +76,28 @@ public class MemberController {
 	
 	@GetMapping("logout")
 	public RedirectView logOut(HttpSession session) {
-		
 		session.invalidate();
 		session=null;
 		return new RedirectView("/index.html");
 	}
 	
+	//회원정보 수정
 	@PutMapping("updateMember")
-	public RedirectView updateMember(HttpSession session, MemberDTO.update member) {
+	public void updateMember(HttpSession session, MemberDTO.update member, HttpServletResponse response) throws IOException {
 		MemberDTO.Get loginMember = (Get) session.getAttribute("loginMember");
 		long id = loginMember.getMemberId();
-		System.out.println(id);
 		
-		System.out.println("회원정보 수정");
-		service.updateMember(id, member);
-
-		return new RedirectView("index.html");
-	} 
-
+		try {
+			boolean result = service.updateMember(id, member);
+			if(result == true) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('수정이 완료되었습니다.'); window.location = \"/mypage.html\"; </script>");
+				out.flush();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+		}
+	}
 }

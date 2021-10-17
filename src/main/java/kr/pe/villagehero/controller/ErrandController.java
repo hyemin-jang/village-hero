@@ -1,7 +1,9 @@
 package kr.pe.villagehero.controller;
 
+import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,22 +29,39 @@ public class ErrandController {
 	
 	//심부름 수정
 	@PutMapping("updateErrand")
-	public String updateWriter(ErrandDTO.updateErrand errand) {
-		System.out.println(errand);
-
-		service.updateErrand(errand);
-		
-		return "심부름 수정 성공";
+	public void updateWriter(ErrandDTO.updateErrand errand, HttpServletResponse response) {
+		try {
+			boolean result = service.updateErrand(errand);
+			if(result == true) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('수정이 완료되었습니다.'); window.location = \"/errandBoard/list.html\"; </script>");
+				out.flush();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+		}
 	}
 
 	// 심부름 등록 
 	@PostMapping("errand")
-	public RedirectView insertErrand(HttpSession session, ErrandDTO newErrand) {
+	public void insertErrand(HttpSession session, ErrandDTO newErrand, HttpServletResponse response) {
 		MemberDTO.Get loginMember = (Get) session.getAttribute("loginMember");
 		long id = loginMember.getMemberId();
 		
-		service.insertErrand(id, newErrand);
-		return new RedirectView("/errandBoard/list.html");
+		try {
+			boolean result = service.insertErrand(id, newErrand);
+			if(result == true) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('등록이 완료되었습니다.'); window.location = \"/errandBoard/list.html\"; </script>");
+				out.flush();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+		}
 	}
 	
 	//심부름 삭제
