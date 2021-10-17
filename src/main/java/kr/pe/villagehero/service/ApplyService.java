@@ -119,15 +119,19 @@ public class ApplyService {
 		}
 		
 		// 내 심부름 -> 해당 지원목록 취소
-		public void cancel(Long memberId, Long errandId) {
-
+		public boolean cancel(Long memberId, Long errandId) {
+			boolean result = false;
 			Member m = memberDAO.findById(memberId).get();
 			Errand e = errandDAO.findById(errandId).get();
 			
 			Apply sub = applyDAO.findCancelApply(m, e);
-			sub.setAppliedAt(sub.getAppliedAt().replace(" 00:00:00", ""));
-			sub.setMatchStatus('3');
-			applyDAO.save(sub);
+			if(sub != null) {
+				sub.setAppliedAt(sub.getAppliedAt().replace(" 00:00:00", ""));
+				sub.setMatchStatus('3');
+				applyDAO.save(sub);
+				result=true;
+			}
+			return result;
 		}
 
 	

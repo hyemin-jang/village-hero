@@ -14,6 +14,7 @@
 		<div id="body">
 			
 			<div class="top">
+				<button class="sort-button" @click="getDateDesc()">최근 등록된 순 보기</button>&nbsp;&nbsp;	
 				<button class="sort-button" @click="getPayDesc()">금액 높은순 보기</button>				
 			</div>
 			<table v-if="resData">
@@ -88,6 +89,18 @@
         		}).catch(errorData =>{
         			return console.log(errorData);
         		})
+        	},
+        	getDateDesc : function(){
+        		axios({
+                    method : "get",
+                    url : "http://localhost:8088/dateerrands"
+                }).then( resData => {
+                	this.resData=true;
+                	return this.errands = resData.data;
+                    
+                }).catch(errorData => {
+                	return console.log(errorData);
+                })
         	},
         }
         	

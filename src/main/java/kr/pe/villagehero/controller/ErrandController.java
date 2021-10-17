@@ -122,6 +122,14 @@ public class ErrandController {
 		return all;
 	}
 	
+	// 모든 심부름 최신순 정렬 조회
+	@GetMapping("dateerrands")
+	public List<ErrandDTO> getAllErrandsDateDesc() {
+		List<ErrandDTO> all = service.getAllErrandsDateDes();
+
+		return all;
+	}
+	
 	//내 심부름 목록 뿌려주기 -> 삭제버튼/count/title/status 뿌려줄 것임.
 	@GetMapping("myerrands/req")
 	public List<ErrandDTO> getAllMyErrands(Long memberId){
