@@ -47,11 +47,12 @@ public class ErrandService {
 	}
 	
 	//심부름 수정
-	public String updateErrand(ErrandDTO.updateErrand errand) {
+	public boolean updateErrand(ErrandDTO.updateErrand errand) {
 		System.out.println("심부름 수정시도");
 		
 		long errandId = errand.getErrandId();
 		Errand updateErrand = errandDAO.findById(errandId).get();
+		boolean result = false;
 
 		try {
 		updateErrand.setTitle(errand.getTitle());
@@ -60,24 +61,23 @@ public class ErrandService {
 		updateErrand.setCategory(errand.getCategory());
 		updateErrand.setReqDate(errand.getReqDate().replace(" 00:00:00", ""));
 		updateErrand.setContent(errand.getContent());
-		
 		//날짜 포멧 맞춰주기
 		updateErrand.setCreatedAt(updateErrand.getCreatedAt().replace(" 00:00:00", ""));
 		
 		errandDAO.save(updateErrand);
-		
+		result = true;
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return "심부름 요청 수정 성공";
+		return result;
 	}
 
 	//새로운 심부름 저장
-	public String insertErrand(long id, ErrandDTO newErrand) {
+	public boolean insertErrand(long id, ErrandDTO newErrand) {
 		System.out.println("심부름 요청 등록시도");
-		
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		Date time = new Date();
+		boolean result = false;
 	
 		Member writer = memberDAO.findById(id).get() ; // session에서 받아와야함
     	int pay = newErrand.getPay();
@@ -88,11 +88,15 @@ public class ErrandService {
     	String reqLocation = newErrand.getReqLocation();
     	String reqDate = newErrand.getReqDate();
     	char errandStatus = '0';
-
-    	Errand errand = new Errand(writer, pay, createdAt, title, content, category, reqLocation, reqDate, errandStatus);
-
-    	errandDAO.save(errand);
-		return "심부름 요청 저장 성공";
+    	
+    	try {
+    		Errand errand = new Errand(writer, pay, createdAt, title, content, category, reqLocation, reqDate, errandStatus);
+    		errandDAO.save(errand);
+    		result = true;
+    	}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	// 존재하는 모든 심부름을 가격순(내림차순)으로 return
