@@ -130,7 +130,6 @@ public class ErrandService {
 		errandDAO.save(e);
 	}
 	
-	
 	// 지원 수락 - 심부름 상태 2로 변경
 	public void updateErrandStatusToMatched(long errandId) {
 		Errand e = errandDAO.findById(errandId).get();

@@ -54,7 +54,7 @@ public class ApplyController {
 	public List<ApplyDTO.List> getAllApplicants(long errandId) {
 		return service.getAllApplicants(errandId);
 	}
-
+	
 	// 지원 수락하기
 	@GetMapping("accept")
 	public RedirectView acceptApply(long errandId, long memberId) {
@@ -64,5 +64,5 @@ public class ApplyController {
 
 		return new RedirectView("index.html");
 	}
-
+	
 }

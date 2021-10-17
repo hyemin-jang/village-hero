@@ -1,3 +1,3 @@
 $(document).ready(function () {
-  $("#test").load("common/header.html");
+  $("#headerBar").load("common/header.html");
 });
