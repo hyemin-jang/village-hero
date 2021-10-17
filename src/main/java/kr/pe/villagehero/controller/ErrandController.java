@@ -2,38 +2,29 @@ package kr.pe.villagehero.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import kr.pe.villagehero.dto.ApplyDTO;
 import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MemberDTO;
-import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.dto.MemberDTO.Get;
-import kr.pe.villagehero.service.ApplyService;
 import kr.pe.villagehero.service.ErrandService;
 
 @RestController
-//@SessionAttributes({ "loginMember" })
 public class ErrandController {
 
 	@Autowired
 	private ErrandService service;
 	
-	@Autowired
-	private ApplyService applyservice;
 	//심부름 수정
 	@PutMapping("updateErrand")
 	public String updateWriter(ErrandDTO.updateErrand errand) {
@@ -41,26 +32,25 @@ public class ErrandController {
 
 		service.updateErrand(errand);
 		
-		return "성공";
+		return "심부름 수정 성공";
 	}
 
 	// 심부름 등록 
 	@PostMapping("errand")
-	public RedirectView insertErrand(Model model, ErrandDTO newErrand) {
-		MemberDTO.Get loginMember = (Get) model.getAttribute("loginMember");
+	public RedirectView insertErrand(HttpSession session, ErrandDTO newErrand) {
+		MemberDTO.Get loginMember = (Get) session.getAttribute("loginMember");
 		long id = loginMember.getMemberId();
-
+		
 		service.insertErrand(id, newErrand);
 		return new RedirectView("/errandBoard/list.html");
 	}
 	
 	//심부름 삭제
 	@DeleteMapping("errandDelete/{id}")
-	public RedirectView deleteErrand(@PathVariable long id) {
-		System.out.println("삭제시도");
+	public String deleteErrand(@PathVariable long id) {
 		service.deleteErrand(id);
-		
-		return new RedirectView("/errandBoard/list.html");
+
+		return "심부름 삭제성공";
 	}
 
 	// 모든 심부름 내역에서 상세페이지로 이동
@@ -118,12 +108,6 @@ public class ErrandController {
 	public List<ErrandDTO> getAllMyErrands(Long memberId){
 
 		return service.getAllMyErrands(memberId);
-	}
-	
-	//내 심부름 - 내가 지원한 심부름 목록 로딩
-	@GetMapping("myerrands/apply")
-	public List<ApplyDTO> getAllMyApply(Long memberId){		
-		return applyservice.getMyApply(memberId);
 	}
 	
 }

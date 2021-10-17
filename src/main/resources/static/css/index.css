@@ -1,79 +1,139 @@
+html {
+	height: 100%;
+	width: 100%;
+	font-family: 'MaruBuri-Bold';
+}
+
 * {
+	margin: 0;
+	padding: 0;
 	box-sizing: border-box;
 }
 
-a {
-	text-decoration: none;	
+/** 헤더 */
+#header-wrap {
+	width: 100%;
+	background-color: black;
 }
 
-body {
+.header-container {
+	width: 90%;
+	min-width: 1400px;
+	height: 100px;
+	margin: 0 auto;
+	background-color: black;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 	
+.header-container > .left {
+	width: 30%;	
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.header-container > .middle {
+	width: 40%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.header-container > .right {
+	width: 30%;	
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-.header {
-	height: 130px;
+.header-button {
+	border: 0;
 	color: white;
 	background-color: black;
-	padding: 30px;
+	font-size: 25px;
+	font-weight: 600;
+	cursor: pointer;
+	margin: 20px;
 }
 
-.menu-logo  {
-	float: left;
-	font-size: 30px;
-	margin-right: 30px;
-}
-.menu-left {
-	float: left;
-	font-size: 25px;
-}
-.menu-right {
-	float: right;
-	font-size: 25px;
-}
-.menu-left > a, .menu-right > a {
-	color: white;
+.header-logo {
+	border: 0;
+	color: rgb(255, 196, 0);
+	background-color: black;
+	font-size: 50px;
+	font-weight: 600;
+	cursor: pointer;	
+	margin: 10px;
 }
 
-.container {
+.pic-header-heroMan {
+	height: 80px;
+	width: auto;
+}
+
+.pic-header-heroWomen {
+	height: 80px;
+	width: auto;
+}
+
+/** 메인 */
+#content-wrap {		
 	margin-left: 100px;
 	margin-right: 100px;
 }
 
-.side {
+.side-container {
 	float: left;
-	padding: 10px;
 	width: 25%;
+	height: 800px;	
+	overflow: hidden;
 }
 
-.errand {
-	height: 140px;
-	margin: 10px;
-	border-radius: 5px;
-	box-shadow: 5px 5px 10px rgb(180, 180, 180);
+.side-container > .side-title {
+	margin: 30px 30px -10px 30px;	
+	font-weight: 600;
+	color: gray;
 }
 
-.main {
+.side-content :hover {
+	background-color: lightgray;
+}
+
+.errand{
+	margin: 20px;
+	padding: 20px;
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: 2px 2px 3px lightgray;
+}
+
+.errand > .title{
+	font-size: 20px;
+}
+.content-container {
 	float: right;
-	padding: 10px;
 	width: 75%;
+	height: 800px;
 }
 
-/* Clear floats after the columns */
-.container:after {
-	content: "";
-	display: table;
-	clear: both;
-}
-
-.footer {
-	background-color: #f1f1f1;
-	padding: 10px;
-	text-align: center;
-}
-
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media ( max-width : 600px) {
-	.side, .main {
+@media(max-width: 1200px){
+	.side-container {
+		display:none;
+	}
+	.content-container {
 		width: 100%;
 	}
+}
+	
+}
+
+/** 푸터 */
+#footer-wrap {
+	float: left;
+	width: 100%;
+	background-color: black;
+}
+
+a {
+	text-decoration: none;
 }

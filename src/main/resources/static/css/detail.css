@@ -1,0 +1,146 @@
+.main-container {
+    font-family: 'MaruBuri-Bold';
+	padding-top: 30px;
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
+.status {
+	width: 150px;
+	border-radius: 3px;
+	font-size: 20px;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.title {
+	font-size: 30px;
+	font-weight: bold;
+	padding-bottom: 20px;
+}
+
+.write-info {
+	height: 40px;
+}
+
+.write-info>.category {
+	float: left;
+	font-size: 18px;
+	font-weight: bold;
+	color: gray;
+}
+
+.write-info>.writer {
+	float: right;
+	color: gray;
+	font-size: 15px;
+}
+
+.errand-info {
+	margin-top: 30px;
+}
+
+.errand-info>.content {
+	font-size: 15px;
+	height: 100px;
+}
+
+.errand-info>.info {
+	height: 100px;
+	margin-top: 30px;
+}
+
+.errand-info>.info>.info-each {
+	margin-bottom: 10px;
+}
+
+.errand-info>.pay {
+	margin-top: 30px;
+	margin-bottom: 30px;
+	font-size: 30px;
+}
+
+.bottom>.left {
+	float: left;
+}
+
+.bottom>.right {
+	padding-top: 15px;
+	float: right;
+}
+
+button, .button {
+	background-color: #ffd000;
+	border: none;
+	color: black;
+	padding: 10px 25px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+}
+
+a {
+	padding: 5px;
+	color: black;
+}
+
+.modal-wrap {
+	background-color: rgba(0, 0, 0, .3);
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	padding: 15px;
+}
+
+#applicantList, #applyForm {
+	/* 모달창으로 만들기 */
+	width: 60%;
+	height: 600px;
+	background-color: white;
+	box-shadow: 5px 10px 10px 1px rgba(0, 0, 0, .3);
+	overflow: auto;
+	padding: 30px;
+}
+
+.applicant {
+	border-bottom: 1px solid lightgray;
+	padding: 30px;
+}
+
+.applicant>.applicant-info {
+	color: gray;
+}
+
+.applicant>.message {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.submit {
+	text-align: right;
+}
+
+.bottom {
+	margin-top: 30px;
+	text-align: right;
+	margin-right: 20px;
+	text-align: right;
+}
+
+.close {
+	cursor: pointer;
+}
+
+textarea {
+	width: 100%;
+	height: 200px;
+	margin-top: 20px;
+}

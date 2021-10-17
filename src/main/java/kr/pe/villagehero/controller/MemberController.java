@@ -5,10 +5,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
+import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MemberDTO;
+import kr.pe.villagehero.dto.MemberDTO.Get;
 import kr.pe.villagehero.service.MemberService;
 
 @RestController
@@ -65,5 +68,17 @@ public class MemberController {
 		session=null;
 		return new RedirectView("/index.html");
 	}
+	
+	@PutMapping("updateMember")
+	public RedirectView updateMember(HttpSession session, MemberDTO.update member) {
+		MemberDTO.Get loginMember = (Get) session.getAttribute("loginMember");
+		long id = loginMember.getMemberId();
+		System.out.println(id);
+		
+		System.out.println("회원정보 수정");
+		service.updateMember(id, member);
+
+		return new RedirectView("index.html");
+	} 
 
 }

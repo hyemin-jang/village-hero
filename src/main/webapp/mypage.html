@@ -7,11 +7,13 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c2c65e47ff9efd53c90ebd6f14d04ecb&libraries=services,clusterer,drawing"></script>	
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
-<style>
-	th, td {
-		border: 1px solid;
-	}
-</style>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+<script src="js/headerTemplate.js"></script>
+
+<link rel="stylesheet" href="/css/list.html">
 </head>
 <body>		
 	<template id="mypage">
@@ -27,7 +29,7 @@
 					{{completionCnt}}번
 				</div>
 			</div>
-			<a href="#">회원정보 수정하기</a> <br>
+			<a href="updatemember.html">회원정보 수정하기</a> <br>
 			<a href="#">회원탈퇴</a>
 			<div class="menu">
 				<button @click="showReqList">요청 내역</button>
@@ -62,7 +64,7 @@
 		</div>
 	</template>
 	
-
+	<div id="headerBar"></div>
 	<div id="app">
 		<my-com></my-com>				
 	</div>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/joinmember.css">
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+	<!-- header -->
+	<div id="header">
+		<h1 class="join_title">
+			<label for="id">회원정보 수정</label>
+		</h1>
+	</div>
+
+	<!-- wrapper -->
+	<div id="wrapper">
+
+		<!-- content-->
+		<div id="content">
+			<!-- <form method="post" action="addUser" enctype="multipart/form-data"> -->
+			<form action="updateMember" method="post">
+				<input type="hidden" name="_method" value="PUT"> 
+				<!-- NICKNAME -->
+				
+					<div>
+						<h3 class="join_title">
+							<label for="nickname">닉네임</label>
+						</h3>
+	
+						<span class="box int_name"> <input type="text" id="nickname"
+							class="int" maxlength="20" name="nickname"
+							v-bind:value="logInMember.nickname"> <span
+							class="step_url">3~10자</span>
+						</span> <span class="error_next_box"></span>
+					</div>
+	
+					<!-- phone -->
+					<div>
+						<h3 class="join_title">
+							<label for="phone">휴대전화</label>
+						</h3>
+						<span class="box int_phone"> <input type="text" id="phone"
+							class="int" maxlength="11" placeholder="휴대전화 입력" name="phone"
+							v-bind:value="logInMember.phone"> <span class="step_url">'-'
+								생략</span>
+						</span> <span class="error_next_box"></span>
+					</div>
+	
+					<!-- address -->
+					<div>
+						<h3 class="join_title">
+							<label for="address">주소</label>
+						</h3>
+						<span class="box int_address"> <input type="text"
+							id="address" class="int" maxlength="50" placeholder="주소 입력"
+							name="address" v-bind:value="logInMember.address"> <span
+							class="step_url">필수 입력</span>
+						</span> <span class="error_next_box"></span>
+					</div>
+	
+					<div>
+						<h3 class="join_title">
+							<label for="spe1">당신의 능력</label>
+						</h3>
+						<div id="spe_wrap">
+	
+							<!-- specialty1 -->
+							<div id="specialty1">
+								<span class="box"> <select id="spe1" class="sel"
+									name="specialty1">
+										<option>필수선택</option>
+										<option value="배달/장보기">배달/장보기</option>
+										<option value="청소/집안일">청소/집안일</option>
+										<option value="설치/조립/운반">설치/조립/운반</option>
+										<option value="돌봄/동행">돌봄/동행</option>
+										<option value="과외/공부">과외/공부</option>
+										<option value="역할대행">역할대행</option>
+										<option value="운전/카풀">운전/카풀</option>
+										<option value="벌레/쥐잡기">벌레/쥐잡기</option>
+										<option value="기타">기타</option>
+								</select>
+								</span> <span class="error_next_box">하나는 필수 선택.</span>
+							</div>
+	
+							<!-- specialty2 -->
+							<div id="specialty2">
+								<span class="box"> <select id="spe2" class="sel"
+									name="specialty2">
+										<option></option>
+										<option value="배달/장보기">배달/장보기</option>
+										<option value="청소/집안일">청소/집안일</option>
+										<option value="설치/조립/운반">설치/조립/운반</option>
+										<option value="돌봄/동행">돌봄/동행</option>
+										<option value="과외/공부">과외/공부</option>
+										<option value="역할대행">역할대행</option>
+										<option value="운전/카풀">운전/카풀</option>
+										<option value="벌레/쥐잡기">벌레/쥐잡기</option>
+										<option value="기타">기타</option>
+								</select>
+								</span>
+							</div>
+	
+							<!-- specialty3 -->
+							<div id="specialty3">
+								<span class="box"> <select id="spe3" class="sel"
+									name="specialty3">
+										<option></option>
+										<option value="배달/장보기">배달/장보기</option>
+										<option value="청소/집안일">청소/집안일</option>
+										<option value="설치/조립/운반">설치/조립/운반</option>
+										<option value="돌봄/동행">돌봄/동행</option>
+										<option value="과외/공부">과외/공부</option>
+										<option value="역할대행">역할대행</option>
+										<option value="운전/카풀">운전/카풀</option>
+										<option value="벌레/쥐잡기">벌레/쥐잡기</option>
+										<option value="기타">기타</option>
+								</select>
+								</span>
+							</div>
+						</div>
+					</div>
+
+				<!-- JOIN BTN-->
+				<div class="btn_area">
+					<button type="submit" id="btnJoin">
+						<span>수정하기</span>
+					</button>
+				</div>
+
+			</form>
+		</div>
+		<!-- content-->
+
+	</div>
+	<!-- wrapper -->
+
+	<script src="js/joinmember.js"></script>
+
+	<script>
+		new Vue({
+	        el:"#wrapper",
+	        data : {
+	        	resData : false,
+	        	logInMember: JSON.parse(sessionStorage.getItem("logInMember")),
+	        	memberId: JSON.parse(sessionStorage.getItem("logInMember")).memberId
+	        },
+	    });
+	</script>
+</body>
+</html>

@@ -33,15 +33,18 @@ public class ApplyDTO {
 	@Getter
 	@Setter
 	@Builder
-	public static class Form {
+	public static class List {
+		private char matchStatus;
 		private long memberId;
 		private String nickname;
+		private char gender;
 		private int birthYear;
 		private String phone;
 		private String specialty1;
 		private String specialty2;
 		private String specialty3;
 		private int score;
+		private String message;
 	}
 	
 	
