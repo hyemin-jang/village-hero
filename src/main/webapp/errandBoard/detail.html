@@ -55,8 +55,6 @@
 							<button @click="showForm" v-if="logInMemberId!=errands.writerId & errands.errandStatus==0"><b>도와줄게요!</b></button>
 						</span>
 						<span class="right">
-							<!-- <a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart1+errands.errandId" >수정하기</a> 
-							<a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart2+errands.errandId" >삭제하기</a>  -->
 							<a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart1+errands.errandId" >수정하기</a>
 							<span v-if="errands.writerId == logInMemberId" @click="deletePage">삭제하기</span>
 							<a href="list.html" class="btn btn-secondary float-left">목록으로</a>

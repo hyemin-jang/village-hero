@@ -62,7 +62,7 @@ public class MemberService {
 	}
 
 	public boolean updateMember(long id, MemberDTO.update member) {
-		System.out.println("회원 정보 수정 시도2");
+		System.out.println("회원 정보 수정 시도");
 		Member updateMember = dao.findById(id).get();
 		boolean result = false;
 		
@@ -103,6 +103,21 @@ public class MemberService {
 		boolean result = true;
 		if(dao.findByPhone(newPhone) != null) {
 			result = false;
+		}
+		return result;
+	}
+
+	public boolean deleteMember(long id) {
+		System.out.println("회원탈퇴시도");
+		Member member = dao.findById(id).get();
+		boolean result = false;
+		try {
+			member.setMemberStatus(1);
+		
+			dao.save(member);
+			result = true;
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 		return result;
 	}
