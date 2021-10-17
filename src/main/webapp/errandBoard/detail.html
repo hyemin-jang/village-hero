@@ -67,7 +67,10 @@
 									class="btn" @click="showForm">									
 									<b>도와줄게요!</b>
 							</button>
-							<span v-if="errands.errandStatus==1 && isApplied==true" style="color:red; font-weight:600; font-size:18px;">수락 대기중인 심부름입니다.</span>
+							<span v-if="errands.errandStatus==1 && isApplied==true" 
+									style="color:red; font-weight:600; font-size:18px;">
+									지원한 심부름입니다. 수락될때까지 기다려주세요.
+							</span>
 						</span>
 						<span class="right">
 							<a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart1+errands.errandId" >수정하기</a>
@@ -153,8 +156,7 @@
 					list: false,
 					isApplied: "", // 로그인한 사용자가 이 심부름에 지원했는지 
 		        	urlPart1 :"http://localhost:8088/getErrandDetail2/",
-		        	urlPart2 :"http://localhost:8088/errandDelete/",
-					//urlPart3 : "http://localhost:8088/accept?errandId="+this.errandId+"&memberId="+this.logInMemberId
+		        	urlPart2 :"http://localhost:8088/errandDelete/"
 				}
 	        },
 	        created :function(){	 

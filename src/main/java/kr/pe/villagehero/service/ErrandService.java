@@ -35,6 +35,15 @@ public class ErrandService {
 
 		return errandList;
 	}
+	
+	// 홈화면에서 진행중인 심부름만 모두 조회
+	public List<ErrandDTO> getAllErrandsOngoing() {
+		List<ErrandDTO> errandList = new ArrayList<ErrandDTO>();
+		List<Errand> errands = (List<Errand>) errandDAO.findAllErrandsOngoing();
+
+		errands.forEach(v -> errandList.add(new ErrandDTO(v)));
+		return errandList;
+	}
 
 	public ErrandDTO getOneErrand(long id) {
 		ErrandDTO errand = new ErrandDTO(errandDAO.findById(id).get());		
@@ -159,6 +168,7 @@ public class ErrandService {
 	
 		errandDAO.save(e);
 	}
+	
 }
 
 
