@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import kr.pe.villagehero.dao.ErrandRepository;
 import kr.pe.villagehero.dao.MemberRepository;
 import kr.pe.villagehero.dto.ErrandDTO;
-import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.entity.Errand;
 import kr.pe.villagehero.entity.Member;
 
