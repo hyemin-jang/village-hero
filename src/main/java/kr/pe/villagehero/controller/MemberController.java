@@ -35,14 +35,38 @@ public class MemberController {
 	// 회원가입 메소드
 	@PostMapping("addMember")
 	public void insertMember(MemberDTO.Join newMember, HttpServletResponse response) {
-//		String new 
+		String newEmail = newMember.getEmail();
+		String newNickname = newMember.getNickname();
+		String newPhone = newMember.getPhone();
+		
 		try {
-			boolean result = service.insertMember(newMember);
-			if(result == true) {
+			boolean emailCheck = service.emailCheck(newEmail);
+			boolean nicknameCheck = service.nicknameCheck(newNickname);
+			boolean phoneCheck = service.phoneCheck(newPhone);
+			
+			if(emailCheck == false) {
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
-				out.println("<script>alert('회원가입이 완료되었습니다.'); window.location = \"/index.html\"; </script>");
+				out.println("<script>alert('존재하는 이메일입니다.'); history.back(); </script>");
 				out.flush();
+			}else if (nicknameCheck == false) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('존재하는 닉네임입니다.'); history.back(); </script>");
+				out.flush();
+			}else if (phoneCheck == false) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('존재하는 전화번호입니다.'); history.back();</script>");
+				out.flush();
+			}else {
+				boolean result = service.insertMember(newMember);
+				if(result == true) {
+					response.setContentType("text/html; charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.println("<script>alert('회원가입이 완료되었습니다.'); window.location = \"/index.html\"; </script>");
+					out.flush();
+				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
