@@ -46,7 +46,8 @@ public class ApplyService {
 		
 		m.ifPresent(member -> {
 			List<Errand> all = errandDAO.findMyReq(member);	
-			all.forEach(v -> myReqList.add(new MyPageDTO.Req(v.getCreatedAt(),
+			all.forEach(v -> myReqList.add(new MyPageDTO.Req(v.getErrandId(),
+															v.getCreatedAt(),
 															v.getTitle(),
 															v.getCategory(),															
 															v.getCompletedAt())));
@@ -64,7 +65,8 @@ public class ApplyService {
 		m.ifPresent(member -> {
 			List<Apply> all = applyDAO.findMyCompletion(member);			
 			
-			all.forEach(v -> myCompletionList.add(new MyPageDTO.Completion(v.getErrand().getCompletedAt(),
+			all.forEach(v -> myCompletionList.add(new MyPageDTO.Completion(v.getErrand().getErrandId(),
+																	v.getErrand().getCompletedAt(),
 																   v.getErrand().getWriter().getNickname(),
 																   v.getErrand().getTitle(),
 																   v.getErrand().getCategory())));
