@@ -5,6 +5,10 @@
 	margin-right: 20%;
 }
 
+#errandDetail{
+	padding: 30px 30px 60px 30px;
+}
+
 .status {
 	width: 150px;
 	border-radius: 3px;
@@ -69,7 +73,7 @@
 	float: right;
 }
 
-button, .button {
+.btn {
 	background-color: #ffd000;
 	border: none;
 	color: black;

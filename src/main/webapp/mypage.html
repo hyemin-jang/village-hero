@@ -35,7 +35,7 @@
 				</div>
 				<div class="bottom">
 					<a href="updatemember.html">회원정보 수정하기</a> <br>
-					<a href="#">회원탈퇴</a>
+					<a @click="confirmDelete" style="cursor:pointer;">삭제하기</a>
 				</div>
 			</div>
 
@@ -43,6 +43,7 @@
 				<div class="menu-btn">
 					<button class="list-btn1" @click="showReqList">요청 내역</button>
 					<button class="list-btn2" @click="showCompletionList">수행 내역</button>
+					<span v-if=confirm></span>
 				</div>
 				<table id="reqList"  v-if="show=='req'">
 					<thead>
@@ -89,6 +90,7 @@
 					completionList: [],
 					reqCnt: 0,
 					completionCnt: 0,
+					confirm: "",
 					show: "req",
 					btnColor: ""
 				}
@@ -117,14 +119,21 @@
 				}); 				
 			}, 
 			methods: {
-				showReqList: function(){
-					this.show = "req";
-					this.btnColor = true;
+				deleteMember: function(){
+					axios({
+						method : "put",
+						url : "http://localhost:8088/deleteMember/"+this.logInMember.memberId,
+					}).then((res)=>{
+						alert("탈퇴가 완료되었습니다.")
+						window.location = "/index.html";
+						sessionStorage.removeItem("logInMember");
+					}).catch(errorData => {
+						return console.log(errorData);
+					});	
+				},	
+				confirmDelete: function(){
+					this.confirm = confirm("동네히어로를 탈퇴하시겠습니까?");
 				},
-				showCompletionList: function(){
-					this.show = "completion";	
-					this.btnColor = true;
-				}		
 			}				
 		});
 				

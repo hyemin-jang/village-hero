@@ -144,6 +144,21 @@ public class ErrandService {
 		
 		errandDAO.save(e);
 	}
+
+	// 심부름 완료 처리 - 심부름 상태 3으로 변경
+	public void completeErrand(long errandId) {
+		Errand e = errandDAO.findById(errandId).get();
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+		Date time = new Date();
+		
+		e.setErrandStatus('3');
+		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));		
+		e.setReqDate(e.getReqDate().replace(" 00:00:00", ""));		
+		e.setCompletedAt(dateFormat.format(time));
+	
+		errandDAO.save(e);
+	}
 }
 
 

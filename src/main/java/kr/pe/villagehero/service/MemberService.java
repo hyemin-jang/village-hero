@@ -1,20 +1,24 @@
 package kr.pe.villagehero.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.pe.villagehero.dao.ErrandRepository;
 import kr.pe.villagehero.dao.MemberRepository;
-import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.dto.MemberDTO.Get;
-import kr.pe.villagehero.entity.Errand;
 import kr.pe.villagehero.entity.Member;
 
 @Service
 public class MemberService {
 	
 	@Autowired
-	private MemberRepository dao;
+	private MemberRepository memberDAO;
+	
+	@Autowired
+	private ErrandRepository errandDAO;
 	
 // 	회원가입
 	public boolean insertMember(MemberDTO.Join newMember) {
@@ -39,7 +43,7 @@ public class MemberService {
 					gender, phone, address, specialty1,
 					specialty2, specialty3);
 			
-			dao.save(member);
+			memberDAO.save(member);
 			result = true;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -50,7 +54,7 @@ public class MemberService {
 	//MemberDTO 클래스 내부 이너클래스인 Get클래스	
 	// 로그인 - DB에서 해당 email 가진 회원 조회
 	public Get logIn(String email) {			
-		Member m = dao.findByEmail(email);
+		Member m = memberDAO.findByEmail(email);
 		MemberDTO.Get loginMember = null;
 		if (m!=null) {  
 			loginMember = new MemberDTO.Get(m);
@@ -61,9 +65,10 @@ public class MemberService {
 		return loginMember;
 	}
 
+
 	public boolean updateMember(long id, MemberDTO.update member) {
 		System.out.println("회원 정보 수정 시도");
-		Member updateMember = dao.findById(id).get();
+		Member updateMember = memberDAO.findById(id).get();
 		boolean result = false;
 		
 		try {
@@ -74,7 +79,7 @@ public class MemberService {
 			updateMember.setSpecialty2(member.getSpecialty2());
 			updateMember.setSpecialty3(member.getSpecialty3());
 		
-			dao.save(updateMember);
+			memberDAO.save(updateMember);
 			result = true;
 		
 		}catch(Exception e) {
@@ -85,7 +90,7 @@ public class MemberService {
 
 	public boolean emailCheck(String newEmail) {
 		boolean result = true;
-		if(dao.findByEmail(newEmail) != null) {
+		if(memberDAO.findByEmail(newEmail) != null) {
 			result = false;
 		}
 		return result;
@@ -93,7 +98,7 @@ public class MemberService {
 	
 	public boolean nicknameCheck(String newNickname) {
 		boolean result = true;
-		if(dao.findByNickname(newNickname) != null) {
+		if(memberDAO.findByNickname(newNickname) != null) {
 			result = false;
 		}
 		return result;
@@ -101,7 +106,7 @@ public class MemberService {
 	
 	public boolean phoneCheck(String newPhone) {
 		boolean result = true;
-		if(dao.findByPhone(newPhone) != null) {
+		if(memberDAO.findByPhone(newPhone) != null) {
 			result = false;
 		}
 		return result;
@@ -109,17 +114,22 @@ public class MemberService {
 
 	public boolean deleteMember(long id) {
 		System.out.println("회원탈퇴시도");
-		Member member = dao.findById(id).get();
+		Member member = memberDAO.findById(id).get();
 		boolean result = false;
 		try {
 			member.setMemberStatus(1);
 		
-			dao.save(member);
+			memberDAO.save(member);
 			result = true;
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
-		
+	
+	//게시글 아이디로 회원상태 가져오기
+	public int getMemberStatus1(long errandId) {
+		int memberStatus = errandDAO.findById(errandId).get().getWriter().getMemberStatus();
+		return memberStatus;
+	}
 }

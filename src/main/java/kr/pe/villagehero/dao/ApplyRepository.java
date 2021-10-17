@@ -47,4 +47,5 @@ public interface ApplyRepository extends CrudRepository<Apply, Long>{
 	
 	@Query("select a from Apply a where a.applicant=:member and a.errand=:errand")
 	Apply findCancelApply(Member member,Errand errand);
+	
 }
