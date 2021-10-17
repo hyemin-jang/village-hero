@@ -44,33 +44,27 @@ public class MemberController {
 			boolean nicknameCheck = service.nicknameCheck(newNickname);
 			boolean phoneCheck = service.phoneCheck(newPhone);
 			
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			
 			if(emailCheck == false) {
-				response.setContentType("text/html; charset=UTF-8");
-				PrintWriter out = response.getWriter();
 				out.println("<script>alert('존재하는 이메일입니다.'); history.back(); </script>");
 				out.flush();
 			}else if (nicknameCheck == false) {
-				response.setContentType("text/html; charset=UTF-8");
-				PrintWriter out = response.getWriter();
 				out.println("<script>alert('존재하는 닉네임입니다.'); history.back(); </script>");
 				out.flush();
 			}else if (phoneCheck == false) {
-				response.setContentType("text/html; charset=UTF-8");
-				PrintWriter out = response.getWriter();
 				out.println("<script>alert('존재하는 전화번호입니다.'); history.back();</script>");
 				out.flush();
 			}else {
 				boolean result = service.insertMember(newMember);
 				if(result == true) {
-					response.setContentType("text/html; charset=UTF-8");
-					PrintWriter out = response.getWriter();
 					out.println("<script>alert('회원가입이 완료되었습니다.'); window.location = \"/index.html\"; </script>");
 					out.flush();
 				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
-			
 		}
 	}
 	
