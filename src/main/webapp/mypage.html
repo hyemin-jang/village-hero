@@ -41,8 +41,8 @@
 
 			<div class="list-box">
 				<div class="menu-btn">
-					<button class="list-btn" @click="showReqList" v-bind:class={active:isActive}>요청 내역</button>
-					<button class="list-btn" @click="showCompletionList" v-bind:class={active:isActive}>수행 내역</button>
+					<button class="list-btn1" @click="showReqList">요청 내역</button>
+					<button class="list-btn2" @click="showCompletionList">수행 내역</button>
 				</div>
 				<table id="reqList"  v-if="show=='req'">
 					<thead>
