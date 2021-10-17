@@ -46,7 +46,7 @@ public class ApplyController {
 
 	// 내 심부름 - 내가 지원한 심부름 목록 로딩
 	@GetMapping("myerrands/apply")
-	public List<ErrandDTO> getAllMyApply(Long memberId) {
+	public List<MyPageDTO.MyApply> getAllMyApply(Long memberId) {
 		return service.getMyApply(memberId);
 	}
 
@@ -64,6 +64,13 @@ public class ApplyController {
 		errandService.updateErrandStatusToMatched(errandId);
 
 		return new RedirectView("index.html");
+	}
+	
+	//내심부름 - 지원 취소
+	@GetMapping("applycancel")
+	public RedirectView cancel(Long memberId,Long errandId) {
+		service.cancel(memberId, errandId);
+		return new RedirectView("myerrands.html");
 	}
 	
 }

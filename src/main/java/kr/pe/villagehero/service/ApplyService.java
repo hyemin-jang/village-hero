@@ -98,16 +98,23 @@ public class ApplyService {
 	}
 
 	// 내 심부름 -> 내가 지원한 심부름 목록
-		public List<ErrandDTO> getMyApply(Long memberId) {
+		public List<MyPageDTO.MyApply> getMyApply(Long memberId) {
+			
 			Optional<Member> m = memberDAO.findById(memberId);
-			List<ErrandDTO> all = new ArrayList<>();
+			List<MyPageDTO.MyApply> all = new ArrayList<>();
+			
 			m.ifPresent(member -> {
 				List<Apply> sub = applyDAO.findMyApply(member);
+				
 				for(int i=0;i<sub.size();i++) {
-					//리스트에다가 지원목록에 해당하는 심부름 id값들의 심부름 정보들을 all에 저장해야함.
-					
+					Optional<Errand> e = errandDAO.findById(sub.get(i).getErrand().getErrandId());
+					Apply apply = sub.get(i);
+					e.ifPresent(errand ->{
+						all.add(new MyPageDTO.MyApply(errand,apply));
+					});
 				}
 			});
+			
 			return all;
 		}
 		
