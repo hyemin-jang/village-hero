@@ -64,28 +64,28 @@
 				</div>		
 			</div>
 		</div>		
-</template>
+	</template>
 
-<template id="container">
-	<div id="content-wrap">
-		<div class="side-container">
-			<div class="side-title">지금 당신‍을 기다리는 심부름</div>
-			<div class="side-content">
-				<div class="errand" v-for="errand in allErrands">		
-					<div class="title"><b>{{errand.title}}</b></div>
-					<div class="reqLoc">{{errand.reqLocation}}</div>
-					<br>
-					<div style="text-align:right;"><a href="#">자세히 보기</a></div>
+	
+	<template id="container">
+		<div id="content-wrap">
+			<div class="side-container">
+				<div class="side-title">지금 당신‍을 기다리는 심부름</div>
+				<div class="side-content">
+					<div class="errand" v-for="errand in allErrands">		
+						<div class="title"><b>{{errand.title}}</b></div>
+						<div class="reqLoc">{{errand.reqLocation}}</div>
+						<br>
+						<div style="text-align:right;"><a href="#">자세히 보기</a></div>
+					</div>
 				</div>
 			</div>
-		</div>
-			
-		<div class="content-container">
-			<div id="map" style="height:800px;"></div>					
-		</div>
-	</div>	
-</template>	
-
+				
+			<div class="content-container">
+				<div id="map" style="height:800px;"></div>					
+			</div>
+		</div>	
+	</template>	
 
 
 <!-- component -->
