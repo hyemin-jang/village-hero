@@ -79,7 +79,6 @@ public class MemberController {
 		} else {
 			return null;
 		}
-		System.out.println("==================== " + member);
 		return member;
 	}
 
