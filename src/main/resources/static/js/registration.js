@@ -51,7 +51,7 @@ gender.addEventListener("focusout", function() {
 phone.addEventListener("focusout", checkPhoneNum);
 address.addEventListener("focusout", isAddressCorrect);
 spe1.addEventListener("focusout", function() {
-	if(spe1.value === "필수선택") {
+	if(spe1.value === "필수") {
 		error[8].style.display = "block";
 	} else {
 		error[8].style.display = "none";
@@ -81,7 +81,7 @@ function checkId() {
 }
 
 function checkPw() {
-    var pwPattern = /[a-zA-Z0-9\[~!@#$%^&*\-()_+|<>?:;\]{}]{8,16}/;
+    var pwPattern = /[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,16}/;
     if(pwPattern.test(pw1.value) && pw1.value != "") {
     	error[1].style.display = "none";
     	
@@ -96,7 +96,7 @@ function checkPw() {
         error[1].innerHTML = "필수 정보입니다.";
         error[1].style.display = "block";
     } else if(!pwPattern.test(pw1.value)) {
-        error[1].innerHTML = "8~16자 영문 대소문자, 숫자, 특수문자를 사용하세요.";
+        error[1].innerHTML = "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.";
         error[1].style.display = "block";
         
         pwMsg.innerHTML = "사용불가";
@@ -124,12 +124,12 @@ function comparePw() {
 }
 
 function checkNickname() {
-    var nicknamePattern = /[a-zA-Z가-힣0-9]{3,10}/;
+    var nicknamePattern = /[a-zA-Z가-힣]{3,10}/;
     if(nickname.value === "") {
         error[3].innerHTML = "필수 정보입니다.";
         error[3].style.display = "block";
     } else if(!nicknamePattern.test(nickname.value) || nickname.value.indexOf(" ") > -1) {
-        error[3].innerHTML = "3~10자 한글, 영문, 숫자만 사용하세요.";
+        error[3].innerHTML = "3~10자 한글 or 3~20자 영문 사용(특수기호, 공백 X).";
         error[3].style.display = "block";
     } else {
     	error[3].innerHTML = "유효한 닉네임입니다!";
@@ -205,7 +205,7 @@ function checkPhoneNum() {
 }
 
 function isAddressCorrect() {
-	var addressPattern = /[a-zA-Z가-힣0-9\[~!@#$%^&*\-()_+|<>?:;\]{}]{5,50}/;
+    var addressPattern;
 
     if(address.value === "") { 
     	error[7].innerHTML = "필수 정보입니다.";
@@ -214,8 +214,6 @@ function isAddressCorrect() {
     	error[7].innerHTML = "형식에 맞지 않는 주소입니다.";
         error[7].style.display = "block";
     } else {
-    	error[7].innerHTML = "알맞은 주소입니다!";
-		error[7].style.color = "#08A600";
-        error[7].style.display = "block"; 
+        error[7].style.display = "none"; 
     }
 }

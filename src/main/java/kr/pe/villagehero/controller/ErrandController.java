@@ -45,8 +45,9 @@ public class ErrandController {
 	}
 
 	// 심부름 등록 
-	@PostMapping("errand")
+	@PostMapping("newErrand")
 	public void insertErrand(HttpSession session, ErrandDTO newErrand, HttpServletResponse response) {
+		System.out.println("심부름 등록 메소드 실행");
 		MemberDTO.Get loginMember = (Get) session.getAttribute("loginMember");
 		long id = loginMember.getMemberId();
 		
