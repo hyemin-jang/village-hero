@@ -1,6 +1,9 @@
 package kr.pe.villagehero.controller;
 
+import java.io.PrintWriter;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,6 +59,7 @@ public class ApplyController {
 		return service.getAllApplicants(errandId);
 	}
 	
+	//????
 	// 심부름 상세페이지에서 로그인한 멤버가 이 심부름에 지원한 내역 조회
 	@GetMapping("isApplied")
 	public boolean getApplyHistory(long errandId, long memberId){
@@ -71,12 +75,22 @@ public class ApplyController {
 
 		return new RedirectView("index.html");
 	}
-	
-	//내심부름 - 지원 취소
+
+	// 내심부름 - 지원 취소
 	@GetMapping("applycancel")
-	public RedirectView cancel(Long memberId,Long errandId) {
-		service.cancel(memberId, errandId);
-		return new RedirectView("myerrands.html");
+	public void cancel(Long memberId, Long errandId, HttpServletResponse response) {
+
+		try {
+			boolean result = service.cancel(memberId, errandId);
+			if (result) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('정상적으로 취소되었습니다.'); history.back(); </script>");
+				out.flush();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
-	
+
 }

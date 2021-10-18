@@ -27,7 +27,7 @@
 						<div class="profile-text">
 							<div class="profile-name">{{logInMember.nickname}}</div>	
 							<a href="../updatemember.html">수정하기&nbsp;&nbsp;</a> 
-							<a href="#"> 탈퇴하기</a> 						
+							<a @click="deleteCheck" style="cursor:pointer;">탈퇴하기</a>
 						</div>
 					</div>			
 					<div class="req-cnt" v-bind="reqList">
@@ -99,6 +99,7 @@
 					logInMember: JSON.parse(sessionStorage.getItem("logInMember")),
 					reqList: [],
 					completionList: [],
+					confirm: false,
 					show: "req",
 					urlPart1 : "http://localhost:8088/getErrandDetail/"
 				}
@@ -130,12 +131,18 @@
 						method : "put",
 						url : "http://localhost:8088/deleteMember/"+this.logInMember.memberId,
 					}).then((res)=>{
-						alert("탈퇴가 완료되었습니다.")
+						alert("탈퇴가 완료되었습니다.");
 						window.location = "/index.html";
 						sessionStorage.removeItem("logInMember");
 					}).catch(errorData => {
 						return console.log(errorData);
 					});	
+				},
+				deleteCheck: function(){
+					this.confirm = confirm("동네히어로를 탈퇴하시겠습니까?");
+					if(this.confirm == true){
+						this.deleteMember();
+					}
 				},	
 				showReqList: function(){
 					this.show = "req";
