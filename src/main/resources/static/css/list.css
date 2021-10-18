@@ -19,10 +19,12 @@ th, td {
 }
 
 .top {
-	padding: 30px;
-	text-align: right;
+	margin-top: 25px;
+	text-align: center;
 }
-.sort-button {	
+
+.sort-button {
+	
 	background-color: #696969;	
 	border: none;
 	color: white;
@@ -32,8 +34,8 @@ th, td {
   	display: inline-block;
   	font-size: 16px;
   	font-weight: bold;
-  	margin: 4px 2px;
-  	transition-duration: 0.4s;
+  	margin: 4px -3px;
+  	transition-duration: 0.2s;
 	cursor: pointer;
 	border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px;
 }

@@ -1,19 +1,27 @@
 
 /** 메인 */
+/* * {
+	text-decoration: none;
+	font-family: "배달의 민족 주아 보통" !important;
+}
+
+body {
+	font-family: "배달의 민족 주아 보통" !important;
+} */
+
 #container-wrap {		
-	margin-left: 100px;
-	margin-right: 100px;
 }
 
 .side-container {
 	float: left;
-	width: 25%;
-	height: 800px;	
+	width: 20%;
+	height: 850px;
 	overflow: hidden;
+	margin: -20px 0px 0px 140px;
 }
 
 .side-container > .side-title {
-	margin: 30px 30px -10px 30px;	
+	margin: 30px 30px 30px 30px;	
 	font-weight: 800;
 	color: #696969;
 }
@@ -39,8 +47,22 @@
 }
 .content-container {
 	float: center;
-	width: 95%;
-	height: 800px;
+	width: 92%;
+	height: 850px;
+	margin: 25px 0px 0px 10px;
+}
+
+.detailView {
+	width: 30%;
+    padding: 6px 0px 6px 0px;
+    border: 0;
+    cursor: pointer;
+    color: #696969;
+    background-color: rgb(255, 196, 0);
+    border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px;
+    font-size: 14px;
+    font-weight: 800;
+    font-family: 'MaruBuri-Bold';
 }
 
 @media(max-width: 1200px){

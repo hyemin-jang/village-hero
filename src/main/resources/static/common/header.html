@@ -1,7 +1,14 @@
 <style>
-a {
+
+/* * {
 	text-decoration: none;
+	font-family: "배달의 민족 주아 보통" !important;
 }
+
+body {
+	font-family: "배달의 민족 주아 보통" !important;
+} */
+
 /** 헤더 */
 #header-wrap {
 	width: 100%;
@@ -9,9 +16,9 @@ a {
 }
 
 .header-container {
-	width: 90%;
+	width: 100%;
 	min-width: 1400px;
-	height: 100px;
+	height: 150px;
 	margin: 0 auto;
 	background-color: black;
 	display: flex;
@@ -20,7 +27,7 @@ a {
 }
 	
 .header-left {
-	width: 30%;	
+	width: 28%;	
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -32,7 +39,7 @@ a {
 	justify-content: center;
 }
 .header-right {
-	width: 30%;	
+	width: 28%;	
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -52,19 +59,19 @@ a {
 	border: 0;
 	color: rgb(255, 196, 0);
 	background-color: black;
-	font-size: 50px;
+	font-size: 80px;
 	font-weight: 600;
 	cursor: pointer;	
 	margin: 10px;
 }
 
 .pic-header-heroMan {
-	height: 80px;
+	height: 85px;
 	width: auto;
 }
 
 .pic-header-heroWomen {
-	height: 80px;
+	height: 85px;
 	width: auto;
 }
 </style>
@@ -77,12 +84,12 @@ a {
 				<div class="header-left">					
 					<button type="button" class="header-button"
 						onclick="location.href='http://localhost:8088/errandBoard/list.html';">
-						<span>모든 심부름 보기</span>
+						<span><h3>모든 심부름</h3></span>
 					</button>
 					<button type="button" class="header-button"
 						onclick="location.href='http://localhost:8088/myerrands.html';"
 						v-if="logInCheck">
-						<span>내 심부름 보기</span>
+						<span><h3>내 심부름</h3></span>
 					</button>
 				</div>
 
@@ -97,19 +104,19 @@ a {
 				<div class="header-right">
 					<button type="button" class="header-button"
 						onclick="location.href='http://localhost:8088/login.html';"
-						v-if="!logInCheck">로그인</button>
+						v-if="!logInCheck"><h3>로그인</h3></button>
 					<button type="button" class="header-button"
 						onclick="location.href='http://localhost:8088/joinmember.html';"
-						v-if="!logInCheck">회원가입</button>
+						v-if="!logInCheck"><h3>회원가입</h3></button>
 					<button type="button" class="header-button"
 						onclick="location.href='http://localhost:8088/mypage.html';"
 						v-if="logInCheck">
-						<span>마이페이지</span>
+						<span><h3>마이페이지</h3></span>
 					</button>
 					<button type="button" class="header-button"
 						onclick="location.href='http://localhost:8088';" @click="logout()"
 						v-if="logInCheck">
-						<span>로그아웃</span>
+						<span><h3>로그아웃</h3></span>
 					</button>
 				</div>
 			</div>
