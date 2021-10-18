@@ -57,7 +57,7 @@ public class MemberController {
 			}else if (phoneCheck == false) {
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
-				out.println("<script>alert('존재하는 전화번호입니다.'); history.back();</script>");
+				out.println("<script>alert('존재하는 전화번호입니다.'); history.back(); </script>");
 				out.flush();
 			}else {
 				boolean result = service.insertMember(newMember);

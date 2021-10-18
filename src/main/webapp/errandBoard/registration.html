@@ -377,7 +377,7 @@ select {
 		}
 		
  		function checkErrLoca() {
-			var errLocaPattern = /[a-zA-Z가-힣0-9\[~!@#$%^&*\-()_+|<>?:;\]{}]{2,50}/;
+			var errLocaPattern = /[a-zA-Z가-힣0-9\[~!@#$%^&*\-()_+|<>?:;\]{}]{5,50}/;
 			if (errLoca.value === "") {
 				error[3].innerHTML = "필수 정보입니다.";
 				error[3].style.display = "block";
@@ -385,7 +385,7 @@ select {
 				error[3].innerHTML = "형식에 맞지 않는 주소입니다"
 				error[3].syyle.display = "block";
 			} else {
-				error[3].innerHTML = "알맞은 주소입니다!";
+				error[3].innerHTML = "다시 한번 확인하세요!";
 				error[3].style.color = "#08A600";
 		        error[3].style.display = "block";
 			}
