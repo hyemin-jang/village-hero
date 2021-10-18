@@ -35,6 +35,15 @@ public class ErrandService {
 
 		return errandList;
 	}
+	
+	// 홈화면에서 진행중인 심부름만 모두 조회
+	public List<ErrandDTO> getAllErrandsOngoing() {
+		List<ErrandDTO> errandList = new ArrayList<ErrandDTO>();
+		List<Errand> errands = (List<Errand>) errandDAO.findAllErrandsOngoing();
+
+		errands.forEach(v -> errandList.add(new ErrandDTO(v)));
+		return errandList;
+	}
 
 	public ErrandDTO getOneErrand(long id) {
 		ErrandDTO errand = new ErrandDTO(errandDAO.findById(id).get());		
@@ -42,18 +51,17 @@ public class ErrandService {
 	}
 	
 	//심부름 삭제
-	public String deleteErrand(long id) {
-		System.out.println("삭제시도2");
+	public void deleteErrand(long id) {
 		errandDAO.deleteById(id);
-		return "삭제성공";
 	}
 	
 	//심부름 수정
-	public String updateErrand(ErrandDTO.updateErrand errand) {
+	public boolean updateErrand(ErrandDTO.updateErrand errand) {
 		System.out.println("심부름 수정시도");
 		
 		long errandId = errand.getErrandId();
 		Errand updateErrand = errandDAO.findById(errandId).get();
+		boolean result = false;
 
 		try {
 		updateErrand.setTitle(errand.getTitle());
@@ -62,25 +70,23 @@ public class ErrandService {
 		updateErrand.setCategory(errand.getCategory());
 		updateErrand.setReqDate(errand.getReqDate().replace(" 00:00:00", ""));
 		updateErrand.setContent(errand.getContent());
-		
 		//날짜 포멧 맞춰주기
 		updateErrand.setCreatedAt(updateErrand.getCreatedAt().replace(" 00:00:00", ""));
-		updateErrand.setCompletedAt(updateErrand.getCompletedAt().replace(" 00:00:00", ""));
 		
 		errandDAO.save(updateErrand);
-		
+		result = true;
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return "심부름 요청 수정 성공";
+		return result;
 	}
 
 	//새로운 심부름 저장
-	public String insertErrand(long id, ErrandDTO newErrand) {
+	public boolean insertErrand(long id, ErrandDTO newErrand) {
 		System.out.println("심부름 요청 등록시도");
-		
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		Date time = new Date();
+		boolean result = false;
 	
 		Member writer = memberDAO.findById(id).get() ; // session에서 받아와야함
     	int pay = newErrand.getPay();
@@ -91,11 +97,15 @@ public class ErrandService {
     	String reqLocation = newErrand.getReqLocation();
     	String reqDate = newErrand.getReqDate();
     	char errandStatus = '0';
-
-    	Errand errand = new Errand(writer, pay, createdAt, title, content, category, reqLocation, reqDate, errandStatus);
-
-    	errandDAO.save(errand);
-		return "심부름 요청 저장 성공";
+    	
+    	try {
+    		Errand errand = new Errand(writer, pay, createdAt, title, content, category, reqLocation, reqDate, errandStatus);
+    		errandDAO.save(errand);
+    		result = true;
+    	}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	// 존재하는 모든 심부름을 가격순(내림차순)으로 return
@@ -110,14 +120,14 @@ public class ErrandService {
 	
 	
 	//멤버 id 값으로 저장된 모든 심부름 find
-	public List<MyPageDTO.ErrandDTO2> getAllMyErrands(Long memberId){
+	public List<ErrandDTO> getAllMyErrands(Long memberId){
 		Optional<Member> m = memberDAO.findById(memberId);
-		List<MyPageDTO.ErrandDTO2> myreqlist = new ArrayList<>();
+		List<ErrandDTO> myreqlist = new ArrayList<>();
 		
 		m.ifPresent(member ->{
 			List<Errand> sub = errandDAO.findAllMyReq(member);
 			
-			sub.forEach(v -> myreqlist.add(new MyPageDTO.ErrandDTO2(v.getTitle(),v.getErrandStatus())));
+			sub.forEach(v -> myreqlist.add(new ErrandDTO(v)));
 		});
 		return myreqlist;
 	}
@@ -127,8 +137,8 @@ public class ErrandService {
 		Errand e = errandDAO.findById(errandId).get();
 		
 		e.setErrandStatus('1');
-		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));		
-		e.setReqDate(e.getReqDate().replace(" 00:00:00", ""));		
+		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));
+		e.setReqDate(e.getReqDate().replace(" 00:00:00", ""));
 		
 		errandDAO.save(e);
 	}
@@ -143,6 +153,22 @@ public class ErrandService {
 		
 		errandDAO.save(e);
 	}
+
+	// 심부름 완료 처리 - 심부름 상태 3으로 변경
+	public void completeErrand(long errandId) {
+		Errand e = errandDAO.findById(errandId).get();
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+		Date time = new Date();
+		
+		e.setErrandStatus('3');
+		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));		
+		e.setReqDate(e.getReqDate().replace(" 00:00:00", ""));		
+		e.setCompletedAt(dateFormat.format(time));
+	
+		errandDAO.save(e);
+	}
+	
 }
 
 

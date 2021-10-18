@@ -210,7 +210,7 @@ select {
 		<div id="content">
 
 			<!-- form in -->
-			<form action="errand" method="post">
+			<form action="/errand" method="post">
 
 				<!-- 심부름 제목 -->
 				<div>
@@ -252,17 +252,17 @@ select {
 					</h3>
 					<span class="box int_pay"> <input type="text" id="pay"
 						class="int" maxlength="7" name="pay" required> <span
-						class="step_url">(단위)원</span>
+						class="step_url">숫자만 입력</span>
 					</span> <span class="error_next_box">필수 정보입니다.</span>
 				</div>
 
 				<!-- 위치 -->
 				<div>
 					<h3 class="join_title">
-						<label for="location">심부름 위치</label>
+						<label for="errLoca">심부름 주소</label>
 					</h3>
 					<span class="box int_location"> <input type="text"
-						id="location" class="int" maxlength="50" name="location" required>
+						id="errLoca" class="int" maxlength="50" name="location" required>
 						<span class="step_url">필수 입력</span>
 					</span> <span class="error_next_box">필수 정보입니다.</span>
 				</div>
@@ -315,22 +315,17 @@ select {
 		 * 변수 선언
 		 */
 		var id = document.querySelector('#id');
-		
 		var pay = document.querySelector('#pay');
 
-		var pwMsg = document.querySelector('#alertTxt');
+		/* var pwMsg = document.querySelector('#alertTxt');
 		var pwImg1 = document.querySelector('#pswd1_img1');
 
 		var pwImg2 = document.querySelector('#pswd2_img1');
-		var pwMsgArea = document.querySelector('.int_pass');
+		var pwMsgArea = document.querySelector('.int_pass'); */
 
 		var categoryErrand = document.querySelector('#category-errand');
 
-		var phone = document.querySelector('#phone');
-
-		var address = document.querySelector('#address');
-
-		var spe1 = document.querySelector('#spe1');
+		var errLoca = document.querySelector('#errLoca');
 		
 		var error = document.querySelectorAll('.error_next_box');
 
@@ -346,22 +341,13 @@ select {
 				error[1].style.display = "none";
 			}
 		})
-		phone.addEventListener("focusout", checkPhoneNum);
-		address.addEventListener("focusout", isAddressCorrect);
-		spe1.addEventListener("focusout", function() {
-			if (spe1.value === "필수") {
-				error[8].style.display = "block";
-			} else {
-				error[8].style.display = "none";
-			}
-		})
+		errLoca.addEventListener("focusout", checkErrLoca);
 
 		/**
 		 * 콜백 함수
 		 */
 		function checkId() {
 			var idPattern = /[a-zA-Z가-힣0-9\[~!@#$%^&*\-()_+|<>?:;\]{}]{2,50}/;
-			
 			if (id.value === "") {
 				error[0].innerHTML = "필수 정보입니다.";
 				error[0].style.display = "block";
@@ -380,7 +366,7 @@ select {
 			if (pay.value === "" && "원") {
 				error[2].innerHTML = "필수 정보입니다.";
 				error[2].style.display = "block";
-			} else if (!payPattern.test(pay.value)) {
+			} else if (!payPattern.test(pay.value) && pay.value === "원") {
 				error[2].innerHTML = "숫자만 사용하세요.";
 				error[2].style.display = "block";
 			} else {
@@ -390,34 +376,21 @@ select {
 			}
 		}
 		
-		
-/* 		function checkPhoneNum() {
-			var isPhoneNum = /([01]{2})([01679]{1})([0-9]{3,4})([0-9]{4})/;
-
-			if (phone.value === "") {
-				error[6].innerHTML = "필수 정보입니다.";
-				error[6].style.display = "block";
-			} else if (!isPhoneNum.test(phone.value)) {
-				error[6].innerHTML = "형식에 맞지 않는 번호입니다.";
-				error[6].style.display = "block";
+ 		function checkErrLoca() {
+			var errLocaPattern = /[a-zA-Z가-힣0-9\[~!@#$%^&*\-()_+|<>?:;\]{}]{2,50}/;
+			if (errLoca.value === "") {
+				error[3].innerHTML = "필수 정보입니다.";
+				error[3].style.display = "block";
+			} else if (!errLocaPattern.test(errLoca.value)) {
+				error[3].innerHTML = "형식에 맞지 않는 주소입니다"
+				error[3].syyle.display = "block";
 			} else {
-				error[6].style.display = "none";
+				error[3].innerHTML = "알맞은 주소입니다!";
+				error[3].style.color = "#08A600";
+		        error[3].style.display = "block";
 			}
 		}
-
-		function isAddressCorrect() {
-			var addressPattern;
-
-			if (address.value === "") {
-				error[7].innerHTML = "필수 정보입니다.";
-				error[7].style.display = "block";
-			} else if (!addressPattern.test(address.value)) {
-				error[7].innerHTML = "형식에 맞지 않는 주소입니다.";
-				error[7].style.display = "block";
-			} else {
-				error[7].style.display = "none";
-			}
-		} */
+		
 	</script>
 </body>
 </html>

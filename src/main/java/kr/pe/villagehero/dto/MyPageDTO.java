@@ -3,6 +3,7 @@ package kr.pe.villagehero.dto;
 import javax.persistence.Id;
 
 import kr.pe.villagehero.entity.Apply;
+import kr.pe.villagehero.entity.Errand;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +20,7 @@ public class MyPageDTO {
 	@Setter
 	@Builder
 	public static class Completion {  
+		private long errandId;
 		private String completedAt;
 		private String writer;
 		private String title;
@@ -31,6 +33,7 @@ public class MyPageDTO {
 	@Setter
 	@Builder
 	public static class Req {
+		private long errandId;
 		private String createdAt;
 		private String title;
 		private String category;
@@ -72,15 +75,39 @@ public class MyPageDTO {
 	}
 	
 	//내심부름 -> 내 심부름 내가 지원한 심부름 목록 확인에서 뿌려줄 내용을 위한 DTO
+	
 	@AllArgsConstructor
 	@NoArgsConstructor
 	@Getter
 	@Setter
-	@Builder
 	public static class MyApply{
-		private String title;
+		private long errandId;
+		private long writerId;
 		private String writer;
-		private char matchStatus;
+		private int pay;
+		private String createdAt;
+		private String title;
+		private String content;
+		private String category;
+		private String reqLocation;
+		private String reqDate;
+		private char errandStatus;
+		private char matchStatus;//심부름에 걸려있는 지원자의 매칭상태를 표기해줄것.
+		
+		public MyApply(Errand entity,Apply apply) {
+			this.errandId = entity.getErrandId();
+			this.writerId = entity.getWriter().getMemberId();
+			this.writer = entity.getWriter().getNickname();
+			this.pay = entity.getPay();
+			this.createdAt = entity.getCreatedAt();
+			this.title = entity.getTitle();
+			this.content = entity.getContent();
+			this.category = entity.getCategory();
+			this.reqLocation = entity.getReqLocation();
+			this.reqDate = entity.getReqDate();
+			this.errandStatus = entity.getErrandStatus();
+			this.matchStatus= apply.getMatchStatus();
+		}
 	}
 	
 }

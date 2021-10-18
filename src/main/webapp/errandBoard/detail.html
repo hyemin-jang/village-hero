@@ -5,10 +5,13 @@
 <title>심부름 상세페이지</title>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
+	<script src="../js/headerTemplate.js"></script>
 
 	<link rel="stylesheet" href="/css/index.css" />
 	<link rel="stylesheet" href="/css/detail.css" />
-</head>
 </head>
 <body>
 	<template id="detail">		
@@ -41,8 +44,8 @@
 								{{errands.content}}
 							</div>
 							<div class="info">
-								<div class="info-each"><b>요청일시</b><span style="margin-left: 10px;">{{errands.reqDate}}</span></div>
-								<div class="info-each"><b>요청위치</b><span style="margin-left: 10px;">{{errands.reqLocation}}</span></div>	
+								<div class="info-each"><b>심부름 일시</b><span style="margin-left: 10px;">{{errands.reqDate}}</span></div>
+								<div class="info-each"><b>심부름 위치</b><span style="margin-left: 10px;">{{errands.reqLocation}}</span></div>	
 							</div>
 							<hr>
 							<div class="pay">
@@ -52,18 +55,32 @@
 					</div>
 					<div class="bottom">
 						<span class="left">
-							<button @click="showApplicants" v-if="errands.writerId == logInMemberId">지원자 보기</button>
-							<button @click="showForm" v-if="logInMemberId!=errands.writerId & errands.errandStatus==0"><b>도와줄게요!</b></button>
+							<button v-if="errands.writerId == logInMemberId"
+									class="btn" @click="showApplicants" >
+									지원자 보기
+							</button>
+							<button v-if="errands.writerId == logInMemberId && errands.errandStatus==2"
+									class="btn" @click="complete()">
+									심부름 완료 확인
+							</button>
+							<button v-if="logInMemberId!=errands.writerId && (errands.errandStatus==0 || errands.errandStatus==1) && isApplied==false" 
+									class="btn" @click="showForm">									
+									<b>도와줄게요!</b>
+							</button>
+							<span v-if="errands.errandStatus==1 && isApplied==true" 
+									style="color:red; font-weight:600; font-size:18px;">
+									지원한 심부름입니다. 수락될때까지 기다려주세요.
+							</span>
 						</span>
 						<span class="right">
-							<a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart1+errands.errandId" >수정하기</a> 
-							<a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart2+errands.errandId" >삭제하기</a> 
-							<a href="list.html" class="btn btn-secondary float-left">목록으로</a>
+							<a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart1+errands.errandId" >수정하기</a>
+							<a v-if="errands.writerId == logInMemberId" @click="deletePage" style="cursor:pointer;">삭제하기</a>
+							<a href="list.html">목록으로</a>
 						</span>
 					</div>
 				</div>
 
-				<!-- 지원자 내역 list -->
+				<!-- 지원자 내역 보기 -->
 				<div class="modal-wrap"  v-if="list">					
 					<div id="applicantList">
 						<div v-if="applicants.length==0">아직 지원자가 없습니다.</div>
@@ -81,8 +98,14 @@
 								{{v.message}}
 							</div>
 							<div class="submit">
-								<button @click="accept($event)" v-if="v.matchStatus=='0'">{{v.memberId}}</button>
-								<span v-if="v.matchStatus=='1'" style="background-color: rgb(192, 252, 180); color:rgb(3, 63, 1)">수락한 지원자</span>
+								<button v-if="v.matchStatus=='0'" 
+										class="btn" @click="accept(this.value, $event)" v-bind:value="v.memberId">
+										수락하기
+								</button>
+								<span v-if="v.matchStatus=='1'" 
+									 	style="background-color: rgb(192, 252, 180); color:rgb(3, 63, 1)">
+									 	수락한 지원자
+								</span>								
 							</div>						
 						</div>
 						<div class="bottom">
@@ -91,13 +114,6 @@
 					</div>
 				</div>	
 				
-				<div class="form-group">
-					<a v-if="errands.writerId==logInMemberId" v-bind:href="urlPart1+errands.errandId" >수정하기</a> 
-					<a v-if="errands.writerId==logInMemberId" v-bind:href="urlPart2+errands.errandId" >삭제하기</a> 
-					<a href="list.html" class="btn btn-secondary float-left">목록으로</a>
-					<!-- 도와줄게요 버튼 출력 조건 : 다른 사람이 등록한 심부름일때 / 심부름 상태가 지원자 대기중(0)일때만 -->
-					<button @click="showForm" v-if="logInMemberId!=errands.writerId & errands.errandStatus==0">도와줄게요</button>
-					<button @click="showApplicants">지원자 보기</button>
 				<!-- 심부름 지원 폼 -->
 				<div class="modal-wrap" v-if="form">
 					<div id="applyForm">
@@ -108,7 +124,7 @@
 							<label for="title">간단한 자기소개와 메세지를 남겨주세요.</label>
 							<div>
 								<textarea name="message" required></textarea>
-								<button type="submit">보내기</button>		
+								<button type="submit" class="btn">보내기</button>		
 							</div>	
 						</form>
 						<div class="submit">							
@@ -116,15 +132,12 @@
 						</div>
 					</div>
 				</div>
-
-
-				
 			</div>
 		</div>
 	</template>
 	
-
-	<div id="app">
+	<div id="headerBar"></div>
+	<div id="app">		
 		<detail-com></detail-com>
 	</div>
 	
@@ -141,12 +154,16 @@
 					errandIdForAccept: "",				
 					form: false,
 					list: false,
+					isApplied: "", // 로그인한 사용자가 이 심부름에 지원했는지 
 		        	urlPart1 :"http://localhost:8088/getErrandDetail2/",
-		        	urlPart2 :"http://localhost:8088/errandDelete/",
-					//urlPart3 : "http://localhost:8088/accept?errandId="+this.errandId+"&memberId="+this.logInMemberId
+		        	urlPart2 :"http://localhost:8088/errandDelete/"
 				}
 	        },
-	        created :function(){	        	
+	        created :function(){	 
+	        	if (!this.logInMemberId){	        	
+        			location.href="http://localhost:8088/login.html";
+        		};
+	        	
 	        	axios({
 	                method : "get",
 	                url : "http://localhost:8088/errandDetail" + location.search
@@ -169,20 +186,56 @@
 	            }).catch(errorData => {
 	            	return console.log(errorData);
 	            });
-	        },			
+				
+				// 로그인한 사용자가 이 심부름에 지원했는지 여부 가져오기
+				axios({
+	                method : "get",
+	                url : "http://localhost:8088/isApplied" + location.search + "&memberId=" + this.logInMemberId
+	            }).then( resData => {
+	                this.isApplied = resData.data;
+	            }).catch(errorData => {
+	            	return console.log(errorData);
+	            });
+	        },		        
 			methods: {
-				accept: function(event){
-					this.memberIdForAccept = event.currentTarget.innerText;
+				// 지원자 수락
+				accept: function(id, event){
+					this.memberIdForAccept = event.target.value;
 					console.log(this.memberIdForAccept);
 
 					axios({
 						method : "get",
 						url : "http://localhost:8088/accept?errandId="+this.errandIdForAccept+"&memberId="+this.memberIdForAccept
-					}).then( 
-						alert("수락이 완료되었습니다.")
-					).catch(errorData => {
+					}).then( () => {
+						alert("수락이 완료되었습니다.");
+						location.reload();
+					}).catch(errorData => {
 						return console.log(errorData);
 					});	
+				},
+				// 심부름 완료 처리
+				complete: function(){
+					axios({
+						method : "put",
+						url : "http://localhost:8088/complete?errandId="+this.errandIdForAccept						
+					}).then( () => {
+						alert("심부름이 완료되었습니다. 히어로에게 감사의 인사를 전해주세요!");
+						location.reload();				
+					}).catch(errorData => {
+						return console.log(errorData);
+					});	
+				},
+				deletePage: function(){
+					axios({
+						method : "delete",
+						url : "http://localhost:8088/errandDelete/"+this.errandIdForAccept,
+					}).then((res)=>{
+						alert("삭제가 완료되었습니다.")
+						window.location = "/errandBoard/list.html";
+					}).catch(errorData => {
+						return console.log(errorData);
+					});	
+					
 				},
 				showForm: function(){
 					this.form = true;
@@ -195,7 +248,7 @@
 				},
 				closeApplicants: function(){
 					this.list = false;
-				}
+				},
 			}
 	    });
 
@@ -205,9 +258,5 @@
 	</script>
 	
 </body>
-
-
-
-
 
 </html>

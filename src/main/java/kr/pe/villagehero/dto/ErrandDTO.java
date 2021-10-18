@@ -40,6 +40,8 @@ public class ErrandDTO {
 		this.errandStatus = entity.getErrandStatus();
 	}
 	
+	
+	
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@Getter

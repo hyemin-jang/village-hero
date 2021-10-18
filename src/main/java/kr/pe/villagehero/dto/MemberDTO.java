@@ -78,4 +78,17 @@ public class MemberDTO {
 		private String specialty2;
 		private String specialty3;
 	}
+	
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Getter
+	@Setter
+	public static class update {	// 회원정보 수정 정보 넘겨주는 DTO
+		private String nickname;
+		private String phone;
+		private String address;
+		private String specialty1;
+		private String specialty2;
+		private String specialty3;
+	}
 }

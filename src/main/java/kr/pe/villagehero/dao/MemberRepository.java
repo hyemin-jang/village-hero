@@ -8,5 +8,9 @@ import kr.pe.villagehero.entity.Member;
 @Repository
 public interface MemberRepository extends CrudRepository<Member, Long>{
 
-	Member findByEmail(String email);	
+	Member findByEmail(String email);
+
+	Member findByNickname(String newNickname);
+
+	Member findByPhone(String newPhone);	
 }

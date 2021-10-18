@@ -1,0 +1,145 @@
+<style>
+a {
+	text-decoration: none;
+}
+/** 헤더 */
+#header-wrap {
+	width: 100%;
+	background-color: black;
+}
+
+.header-container {
+	width: 90%;
+	min-width: 1400px;
+	height: 100px;
+	margin: 0 auto;
+	background-color: black;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+	
+.header-left {
+	width: 30%;	
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.header-middle {
+	width: 40%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.header-right {
+	width: 30%;	
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.header-button {
+	border: 0;
+	color: white;
+	background-color: black;
+	font-size: 25px;
+	font-weight: 600;
+	cursor: pointer;
+	margin: 20px;
+}
+
+.header-logo {
+	border: 0;
+	color: rgb(255, 196, 0);
+	background-color: black;
+	font-size: 50px;
+	font-weight: 600;
+	cursor: pointer;	
+	margin: 10px;
+}
+
+.pic-header-heroMan {
+	height: 80px;
+	width: auto;
+}
+
+.pic-header-heroWomen {
+	height: 80px;
+	width: auto;
+}
+</style>
+
+<body>
+	<!-- Header -->
+	<template id="header">
+		<div id="header-wrap">
+			<div class="header-container">
+				<div class="header-left">					
+					<button type="button" class="header-button"
+						onclick="location.href='http://localhost:8088/errandBoard/list.html';">
+						<span>모든 심부름 보기</span>
+					</button>
+					<button type="button" class="header-button"
+						onclick="location.href='http://localhost:8088/myerrands.html';"
+						v-if="logInCheck">
+						<span>내 심부름</span>
+					</button>
+				</div>
+
+				<div class="header-middle">
+					<img src="/images/manhero.png" class="pic-header-heroMan">
+					<button class="header-logo" onclick="location.href='http://localhost:8088';">
+						<b>동네히어로</b>
+					</button>
+					<img src="/images/womenhero.png" class="pic-header-heroWomen">
+				</div>
+
+				<div class="header-right">
+					<button type="button" class="header-button"
+						onclick="location.href='http://localhost:8088/login.html';"
+						v-if="!logInCheck">로그인</button>
+					<button type="button" class="header-button"
+						onclick="location.href='http://localhost:8088/joinmember.html';"
+						v-if="!logInCheck">회원가입</button>
+					<button type="button" class="header-button"
+						onclick="location.href='http://localhost:8088/mypage.html';"
+						v-if="logInCheck">
+						<span>마이페이지</span>
+					</button>
+					<button type="button" class="header-button"
+						onclick="location.href='http://localhost:8088';" @click="logout()"
+						v-if="logInCheck">
+						<span>로그아웃</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</template>
+
+	<div id="headerCom">
+		<header-com></header-com>
+	</div>
+
+	<script>
+		// header 컴포넌트
+		Vue.component("header-com", {
+			template : "#header",
+			data : function() {
+				return {
+					logInCheck : sessionStorage.getItem("logInMember")
+				}
+			},
+			methods : {
+				logout : function() {
+					sessionStorage.removeItem("logInMember");
+				}
+			}
+		});
+		
+		new Vue({
+			el: "#headerCom"            
+		});
+	</script>
+
+</body>
+</html>
