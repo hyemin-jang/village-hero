@@ -2,6 +2,7 @@ package kr.pe.villagehero.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.dto.MemberDTO.Get;
+import kr.pe.villagehero.entity.Member;
 import kr.pe.villagehero.service.MemberService;
 
 @RestController
@@ -115,8 +117,8 @@ public class MemberController {
 
 	// 회원정보 수정후 로그인 멤버 정보 프론트로 보내기
 	@GetMapping("getLogInInfo")
-	public void getLogInInfo() {
-
+	public Optional<Member> getLogInInfo(long memberId) {		
+		return service.getLogInInfo(memberId);
 	}
 
 	// 회원탈퇴

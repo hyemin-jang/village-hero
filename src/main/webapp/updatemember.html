@@ -32,7 +32,7 @@
 	
 						<span class="box int_name"> <input type="text" id="nickname"
 							class="int" maxlength="20" name="nickname"
-							v-bind:value="logInMember.nickname"> <span
+							v-bind:value="logInMemberDB.nickname"> <span
 							class="step_url">3~10자</span>
 						</span> <span class="error_next_box"></span>
 					</div>
@@ -44,7 +44,7 @@
 						</h3>
 						<span class="box int_phone"> <input type="text" id="phone"
 							class="int" maxlength="11" placeholder="휴대전화 입력" name="phone"
-							v-bind:value="logInMember.phone"> <span class="step_url">'-'
+							v-bind:value="logInMemberDB.phone"> <span class="step_url">'-'
 								생략</span>
 						</span> <span class="error_next_box"></span>
 					</div>
@@ -56,7 +56,7 @@
 						</h3>
 						<span class="box int_address"> <input type="text"
 							id="address" class="int" maxlength="50" placeholder="주소 입력"
-							name="address" v-bind:value="logInMember.address"> <span
+							name="address" v-bind:value="logInMemberDB.address"> <span
 							class="step_url">필수 입력</span>
 						</span> <span class="error_next_box"></span>
 					</div>
@@ -141,8 +141,20 @@
 	        data : {
 	        	resData : false,
 	        	logInMember: JSON.parse(sessionStorage.getItem("logInMember")),
-	        	memberId: JSON.parse(sessionStorage.getItem("logInMember")).memberId
+	        	memberId: JSON.parse(sessionStorage.getItem("logInMember")).memberId,
+	        	logInMemberDB: []
 	        },
+	        created : function(){	
+				// DB에서 회원정보 받아오는 비동기
+				axios({
+					method: "get",
+					url: "http://localhost:8088/getLogInInfo?memberId="+this.logInMember.memberId			
+				}).then(resData => {									      			
+					this.logInMemberDB = resData.data;  	
+				}).catch(error => {
+					console.log("error", error);
+				});  
+	        }
 	    });
 	</script>
 </body>

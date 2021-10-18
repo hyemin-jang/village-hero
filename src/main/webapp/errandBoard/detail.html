@@ -75,7 +75,7 @@
 						</span>
 						<span class="right">
 							<a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart1+errands.errandId" >수정하기</a>
-							<a v-if="errands.writerId == logInMemberId" @click="deletePage" style="cursor:pointer;">삭제하기</a>
+							<a v-if="errands.writerId == logInMemberId" @click="deleteCheck" style="cursor:pointer;">삭제하기</a>
 							<a href="list.html">목록으로</a>
 						</span>
 					</div>
@@ -247,7 +247,12 @@
 					}).catch(errorData => {
 						return console.log(errorData);
 					});	
-					
+				},
+				deleteCheck: function(){
+					this.confirm = confirm("심부름을 삭제하시겠습니까?");
+					if(this.confirm == true){
+						this.deletePage();
+					}
 				},
 				showForm: function(){
 					this.form = true;

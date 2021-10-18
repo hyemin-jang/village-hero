@@ -1,6 +1,7 @@
 package kr.pe.villagehero.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -131,5 +132,9 @@ public class MemberService {
 	public int getMemberStatus1(long errandId) {
 		int memberStatus = errandDAO.findById(errandId).get().getWriter().getMemberStatus();
 		return memberStatus;
+	}
+
+	public Optional<Member> getLogInInfo(long id) {
+		return memberDAO.findById(id);
 	}
 }
