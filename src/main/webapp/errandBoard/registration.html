@@ -4,195 +4,10 @@
 <meta charset="UTF-8">
 <title>동네히어로 : 심부름 요청</title>
 
-<style>
-html {
-	height: 100%;
-}
+<link rel="stylesheet" href="../css/errandform.css">
+<script src="../js/errandform.js"></script>
 
-body {
-	margin: 0;
-	height: 100%;
-	background: color:black;
-	font-family: 'MaruBuri-Bold';
-}
-
-#header {
-	padding-top: 100px;
-	padding-bottom: 0px;
-	text-align: center;
-}
-
-#wrapper {
-	position: relative;
-	height: 100%;
-}
-
-#content {
-	position: absolute;
-	left: 50%;
-	transform: translate(-50%);
-	width: 400px;
-}
-
-/**
-* 입력폼
-*/
-input:focus {
-	outline: none;
-}
-
-h3 {
-	color: #545454;
-	margin: 20px 0px 5px 2px;
-	font-size: 14px;
-	font-weight: 700;
-}
-
-.box {
-	display: block;
-	width: 100%;
-	height: 40px;
-	border: solid 1px #dadada;
-	border-radius: 5px 5px 5px 5px/5px 5px 5px 5px;
-	padding: 5px 10px 5px 10px;
-	box-sizing: border-box;
-	background: #fff;
-	position: relative;
-}
-
-.box2 {
-	display: block;
-	width: 100%;
-	height: 120px;
-	border: solid 1px #dadada;
-	border-radius: 5px 5px 5px 5px/5px 5px 5px 5px;
-	padding: 5px 10px 5px 10px;
-	box-sizing: border-box;
-	background: #fff;
-	position: relative;
-}
-
-.int {
-	display: block;
-	position: relative;
-	width: 100%;
-	height: 30px;
-	border: none;
-	background: #fff;
-	font-size: 15px;
-}
-
-.textarea {
-	display: block;
-	position: relative;
-	width: 100%;
-	height: 100px;
-	border: none;
-	background: #fff;
-	font-size: 15px;
-	resize: none;
-}
-
-.textarea:focus {
-	outline: none;
-}
-
-.step_url {
-	/*@naver.com*/
-	position: absolute;
-	top: 10px;
-	right: 12px;
-	font-size: 15px;
-	color: #8e8e8e;
-}
-
-.pswdImg {
-	width: 18px;
-	height: 20px;
-	display: inline-block;
-	position: absolute;
-	top: 50%;
-	right: 16px;
-	margin-top: -10px;
-	cursor: pointer;
-}
-
-#pay {
-	display: table-cell;
-	width: 147px;
-}
-
-#category {
-	display: table-cell;
-	width: 147px;
-}
-
-#bir_gender {
-	display: table-cell;
-	width: 147px;
-	vertical-align: middle;
-	padding-left: 10px;
-}
-
-select {
-	width: 100%;
-	height: 29px;
-	font-size: 15px;
-	background: #fff
-		url(https://static.nid.naver.com/images/join/pc/sel_arr_2x.gif) 100%
-		50% no-repeat;
-	background-size: 20px 8px;
-	-webkit-appearance: none;
-	display: inline-block;
-	text-align: start;
-	border: none;
-	cursor: default;
-}
-
-/**
-* 에러메세지
-*/
-.error_next_box {
-	margin-top: 9px;
-	font-size: 12px;
-	color: red;
-	display: none;
-}
-
-#alertTxt {
-	position: absolute;
-	top: 12px;
-	right: 38px;
-	font-size: 12px;
-	color: red;
-	display: none;
-}
-
-/**
-* 버튼
-*/
-.btn_area {
-	margin: 30px 0 91px;
-}
-
-#btnJoin {
-	width: 100%;
-	padding: 16px 0 12px;
-	border: 0;
-	cursor: pointer;
-	color: #fff;
-	background-color: #696969;
-	border-radius: 5px 5px 5px 5px/5px 5px 5px 5px;
-	font-size: 20px;
-	font-weight: 800;
-	font-family: 'MaruBuri-Bold';
-}
-</style>
 </head>
-
-
-
-
 
 <!-- 바디 -->
 <body>
@@ -210,8 +25,8 @@ select {
 		<div id="content">
 
 			<!-- form in -->
-			<form action="/errand" method="post">
-
+			<form action="../newErrand" method="post">
+				
 				<!-- 심부름 제목 -->
 				<div>
 					<h3 class="join_title">
@@ -250,10 +65,11 @@ select {
 					<h3 class="join_title">
 						<label for="pay">심부름 가격</label>
 					</h3>
-					<span class="box int_pay"> <input type="text" id="pay"
-						class="int" maxlength="7" name="pay" required> <span
-						class="step_url">숫자만 입력</span>
-					</span> <span class="error_next_box">필수 정보입니다.</span>
+					<span class="box int_pay"> 
+						<input type="text" id="pay" class="int" maxlength="7" name="pay" required> 
+						<span class="step_url">숫자만 입력</span>
+					</span> 
+					<span class="error_next_box">필수 정보입니다.</span>
 				</div>
 
 				<!-- 위치 -->
@@ -262,7 +78,7 @@ select {
 						<label for="errLoca">심부름 주소</label>
 					</h3>
 					<span class="box int_location"> <input type="text"
-						id="errLoca" class="int" maxlength="50" name="location" required>
+						id="errLoca" class="int" maxlength="50" name="reqLocation" required>
 						<span class="step_url">필수 입력</span>
 					</span> <span class="error_next_box">필수 정보입니다.</span>
 				</div>
@@ -297,7 +113,7 @@ select {
 					</button>
 				</div>
 
-			</form>
+			</form> 
 			<!-- form out -->
 
 		</div>
@@ -305,92 +121,5 @@ select {
 
 	</div>
 	<!-- wrapper out-->
-
-
-
-
-
-	<script>
-		/**
-		 * 변수 선언
-		 */
-		var id = document.querySelector('#id');
-		var pay = document.querySelector('#pay');
-
-		/* var pwMsg = document.querySelector('#alertTxt');
-		var pwImg1 = document.querySelector('#pswd1_img1');
-
-		var pwImg2 = document.querySelector('#pswd2_img1');
-		var pwMsgArea = document.querySelector('.int_pass'); */
-
-		var categoryErrand = document.querySelector('#category-errand');
-
-		var errLoca = document.querySelector('#errLoca');
-		
-		var error = document.querySelectorAll('.error_next_box');
-
-		/**
-		 * 이벤트 핸들러 연결
-		 */
-		id.addEventListener("focusout", checkId);
-		pay.addEventListener("focusout", checkPay);
-		categoryErrand.addEventListener("focusout", function() {
-			if (categoryErrand.value === "필수선택") {
-				error[1].style.display = "block";
-			} else {
-				error[1].style.display = "none";
-			}
-		})
-		errLoca.addEventListener("focusout", checkErrLoca);
-
-		/**
-		 * 콜백 함수
-		 */
-		function checkId() {
-			var idPattern = /[a-zA-Z가-힣0-9\[~!@#$%^&*\-()_+|<>?:;\]{}]{2,50}/;
-			if (id.value === "") {
-				error[0].innerHTML = "필수 정보입니다.";
-				error[0].style.display = "block";
-			} else if (!idPattern.test(id.value)) {
-				error[0].innerHTML = "형식에 맞지 않는 제목입니다.";
-				error[0].style.display = "block";
-			} else {
-				error[0].innerHTML = "유효한 제목입니다!";
-				error[0].style.color = "#08A600";
-				error[0].style.display = "block";
-			}
-		}
-
-		function checkPay() {
-			var payPattern = /[0-9]{4,7}/;
-			if (pay.value === "" && "원") {
-				error[2].innerHTML = "필수 정보입니다.";
-				error[2].style.display = "block";
-			} else if (!payPattern.test(pay.value) && pay.value === "원") {
-				error[2].innerHTML = "숫자만 사용하세요.";
-				error[2].style.display = "block";
-			} else {
-				error[2].innerHTML = "위 가격이 확실하겠죠?";
-				error[2].style.color = "#08A600";
-				error[2].style.display = "block";
-			}
-		}
-		
- 		function checkErrLoca() {
-			var errLocaPattern = /[a-zA-Z가-힣0-9\[~!@#$%^&*\-()_+|<>?:;\]{}]{5,50}/;
-			if (errLoca.value === "") {
-				error[3].innerHTML = "필수 정보입니다.";
-				error[3].style.display = "block";
-			} else if (!errLocaPattern.test(errLoca.value)) {
-				error[3].innerHTML = "형식에 맞지 않는 주소입니다"
-				error[3].syyle.display = "block";
-			} else {
-				error[3].innerHTML = "다시 한번 확인하세요!";
-				error[3].style.color = "#08A600";
-		        error[3].style.display = "block";
-			}
-		}
-		
-	</script>
 </body>
 </html>

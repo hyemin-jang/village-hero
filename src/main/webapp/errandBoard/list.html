@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>동네히어로</title>
+<title>동네히어로 : 모든 심부름 보기</title>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
@@ -20,6 +20,7 @@
 	<div id="content-wrap">
 		<div id="body">			
 			<div class="top">
+				<button class="sort-button" @click="getDateDesc()">최근 등록된 순 보기</button>&nbsp;&nbsp;	
 				<button class="sort-button" @click="getPayDesc()">금액 높은순 보기</button>				
 			</div>
 			<table v-if="resData">
@@ -35,7 +36,8 @@
 				
 				<tr class="tr-errand" v-for="(v, i) in errands">	
 					<td>{{i+1}}</td>
-					<td>{{v.writer}}</td>
+					<td v-if="v.writerStatus==0">{{v.writer}}</td>
+					<td v-if="v.writerStatus==1" style="color:gray;">탈퇴한 회원</td>
 					<td>{{v.createdAt}}</td>
 					<td>{{v.category}}</td>
 					<td> <a v-bind:href="urlPart1+v.errandId">{{v.title}}</a></td>
@@ -66,8 +68,8 @@
                 url : "http://localhost:8088/errands"
             }).then( resData => {
             	this.resData=true;
-                return this.errands = resData.data;
-                
+                this.errands = resData.data;
+                console.log(this.errands[0]);
             }).catch(errorData => {
             	return console.log(errorData);
             })
@@ -95,9 +97,19 @@
         			return console.log(errorData);
         		})
         	},
-        }
-        	
-        	
+        	getDateDesc : function(){
+        		axios({
+                    method : "get",
+                    url : "http://localhost:8088/dateerrands"
+                }).then( resData => {
+                	this.resData=true;
+                	return this.errands = resData.data;
+                    
+                }).catch(errorData => {
+                	return console.log(errorData);
+                })
+        	},
+        }       	
     });
 	</script>
 </body>

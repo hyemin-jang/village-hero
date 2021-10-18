@@ -13,7 +13,6 @@ import kr.pe.villagehero.dao.ApplyRepository;
 import kr.pe.villagehero.dao.ErrandRepository;
 import kr.pe.villagehero.dao.MemberRepository;
 import kr.pe.villagehero.dto.ApplyDTO;
-import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.entity.Apply;
 import kr.pe.villagehero.entity.Errand;
@@ -90,36 +89,42 @@ public class ApplyService {
 	}
 
 	// 내 심부름 -> 내가 지원한 심부름 목록
-	public List<MyPageDTO.MyApply> getMyApply(Long memberId) {
-		
-		Optional<Member> m = memberDAO.findById(memberId);
-		List<MyPageDTO.MyApply> all = new ArrayList<>();
-		
-		m.ifPresent(member -> {
-			List<Apply> sub = applyDAO.findMyApply(member);
+		public List<MyPageDTO.MyApply> getMyApply(Long memberId) {
 			
-			for(int i=0;i<sub.size();i++) {
-				Optional<Errand> e = errandDAO.findById(sub.get(i).getErrand().getErrandId());
-				Apply apply = sub.get(i);
-				e.ifPresent(errand ->{
-					all.add(new MyPageDTO.MyApply(errand,apply));
-				});
-			}
-		});
-		
-		return all;
-	}
+			Optional<Member> m = memberDAO.findById(memberId);
+			List<MyPageDTO.MyApply> all = new ArrayList<>();
+			
+			m.ifPresent(member -> {
+				List<Apply> sub = applyDAO.findMyApply(member);
+
+				for(int i=0;i<sub.size();i++) {
+					Optional<Errand> e = errandDAO.findById(sub.get(i).getErrand().getErrandId());
+					Apply apply = sub.get(i);
+					e.ifPresent(errand ->{
+						if (errand.getErrandStatus() != '3') {
+							all.add(new MyPageDTO.MyApply(errand,apply));
+						}
+					});
+				}
+			});
+			
+			return all;
+		}
 	
 	// 내 심부름 -> 해당 지원목록 취소
-	public void cancel(Long memberId, Long errandId) {
-
+	public boolean cancel(Long memberId, Long errandId) {
+		boolean result = false;
 		Member m = memberDAO.findById(memberId).get();
 		Errand e = errandDAO.findById(errandId).get();
 		
 		Apply sub = applyDAO.findCancelApply(m, e);
-		sub.setAppliedAt(sub.getAppliedAt().replace(" 00:00:00", ""));
-		sub.setMatchStatus('3');
-		applyDAO.save(sub);
+		if(sub != null) {
+			sub.setAppliedAt(sub.getAppliedAt().replace(" 00:00:00", ""));
+			sub.setMatchStatus('3');
+			applyDAO.save(sub);
+			result=true;
+		}
+		return result;
 	}
 
 	
@@ -130,7 +135,8 @@ public class ApplyService {
 		Errand e = errandDAO.findById(errandId).get();
 		
 		List<Apply> all = applyDAO.findByErrand(e);
-		all.forEach(v -> applyList.add(new ApplyDTO.List(v.getMatchStatus(),
+		all.stream().filter(v -> v.getMatchStatus()!=3)
+			.forEach(v -> applyList.add(new ApplyDTO.List(v.getMatchStatus(),
 														v.getApplicant().getMemberId(),
 														v.getApplicant().getNickname(),
 														v.getApplicant().getGender(),

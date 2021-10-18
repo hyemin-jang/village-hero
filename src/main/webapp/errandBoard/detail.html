@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>심부름 상세페이지</title>
+<title>동네히어로 : 심부름 상세페이지</title>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	
@@ -34,7 +34,8 @@
 								{{errands.category}}
 							</span>
 							<span class="writer">
-								<span>{{errands.writer}} ·</span>
+								<span v-if="memberStatus==1">탈퇴한 회원</span>
+								<span v-else>{{errands.writer}} ·</span>
 								<span>{{errands.createdAt}}</span>
 							</span>
 						</div>
@@ -63,7 +64,7 @@
 									class="btn" @click="complete()">
 									심부름 완료 확인
 							</button>
-							<button v-if="logInMemberId!=errands.writerId && (errands.errandStatus==0 || errands.errandStatus==1) && isApplied==false" 
+							<button v-if="logInMemberId!=errands.writerId && (errands.errandStatus==0 || errands.errandStatus==1) && isApplied==false && memberStatus==0" 
 									class="btn" @click="showForm">									
 									<b>도와줄게요!</b>
 							</button>
@@ -73,9 +74,9 @@
 							</span>
 						</span>
 						<span class="right">
-							<a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart1+errands.errandId" >수정하기</a>
-							<a v-if="errands.writerId == logInMemberId" @click="deletePage" style="cursor:pointer;">삭제하기</a>
-							<a href="list.html">목록으로</a>
+							<a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart1+errands.errandId" ><b>수정하기</b></a>
+							<a v-if="errands.writerId == logInMemberId" @click="deleteCheck" style="cursor:pointer;"><b>삭제하기</b></a>
+							<a href="list.html"><b>목록으로</b></a>
 						</span>
 					</div>
 				</div>
@@ -150,13 +151,15 @@
 					errands :"",
 					applicants: "",
 					logInMemberId: JSON.parse(sessionStorage.getItem("logInMember")).memberId,	
+					memberStatus:"" ,
 					memberIdForAccept: "",
-					errandIdForAccept: "",				
+					errandIdForAccept: "",
 					form: false,
 					list: false,
 					isApplied: "", // 로그인한 사용자가 이 심부름에 지원했는지 
 		        	urlPart1 :"http://localhost:8088/getErrandDetail2/",
-		        	urlPart2 :"http://localhost:8088/errandDelete/"
+		        	urlPart2 :"http://localhost:8088/errandDelete/",
+		        	thisYear: new Date().getFullYear()
 				}
 	        },
 	        created :function(){	 
@@ -193,6 +196,16 @@
 	                url : "http://localhost:8088/isApplied" + location.search + "&memberId=" + this.logInMemberId
 	            }).then( resData => {
 	                this.isApplied = resData.data;
+	            }).catch(errorData => {
+	            	return console.log(errorData);
+	            });
+				
+				//게시물 작성자의 탈퇴여부 가져오기
+				axios({
+	                method : "get",
+	                url : "http://localhost:8088/memberStatus" + location.search
+	            }).then( resData => {
+	                this.memberStatus = resData.data;
 	            }).catch(errorData => {
 	            	return console.log(errorData);
 	            });
@@ -235,7 +248,12 @@
 					}).catch(errorData => {
 						return console.log(errorData);
 					});	
-					
+				},
+				deleteCheck: function(){
+					this.confirm = confirm("심부름을 삭제하시겠습니까?");
+					if(this.confirm == true){
+						this.deletePage();
+					}
 				},
 				showForm: function(){
 					this.form = true;

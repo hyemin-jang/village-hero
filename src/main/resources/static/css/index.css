@@ -14,8 +14,12 @@
 
 .side-container > .side-title {
 	margin: 30px 30px -10px 30px;	
-	font-weight: 600;
-	color: gray;
+	font-weight: 800;
+	color: #696969;
+}
+
+.side-title {
+	text-align: center;
 }
 
 .side-content :hover {
@@ -34,8 +38,8 @@
 	font-size: 20px;
 }
 .content-container {
-	float: right;
-	width: 75%;
+	float: center;
+	width: 95%;
 	height: 800px;
 }
 

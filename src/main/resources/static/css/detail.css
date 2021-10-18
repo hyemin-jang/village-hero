@@ -74,16 +74,18 @@
 }
 
 .btn {
-	background-color: #ffd000;
+	background-color: rgb(255, 196, 0);
 	border: none;
-	color: black;
+	color: #696969;
 	padding: 10px 25px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
 	font-size: 16px;
+	font-weight: bold;
 	margin: 4px 2px;
 	cursor: pointer;
+	border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px;
 }
 
 a {

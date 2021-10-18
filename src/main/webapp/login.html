@@ -41,6 +41,7 @@
 					<h3 class="login_title">
 						<label for="password">암호</label>
 					</h3>
+
 					<span class="box int_pass"> <input type="password"
 						id="password" v-model="password" class="int" maxlength="16">
 						<span class="step_url">****</span>
@@ -115,6 +116,14 @@
 		new Vue({
 	       el: "#app"            
 	   });
+		
+		function enterkey() {
+	        if (window.event.keyCode == 13) {
+	 
+	             // 엔터키가 눌렸을 때 실행할 내용
+	             logInCheck();
+	        }
+	}
    </script>
 
 </body>
