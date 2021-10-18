@@ -58,6 +58,7 @@ public class ApplyController {
 		return service.getAllApplicants(errandId);
 	}
 	
+	//????
 	// 심부름 상세페이지에서 로그인한 멤버가 이 심부름에 지원한 내역 조회
 	@GetMapping("isApplied")
 	public boolean getApplyHistory(long errandId, long memberId){
