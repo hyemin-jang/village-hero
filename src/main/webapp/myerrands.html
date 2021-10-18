@@ -38,7 +38,7 @@
 					<td><a v-bind:href="urlPart1+v.errandId">{{v.title}}</a></td>
 					<td v-if="v.errandStatus==0"><span style="background-color: rgb(228, 232, 236); padding:3px; border-radius:3px;">지원자 대기중</span></td>
 					<td v-if="v.errandStatus==1"><span style="background-color:rgb(178, 222, 252); color:rgb(2, 64, 116); padding:3px; border-radius:3px;">매칭 대기중</span></td>
-					<td v-if="v.errandStatus==2"><span style="background-color: rgb(228, 232, 236); padding:3px; border-radius:3px;">취소됨</span></td>
+					<td v-if="v.errandStatus==2"><span style="background-color: rgb(192, 252, 180); color:rgb(3, 63, 1); padding:3px; border-radius:3px;">매칭완료</span></td>
 				</tr>
 			</table>
 
@@ -58,6 +58,7 @@
 					<td>{{v.writer}}</td>
 					<td><a v-bind:href="urlPart1+v.errandId">{{v.title}}</a></td>
 					<td v-if="v.matchStatus==0"><span style="background-color: rgb(228, 232, 236); padding:3px; border-radius:3px;">수락 대기중</span></td>
+					<td v-if="v.matchStatus==1"><span style="background-color: rgb(192, 252, 180); color:rgb(3, 63, 1); padding:3px; border-radius:3px;">나한테 매칭됨</span></td>
 					<td v-if="v.matchStatus==2"><span style="background-color: rgb(253, 219, 230); color:rgb(63, 1, 11); padding:3px; border-radius:3px;">다른사람한테 매칭됨</span></td>
 				</tr>
 			</table>
