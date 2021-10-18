@@ -63,7 +63,7 @@ public class ErrandDTO implements Comparable<ErrandDTO> {
 	@Getter
 	@Setter
 	public static class updateErrand { // 심부름 수정용 DTO 클래스
-		private String errandId;
+		private long errandId;
 		private long writerId;
 		private String title;
 		private String reqLocation;

@@ -30,7 +30,6 @@ public class ErrandController {
 	//심부름 수정
 	@PutMapping("updateErrand")
 	public void updateWriter(ErrandDTO.updateErrand errand, HttpServletResponse response) {
-		System.out.println(errand.getErrandId());
 		try {
 			boolean result = service.updateErrand(errand);
 			if(result == true) {
