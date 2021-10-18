@@ -2,6 +2,8 @@ package kr.pe.villagehero.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -13,9 +15,10 @@ import org.springframework.stereotype.Service;
 import kr.pe.villagehero.dao.ErrandRepository;
 import kr.pe.villagehero.dao.MemberRepository;
 import kr.pe.villagehero.dto.ErrandDTO;
-import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.entity.Errand;
 import kr.pe.villagehero.entity.Member;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Service
 public class ErrandService {
@@ -118,6 +121,16 @@ public class ErrandService {
 		return all;
 	}
 	
+	// 존재하는 모든 심부름을 최신순으로 return
+		public List<ErrandDTO> getAllErrandsDateDes() {
+			List<ErrandDTO> all = new ArrayList<ErrandDTO>();
+			List<Errand> all2 = (List<Errand>) errandDAO.findAll();
+
+			all2.forEach(v -> all.add(new ErrandDTO(v)));
+			
+			Collections.sort(all);
+			return all;
+		}
 	
 	//멤버 id 값으로 저장된 모든 심부름 find
 	public List<ErrandDTO> getAllMyErrands(Long memberId){
@@ -139,7 +152,6 @@ public class ErrandService {
 		e.setErrandStatus('1');
 		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));
 		e.setReqDate(e.getReqDate().replace(" 00:00:00", ""));
-		
 		errandDAO.save(e);
 	}
 	

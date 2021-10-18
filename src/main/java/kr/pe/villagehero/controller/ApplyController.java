@@ -1,6 +1,9 @@
 package kr.pe.villagehero.controller;
 
+import java.io.PrintWriter;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 import kr.pe.villagehero.dto.ApplyDTO;
-import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.service.ApplyService;
 import kr.pe.villagehero.service.ErrandService;
@@ -71,12 +73,22 @@ public class ApplyController {
 
 		return new RedirectView("index.html");
 	}
-	
-	//내심부름 - 지원 취소
+
+	// 내심부름 - 지원 취소
 	@GetMapping("applycancel")
-	public RedirectView cancel(Long memberId,Long errandId) {
-		service.cancel(memberId, errandId);
-		return new RedirectView("myerrands.html");
+	public void cancel(Long memberId, Long errandId, HttpServletResponse response) {
+
+		try {
+			boolean result = service.cancel(memberId, errandId);
+			if (result) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('정상적으로 취소되었습니다.'); history.back(); </script>");
+				out.flush();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
-	
+
 }

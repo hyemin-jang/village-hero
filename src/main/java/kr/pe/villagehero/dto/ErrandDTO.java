@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class ErrandDTO {
+public class ErrandDTO implements Comparable<ErrandDTO> {
 	private long errandId;
 	private long writerId;
 	private String writer;
@@ -55,6 +55,21 @@ public class ErrandDTO {
 		private String reqDate;
 		private String content;
 	}
+
+
+
+	@Override
+	public int compareTo(ErrandDTO o) {
+		int compareResult = this.createdAt.compareTo(o.createdAt);
+        if (compareResult > 0) {
+            return -1;
+        } else if (compareResult < 0) {
+            return 1;
+        }
+        return 0;
+	}
+	
+
 }
 
 	

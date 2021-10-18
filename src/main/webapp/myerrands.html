@@ -11,6 +11,8 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   
 <script src="js/headerTemplate.js"></script>
+<link rel="stylesheet" href="/css/list.css">
+<link rel="stylesheet" href="/css/myerrand.css">
 <body>
 	<div id="headerBar"></div>
 	
@@ -19,47 +21,49 @@
 	</div>
 
 	<template id="myerrand">
-		<div>
-			<button @click="getmyerrands()">내가 요청한 심부름 목록</button>
-			<button @click="getmyapplies()">내가 지원한 심부름 목록(진행중인)</button>
+		<div class="body">
+			<div class="">
+			<button class="button button1" @click="getmyerrands()">내가 요청한 심부름 목록</button>
+			<button class="button button1" @click="getmyapplies()">내가 지원한 심부름 목록</button>
+			</div>
+			<div class="table">
 			<table v-if="myReqBool">
-				<tr>
+				<tr style="background-color: rgb(255, 251, 0);">
 					<th>No.</th>
 					<th>심부름 제목</th>
 					<th>상태</th>
 				</tr>
-				<tr v-for="v,index in myReq" v-if="v.errandStatus!=3">
+				<tr class="tr-errand" v-for="v,index in myReq" v-if="v.errandStatus!=3">
 					<td>{{index}}</td>
 					<td><a v-bind:href="urlPart1+v.errandId">{{v.title}}</a></td>
-					<td v-if="v.errandStatus==0">지원자 대기중</td>
-					<td v-if="v.errandStatus==1">매칭 대기중</td>
-					<td v-if="v.errandStatus==2">취소됨</td>
+					<td v-if="v.errandStatus==0"><span style="background-color: rgb(228, 232, 236); padding:3px; border-radius:3px;">지원자 대기중</span></td>
+					<td v-if="v.errandStatus==1"><span style="background-color:rgb(178, 222, 252); color:rgb(2, 64, 116); padding:3px; border-radius:3px;">매칭 대기중</span></td>
+					<td v-if="v.errandStatus==2"><span style="background-color: rgb(228, 232, 236); padding:3px; border-radius:3px;">취소됨</span></td>
 				</tr>
 			</table>
 
 			<table v-if="myApplyBool">
-				<tr>
+				<tr style="background-color: rgb(255, 251, 0);">
 					<th></th>
 					<th>No.</th>
 					<th>심부름 작성자</th>
 					<th>심부름 제목</th>
 					<th>상태</th>
 				</tr>
-				<tr v-for="v,index in myApply">
+				<tr class="tr-errand" v-for="v,index in myApply">
 					<td>
-					<a v-if="v.matchStatus==0" v-bind:href="urlPart2+v.errandId">취소</a>
+					<a class="button1" v-if="v.matchStatus==0" v-bind:href="urlPart2+v.errandId"><span style="background-color: rgb(207, 197, 197); color:rgb(63, 1, 11); padding:3px; border-radius:3px;">지원취소</span></a>
 					</td>
 					<td>{{index}}</td>
 					<td>{{v.writer}}</td>
 					<td><a v-bind:href="urlPart1+v.errandId">{{v.title}}</a></td>
-					<td v-if="v.matchStatus==0">수락 대기중</td>
-					<td v-if="v.matchStatus==2">다른사람한테 매칭됨</td>
-					<td v-if="v.matchStatus==3">취소됨</td>
+					<td v-if="v.matchStatus==0"><span style="background-color: rgb(228, 232, 236); padding:3px; border-radius:3px;">수락 대기중</span></td>
+					<td v-if="v.matchStatus==1"><span style="background-color: rgb(228, 232, 236); padding:3px; border-radius:3px;">나에게 매칭됨</span></td>					
+					<td v-if="v.matchStatus==2"><span style="background-color: rgb(253, 219, 230); color:rgb(63, 1, 11); padding:3px; border-radius:3px;">다른사람한테 매칭됨</span></td>
 				</tr>
 			</table>
+			</div>
 			<br>
-			<hr>
-			<button @click="gotomain()">메인으로 이동</button>
 		</div>
 
 	</template>
