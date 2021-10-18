@@ -23,5 +23,3 @@ insert into apply values(apply_seq.nextval, 4, 1, '우와 강아지야 내가 태워줄게',
 
 commit;
 
-
-

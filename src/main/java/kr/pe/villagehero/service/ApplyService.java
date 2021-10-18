@@ -65,11 +65,12 @@ public class ApplyService {
 		m.ifPresent(member -> {
 			List<Apply> all = applyDAO.findMyCompletion(member);			
 			
-			all.forEach(v -> myCompletionList.add(new MyPageDTO.Completion(v.getErrand().getErrandId(),
-																	v.getErrand().getCompletedAt(),
-																   v.getErrand().getWriter().getNickname(),
-																   v.getErrand().getTitle(),
-																   v.getErrand().getCategory())));
+			all.stream().filter(v -> v.getErrand().getErrandStatus()=='3')
+				.forEach(v -> myCompletionList.add(new MyPageDTO.Completion(v.getErrand().getErrandId(),
+																	 		v.getErrand().getCompletedAt(),
+																	 		v.getErrand().getWriter().getNickname(),
+																	 		v.getErrand().getTitle(),
+																	 		v.getErrand().getCategory())));
 															       
 		});			
 		
@@ -88,49 +89,38 @@ public class ApplyService {
 		applyDAO.save(new Apply(errand, applicant, message, dateFormat.format(time), '0'));		
 	}
 
-	
-	
-	
-	
-	public List joinTest(long memberId) {
-		List result = new ArrayList<>();
-		Optional<Apply> a = applyDAO.findById(memberId);
-		a.ifPresent(v -> result.add(v));
-		return result;		
-	}
-
 	// 내 심부름 -> 내가 지원한 심부름 목록
-		public List<MyPageDTO.MyApply> getMyApply(Long memberId) {
-			
-			Optional<Member> m = memberDAO.findById(memberId);
-			List<MyPageDTO.MyApply> all = new ArrayList<>();
-			
-			m.ifPresent(member -> {
-				List<Apply> sub = applyDAO.findMyApply(member);
-				
-				for(int i=0;i<sub.size();i++) {
-					Optional<Errand> e = errandDAO.findById(sub.get(i).getErrand().getErrandId());
-					Apply apply = sub.get(i);
-					e.ifPresent(errand ->{
-						all.add(new MyPageDTO.MyApply(errand,apply));
-					});
-				}
-			});
-			
-			return all;
-		}
+	public List<MyPageDTO.MyApply> getMyApply(Long memberId) {
 		
-		// 내 심부름 -> 해당 지원목록 취소
-		public void cancel(Long memberId, Long errandId) {
-
-			Member m = memberDAO.findById(memberId).get();
-			Errand e = errandDAO.findById(errandId).get();
+		Optional<Member> m = memberDAO.findById(memberId);
+		List<MyPageDTO.MyApply> all = new ArrayList<>();
+		
+		m.ifPresent(member -> {
+			List<Apply> sub = applyDAO.findMyApply(member);
 			
-			Apply sub = applyDAO.findCancelApply(m, e);
-			sub.setAppliedAt(sub.getAppliedAt().replace(" 00:00:00", ""));
-			sub.setMatchStatus('3');
-			applyDAO.save(sub);
-		}
+			for(int i=0;i<sub.size();i++) {
+				Optional<Errand> e = errandDAO.findById(sub.get(i).getErrand().getErrandId());
+				Apply apply = sub.get(i);
+				e.ifPresent(errand ->{
+					all.add(new MyPageDTO.MyApply(errand,apply));
+				});
+			}
+		});
+		
+		return all;
+	}
+	
+	// 내 심부름 -> 해당 지원목록 취소
+	public void cancel(Long memberId, Long errandId) {
+
+		Member m = memberDAO.findById(memberId).get();
+		Errand e = errandDAO.findById(errandId).get();
+		
+		Apply sub = applyDAO.findCancelApply(m, e);
+		sub.setAppliedAt(sub.getAppliedAt().replace(" 00:00:00", ""));
+		sub.setMatchStatus('3');
+		applyDAO.save(sub);
+	}
 
 	
 	// 심부름 상세페이지에서 모든 지원자들 내역 조회
