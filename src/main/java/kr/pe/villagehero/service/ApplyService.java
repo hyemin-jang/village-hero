@@ -110,7 +110,9 @@ public class ApplyService {
 					Optional<Errand> e = errandDAO.findById(sub.get(i).getErrand().getErrandId());
 					Apply apply = sub.get(i);
 					e.ifPresent(errand ->{
-						all.add(new MyPageDTO.MyApply(errand,apply));
+						if(errand.getErrandStatus()!='3') {
+							all.add(new MyPageDTO.MyApply(errand,apply));
+						}
 					});
 				}
 			});
