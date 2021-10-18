@@ -63,29 +63,26 @@ public class ErrandService {
 		System.out.println("심부름 수정시도");
 		
 		long errandId = errand.getErrandId();
-		System.out.println(errandId);
 		Errand updateErrand = errandDAO.findById(errandId).get();
-		System.out.println(updateErrand);
 		boolean result = false;
 
 		try {
-			System.out.println(updateErrand(errand));
-			updateErrand.setTitle(errand.getTitle());
-			updateErrand.setReqLocation(errand.getReqLocation());
-			updateErrand.setPay(errand.getPay());
-			updateErrand.setCategory(errand.getCategory());
-			updateErrand.setReqDate(errand.getReqDate().replace(" 00:00:00", ""));
-			updateErrand.setContent(errand.getContent());
-			//날짜 포멧 맞춰주기
-			updateErrand.setCreatedAt(updateErrand.getCreatedAt().replace(" 00:00:00", ""));
-			
-			errandDAO.save(updateErrand);
-			result = true;
+		updateErrand.setTitle(errand.getTitle());
+		updateErrand.setReqLocation(errand.getReqLocation());
+		updateErrand.setPay(errand.getPay());
+		updateErrand.setCategory(errand.getCategory());
+		updateErrand.setReqDate(errand.getReqDate().replace(" 00:00:00", ""));
+		updateErrand.setContent(errand.getContent());
+		//날짜 포멧 맞춰주기
+		updateErrand.setCreatedAt(updateErrand.getCreatedAt().replace(" 00:00:00", ""));
+		
+		errandDAO.save(updateErrand);
+		result = true;
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return result;
-	}
+		}
 
 	//새로운 심부름 저장
 	public boolean insertErrand(long id, ErrandDTO newErrand) {
