@@ -62,12 +62,14 @@ public class ErrandService {
 	public boolean updateErrand(ErrandDTO.updateErrand errand) {
 		System.out.println("심부름 수정시도");
 		
-		long errandId = Long.parseLong(errand.getErrandId());
+		long errandId = errand.getErrandId();
+		System.out.println(errandId);
 		Errand updateErrand = errandDAO.findById(errandId).get();
 		System.out.println(updateErrand);
 		boolean result = false;
 
 		try {
+			System.out.println(updateErrand(errand));
 			updateErrand.setTitle(errand.getTitle());
 			updateErrand.setReqLocation(errand.getReqLocation());
 			updateErrand.setPay(errand.getPay());
