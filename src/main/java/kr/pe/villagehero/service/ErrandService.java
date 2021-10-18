@@ -38,6 +38,15 @@ public class ErrandService {
 
 		return errandList;
 	}
+	
+	// 홈화면에서 진행중인 심부름만 모두 조회
+	public List<ErrandDTO> getAllErrandsOngoing() {
+		List<ErrandDTO> errandList = new ArrayList<ErrandDTO>();
+		List<Errand> errands = (List<Errand>) errandDAO.findAllErrandsOngoing();
+
+		errands.forEach(v -> errandList.add(new ErrandDTO(v)));
+		return errandList;
+	}
 
 	public ErrandDTO getOneErrand(long id) {
 		ErrandDTO errand = new ErrandDTO(errandDAO.findById(id).get());		
@@ -156,6 +165,22 @@ public class ErrandService {
 		
 		errandDAO.save(e);
 	}
+
+	// 심부름 완료 처리 - 심부름 상태 3으로 변경
+	public void completeErrand(long errandId) {
+		Errand e = errandDAO.findById(errandId).get();
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+		Date time = new Date();
+		
+		e.setErrandStatus('3');
+		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));		
+		e.setReqDate(e.getReqDate().replace(" 00:00:00", ""));		
+		e.setCompletedAt(dateFormat.format(time));
+	
+		errandDAO.save(e);
+	}
+	
 }
 
 

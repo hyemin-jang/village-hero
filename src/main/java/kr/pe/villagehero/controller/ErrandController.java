@@ -64,6 +64,13 @@ public class ErrandController {
 		}
 	}
 	
+	// 심부름 완료 처리
+	@PutMapping("complete")
+	public void completeErrand(long errandId) {
+		service.completeErrand(errandId);
+	}
+	
+	
 	//심부름 삭제
 	@DeleteMapping("errandDelete/{id}")
 	public String deleteErrand(@PathVariable long id) {
@@ -105,6 +112,13 @@ public class ErrandController {
 	@GetMapping("errands")
 	public List<ErrandDTO> getAllErrands() {		
 		List<ErrandDTO> all = service.getAllErrands();
+		return all;
+	}
+	
+	// 홈화면에서 현재 진행중인 모든 심부름 조회
+	@GetMapping("errandsOngoing")
+	public List<ErrandDTO> getAllErrandsOngoing() {		
+		List<ErrandDTO> all = service.getAllErrandsOngoing();
 		return all;
 	}
 

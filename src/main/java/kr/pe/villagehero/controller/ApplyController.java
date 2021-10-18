@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 import kr.pe.villagehero.dto.ApplyDTO;
-import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MyPageDTO;
 import kr.pe.villagehero.service.ApplyService;
 import kr.pe.villagehero.service.ErrandService;
@@ -58,7 +57,14 @@ public class ApplyController {
 	public List<ApplyDTO.List> getAllApplicants(long errandId) {
 		return service.getAllApplicants(errandId);
 	}
-
+	
+	//????
+	// 심부름 상세페이지에서 로그인한 멤버가 이 심부름에 지원한 내역 조회
+	@GetMapping("isApplied")
+	public boolean getApplyHistory(long errandId, long memberId){
+		return service.getApplyHistory(errandId, memberId);
+	}
+	
 	// 지원 수락하기
 	@GetMapping("accept")
 	public RedirectView acceptApply(long errandId, long memberId) {
