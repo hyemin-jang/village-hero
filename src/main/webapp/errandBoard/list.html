@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>동네히어로</title>
+<title>동네히어로 : 모든 심부름 보기</title>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
@@ -21,7 +21,7 @@
 		<div id="body">			
 			<div class="top">
 				<button class="sort-button" @click="getDateDesc()">최근 등록된 순 보기</button>&nbsp;&nbsp;	
-				<button class="sort-button" @click="getPayDesc()">금액 높은순 보기</button>				
+				<button class="sort-button" @click="getPayDesc()">금액 높은 순 보기</button>				
 			</div>
 			<table v-if="resData">
 				<tr>

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>동네히어로 : 마이페이지</title>
 <!-- 지도 API include -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c2c65e47ff9efd53c90ebd6f14d04ecb&libraries=services,clusterer,drawing"></script>	
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -43,12 +43,12 @@
 
 			<div class="list-box">
 				<div class="menu-btn" v-if="show=='req'">
-					<button class="list-btn" @click="showReqList" style="background-color:#ffd000;">요청 내역</button>
+					<button class="list-btn" @click="showReqList" style="background-color:rgb(255, 196, 0);">요청 내역</button>
 					<button class="list-btn" @click="showCompletionList">수행 내역</button>
 				</div>
 				<div class="menu-btn" v-if="show=='completion'">
 					<button class="list-btn" @click="showReqList">요청 내역</button>
-					<button class="list-btn" @click="showCompletionList" style="background-color:#ffd000;">수행 내역</button>
+					<button class="list-btn" @click="showCompletionList" style="background-color:rgb(255, 196, 0);">수행 내역</button>
 				</div>
 				<table id="reqList"  v-if="show=='req'">
 					<thead>

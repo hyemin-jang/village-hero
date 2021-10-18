@@ -1,21 +1,35 @@
 
 /** 메인 */
+/* * {
+	text-decoration: none;
+	font-family: "배달의 민족 주아 보통" !important;
+}
+
+body {
+	font-family: "배달의 민족 주아 보통" !important;
+} */
+
 #container-wrap {		
-	margin-left: 100px;
-	margin-right: 100px;
 }
 
 .side-container {
 	float: left;
-	width: 25%;
-	height: 800px;	
+	width: 20%;
+	height: 850px;
 	overflow: hidden;
+	margin: -20px 0px 0px 140px;
 }
 
 .side-container > .side-title {
-	margin: 30px 30px -10px 30px;	
-	font-weight: 600;
-	color: gray;
+	margin: 30px 30px 30px 30px;	
+	font-weight: 800;
+	color: #696969;
+	background-color: #00bfff;
+	border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px;
+}
+
+.side-title {
+	text-align: center;
 }
 
 .side-content :hover {
@@ -24,19 +38,36 @@
 
 .errand{
 	margin: 20px;
-	padding: 20px;
+	padding: 15px;
 	background-color: white;
 	border-radius: 10px;
-	box-shadow: 2px 2px 3px lightgray;
+	box-shadow: 3px 3px 4px lightgray;
 }
 
 .errand > .title{
 	font-size: 20px;
 }
 .content-container {
-	float: right;
-	width: 75%;
-	height: 800px;
+	float: center;
+	width: 92%;
+	height: 850px;
+	margin: 25px 0px 0px 10px;
+}
+
+.detailView {
+	width: 30%;
+    padding: 6px 0px 6px 0px;
+    border: 0;
+    cursor: pointer;
+    color: #696969;
+    background-color: rgb(255, 196, 0);
+    border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.detailView:hover {
+	background-color: rgb(255, 196, 0);
 }
 
 @media(max-width: 1200px){
