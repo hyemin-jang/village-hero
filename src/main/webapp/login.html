@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>동네히어로 : 로그인</title>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <link rel="stylesheet" href="css/joinmember.css">
@@ -41,8 +41,9 @@
 					<h3 class="login_title">
 						<label for="password">암호</label>
 					</h3>
-					<span class="box int_id"> <input type="password"
-						id="password" v-model="password" class="int" maxlength="16" @keyup.enter="logInCheck">
+
+					<span class="box int_pass"> <input type="password"
+						id="password" v-model="password" class="int" maxlength="16">
 						<span class="step_url">****</span>
 					</span>
 

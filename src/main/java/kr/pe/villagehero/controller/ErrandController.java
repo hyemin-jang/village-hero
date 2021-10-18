@@ -30,6 +30,7 @@ public class ErrandController {
 	//심부름 수정
 	@PutMapping("updateErrand")
 	public void updateWriter(ErrandDTO.updateErrand errand, HttpServletResponse response) {
+		System.out.println(errand.getErrandId());
 		try {
 			boolean result = service.updateErrand(errand);
 			if(result == true) {
@@ -45,13 +46,21 @@ public class ErrandController {
 	}
 
 	// 심부름 등록 
-	@PostMapping("errand")
+	@PostMapping("newErrand")
 	public void insertErrand(HttpSession session, ErrandDTO newErrand, HttpServletResponse response) {
+		System.out.println(newErrand.getCategory());
+		System.out.println(newErrand.getContent());
+		System.out.println(newErrand.getPay());
+		System.out.println(newErrand.getReqDate());
+		System.out.println(newErrand.getReqLocation());
+		System.out.println(newErrand.getTitle());
+		
 		MemberDTO.Get loginMember = (Get) session.getAttribute("loginMember");
-		long id = loginMember.getMemberId();
+		long memberId = loginMember.getMemberId();
+		System.out.println(memberId);
 		
 		try {
-			boolean result = service.insertErrand(id, newErrand);
+			boolean result = service.insertErrand(memberId, newErrand);
 			if(result == true) {
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();

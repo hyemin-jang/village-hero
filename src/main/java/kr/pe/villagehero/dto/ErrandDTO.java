@@ -16,6 +16,7 @@ public class ErrandDTO implements Comparable<ErrandDTO> {
 	private long errandId;
 	private long writerId;
 	private String writer;
+	private int writerStatus;
 	private int pay;
 	private String createdAt;
 	private String title;
@@ -23,6 +24,7 @@ public class ErrandDTO implements Comparable<ErrandDTO> {
 	private String category;
 	private String reqLocation;
 	private String reqDate;
+	private String completedAt;
 	private char errandStatus;
 
 	// entity 객체를 받아서 DTO로 변환해주는 생성자
@@ -30,6 +32,7 @@ public class ErrandDTO implements Comparable<ErrandDTO> {
 		this.errandId = entity.getErrandId();
 		this.writerId = entity.getWriter().getMemberId();
 		this.writer = entity.getWriter().getNickname();
+		this.writerStatus = entity.getWriter().getMemberStatus();
 		this.pay = entity.getPay();
 		this.createdAt = entity.getCreatedAt();
 		this.title = entity.getTitle();
@@ -37,17 +40,31 @@ public class ErrandDTO implements Comparable<ErrandDTO> {
 		this.category = entity.getCategory();
 		this.reqLocation = entity.getReqLocation();
 		this.reqDate = entity.getReqDate();
+		this.completedAt = entity.getCompletedAt();
 		this.errandStatus = entity.getErrandStatus();
 	}
-	
-	
 	
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@Getter
 	@Setter
-	public static class updateErrand { // 로그인한 정보 넘겨줄때 필요한 DTO 클래스
-		private long errandId;
+	public static class newErrand {   // 심부름 등록용 DTO
+		private long writerId;
+		private int pay;
+		private String title;
+		private String content;
+		private String category;
+		private String reqLocation;
+		private String reqDate;
+	}
+	
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Getter
+	@Setter
+	public static class updateErrand { // 심부름 수정용 DTO 클래스
+		private String errandId;
+		private long writerId;
 		private String title;
 		private String reqLocation;
 		private int pay;
@@ -68,7 +85,6 @@ public class ErrandDTO implements Comparable<ErrandDTO> {
         }
         return 0;
 	}
-	
 
 }
 
