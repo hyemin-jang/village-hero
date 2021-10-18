@@ -124,12 +124,12 @@ function comparePw() {
 }
 
 function checkNickname() {
-    var nicknamePattern = /[a-zA-Z가-힣0-9]{3,10}/;
+    var nicknamePattern = /[a-zA-Z가-힣0-9]{2,10}/;
     if(nickname.value === "") {
         error[3].innerHTML = "필수 정보입니다.";
         error[3].style.display = "block";
     } else if(!nicknamePattern.test(nickname.value) || nickname.value.indexOf(" ") > -1) {
-        error[3].innerHTML = "3~10자 한글, 영문, 숫자만 사용하세요.";
+        error[3].innerHTML = "2~10자 한글, 영문, 숫자만 사용하세요.";
         error[3].style.display = "block";
     } else {
     	error[3].innerHTML = "유효한 닉네임입니다!";
@@ -141,7 +141,6 @@ function checkNickname() {
 
 function isBirthCompleted() {
     var yearPattern = /[0-9]{4}/;
-
     if(!yearPattern.test(yy.value)) {
         error[4].innerHTML = "태어난 년도 4자리를 정확하게 입력하세요.";
         error[4].style.display = "block";
@@ -192,7 +191,6 @@ function checkAge() {
 
 function checkPhoneNum() {
     var isPhoneNum = /([01]{2})([01679]{1})([0-9]{3,4})([0-9]{4})/;
-
     if(phone.value === "") {
         error[6].innerHTML = "필수 정보입니다.";
         error[6].style.display = "block";
@@ -206,7 +204,6 @@ function checkPhoneNum() {
 
 function isAddressCorrect() {
 	var addressPattern = /[a-zA-Z가-힣0-9\[~!@#$%^&*\-()_+|<>?:;\]{}]{5,50}/;
-
     if(address.value === "") { 
     	error[7].innerHTML = "필수 정보입니다.";
         error[7].style.display = "block"; 
