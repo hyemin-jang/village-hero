@@ -23,14 +23,14 @@
 		<div id="wrapper">
 	
 			<!-- content in -->
-			<div id="content">
+			<div id="content" v-bind="errands">
 	
 				<!-- form in -->
 				<form action="../updateErrand" method="post">
 					<input type="hidden" name="_method" value="PUT"> 
-					<input type="hidden" class="form-control" id="errandId" name="errandId">
+					<input type="hidden" class="form-control" id="errandId" name="errandId"
+							v-bind:value="errands.errandId">
 					
-					<div v-bind="errands">				
 						<!-- 심부름 제목 -->
 						<div>
 							<h3 class="join_title">
@@ -120,7 +120,6 @@
 								<span>등록하기</span>
 							</button>
 						</div>
-					</div>
 				</form> 
 				<!-- form out -->
 	
@@ -130,7 +129,6 @@
 		</div>
 		<!-- wrapper out-->
 	</div>
-	
 	<script>
 		new Vue({
 	        el:"#detail",
