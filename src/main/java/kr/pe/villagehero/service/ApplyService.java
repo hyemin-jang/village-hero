@@ -89,27 +89,27 @@ public class ApplyService {
 	}
 
 	// 내 심부름 -> 내가 지원한 심부름 목록
-	public List<MyPageDTO.MyApply> getMyApply(Long memberId) {
-		
-		Optional<Member> m = memberDAO.findById(memberId);
-		List<MyPageDTO.MyApply> all = new ArrayList<>();
-		
-		m.ifPresent(member -> {
-			List<Apply> sub = applyDAO.findMyApply(member);
-
-			for(int i=0;i<sub.size();i++) {
-				Optional<Errand> e = errandDAO.findById(sub.get(i).getErrand().getErrandId());
-				Apply apply = sub.get(i);
-				e.ifPresent(errand ->{
-					if (errand.getErrandStatus() != 3) {
-						all.add(new MyPageDTO.MyApply(errand,apply));
-					}
-				});
-			}
-		});
-		
-		return all;
-	}
+		public List<MyPageDTO.MyApply> getMyApply(Long memberId) {
+			
+			Optional<Member> m = memberDAO.findById(memberId);
+			List<MyPageDTO.MyApply> all = new ArrayList<>();
+			
+			m.ifPresent(member -> {
+				List<Apply> sub = applyDAO.findMyApply(member);
+				
+				for(int i=0;i<sub.size();i++) {
+					Optional<Errand> e = errandDAO.findById(sub.get(i).getErrand().getErrandId());
+					Apply apply = sub.get(i);
+					e.ifPresent(errand ->{
+						if(errand.getErrandStatus()!='3') {
+							all.add(new MyPageDTO.MyApply(errand,apply));
+						}
+					});
+				}
+			});
+			
+			return all;
+		}
 	
 	// 내 심부름 -> 해당 지원목록 취소
 	public boolean cancel(Long memberId, Long errandId) {
