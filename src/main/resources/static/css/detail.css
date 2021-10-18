@@ -108,12 +108,13 @@ a {
 
 #applicantList, #applyForm {
 	/* 모달창으로 만들기 */
-	width: 60%;
-	height: 600px;
+	width: 50%;
+	height: 540px;
 	background-color: white;
 	box-shadow: 5px 10px 10px 1px rgba(0, 0, 0, .3);
 	overflow: auto;
 	padding: 30px;
+	border-radius: 10px;
 }
 
 .applicant {
@@ -135,7 +136,7 @@ a {
 }
 
 .bottom {
-	margin-top: 30px;
+	margin-top: 20px;
 	text-align: right;
 	margin-right: 20px;
 	text-align: right;

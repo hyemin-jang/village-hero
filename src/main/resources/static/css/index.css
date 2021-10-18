@@ -36,10 +36,10 @@ body {
 
 .errand{
 	margin: 20px;
-	padding: 20px;
+	padding: 15px;
 	background-color: white;
 	border-radius: 10px;
-	box-shadow: 2px 2px 3px lightgray;
+	box-shadow: 3px 3px 4px lightgray;
 }
 
 .errand > .title{
@@ -60,9 +60,12 @@ body {
     color: #696969;
     background-color: rgb(255, 196, 0);
     border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 800;
-    font-family: 'MaruBuri-Bold';
+}
+
+.detailView:hover {
+	background-color: rgb(255, 196, 0);
 }
 
 @media(max-width: 1200px){

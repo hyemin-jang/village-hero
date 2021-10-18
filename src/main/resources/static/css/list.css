@@ -19,34 +19,33 @@ th, td {
 }
 
 .top {
-	margin-top: 25px;
-	text-align: center;
+	margin: 25px 25px 0px 0px;
+	text-align: right;
 }
 
 .sort-button {
 	
-	background-color: #696969;	
 	border: none;
-	color: white;
-	padding: 16px 32px;
+	color: #696969;
+	padding: 6px 6px;
   	text-align: center;
   	text-decoration: none;
   	display: inline-block;
-  	font-size: 16px;
+  	font-size: 12px;
   	font-weight: bold;
-  	margin: 4px -3px;
+  	margin: 4px -4px;
   	transition-duration: 0.2s;
 	cursor: pointer;
 	border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px;
 }
 
 .sort-button:hover {
-  background-color: rgb(255, 196, 0);
+  background-color: lightgray;
   color: #696969;
 }
 
 .sort-button:focus{
-	background: rgb(255, 196, 0);
+	background: lightgray;
   	color: #696969;
 }
 
