@@ -18,8 +18,8 @@ public interface ApplyRepository extends CrudRepository<Apply, Long>{
 	@Query("select a from Apply a where a.applicant=:member and a.matchStatus=1")
 	List<Apply> findMyCompletion(Member member);
 	
-	// 내 심부름 - 다른사람에게 매칭됐거나 취소된 경우 제외
-	@Query("select a from Apply a where a.applicant=:member and a.matchStatus!=2 and a.matchStatus!=3")
+	// 내 심부름
+	@Query("select a from Apply a where a.applicant=:member and a.matchStatus!=3")
 	List<Apply> findMyApply(Member member);
 	
 	// 심부름 상세페이지에서 모든 지원 내역 출력

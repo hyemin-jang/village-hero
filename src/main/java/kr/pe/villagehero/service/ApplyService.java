@@ -96,12 +96,14 @@ public class ApplyService {
 		
 		m.ifPresent(member -> {
 			List<Apply> sub = applyDAO.findMyApply(member);
-			
+
 			for(int i=0;i<sub.size();i++) {
 				Optional<Errand> e = errandDAO.findById(sub.get(i).getErrand().getErrandId());
 				Apply apply = sub.get(i);
 				e.ifPresent(errand ->{
-					all.add(new MyPageDTO.MyApply(errand,apply));
+					if (errand.getErrandStatus() != 3) {
+						all.add(new MyPageDTO.MyApply(errand,apply));
+					}
 				});
 			}
 		});

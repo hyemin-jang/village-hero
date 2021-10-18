@@ -97,6 +97,7 @@
 			data: function(){
 				return {
 					logInMember: JSON.parse(sessionStorage.getItem("logInMember")),
+					//logInMember: // DB에서 바로가져오기
 					reqList: [],
 					completionList: [],
 					confirm: false,
@@ -104,7 +105,17 @@
 					urlPart1 : "http://localhost:8088/getErrandDetail/"
 				}
 			},
-			created : function(){				
+			created : function(){	
+				// DB에서 회원정보 받아오는 비동기
+				/* axios({
+					method: "get",
+					url: "http://localhost:8088/getLogInInfo			
+				}).then(resData => {									      			
+					this.logInMember = resData.data;  	
+				}).catch(error => {
+					console.log("error", error);
+				});  */
+				
 				// 내 요청 내역 데이터 받아오는 비동기			
 				axios({
 					method: "get",
@@ -125,7 +136,7 @@
 					console.log("error", error);
 				}); 				
 			}, 
-			methods: {
+			methods: {				
 				deleteMember: function(){
 					axios({
 						method : "put",
