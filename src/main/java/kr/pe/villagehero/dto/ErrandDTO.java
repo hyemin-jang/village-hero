@@ -16,6 +16,7 @@ public class ErrandDTO implements Comparable<ErrandDTO> {
 	private long errandId;
 	private long writerId;
 	private String writer;
+	private int writerStatus;
 	private int pay;
 	private String createdAt;
 	private String title;
@@ -30,6 +31,7 @@ public class ErrandDTO implements Comparable<ErrandDTO> {
 		this.errandId = entity.getErrandId();
 		this.writerId = entity.getWriter().getMemberId();
 		this.writer = entity.getWriter().getNickname();
+		this.writerStatus = entity.getWriter().getMemberStatus();
 		this.pay = entity.getPay();
 		this.createdAt = entity.getCreatedAt();
 		this.title = entity.getTitle();

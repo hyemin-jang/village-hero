@@ -16,10 +16,12 @@ insert into errand values(errand_seq.nextval, 3, '2021-10-15', '1일 남친 구해요'
 insert into errand values(errand_seq.nextval, 1, '2021-10-16', '코드좀 대신 짜주세요..', '너무 힘드러여 ㅠㅠ 뇌가 쪼그라들것 같아요', '과외/공부', '파주시 운정1동 해솔로 20', '2021-10-16', 5000, '0', NULL);
 
 -- [심부름 지원]
-insert into apply values(apply_seq.nextval, 1, 2, '청소 및 모든 집안일 겁나 잘합니다ㅎㅎ', '2021-10-11', 2);
-insert into apply values(apply_seq.nextval, 1, 3, '등촌동 벌레잡이입니다. 맡겨주세요.', '2021-10-11', 1);
-insert into apply values(apply_seq.nextval, 2, 3, '마당있는 전원주택입니다^^반려친구들과 편하게 방문하세요^^', '2021-10-14', 2);
+insert into apply values(apply_seq.nextval, 1, 2, '청소 및 모든 집안일 겁나 잘합니다ㅎㅎ', '2021-10-11', 0);
+insert into apply values(apply_seq.nextval, 1, 3, '등촌동 벌레잡이입니다. 맡겨주세요.', '2021-10-11', 0);
+insert into apply values(apply_seq.nextval, 2, 3, '마당있는 전원주택입니다^^반려친구들과 편하게 방문하세요^^', '2021-10-14', 1);
+insert into apply values(apply_seq.nextval, 2, 1, '제가할게요!!', '2021-10-14', 2);
 insert into apply values(apply_seq.nextval, 4, 1, '우와 강아지야 내가 태워줄게', '2021-10-15', 1);
 
 commit;
+
 

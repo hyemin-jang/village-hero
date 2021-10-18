@@ -36,7 +36,8 @@
 				
 				<tr class="tr-errand" v-for="(v, i) in errands">	
 					<td>{{i+1}}</td>
-					<td>{{v.writer}}</td>
+					<td v-if="v.writerStatus==0">{{v.writer}}</td>
+					<td v-if="v.writerStatus==1" style="color:gray;">탈퇴한 회원</td>
 					<td>{{v.createdAt}}</td>
 					<td>{{v.category}}</td>
 					<td> <a v-bind:href="urlPart1+v.errandId">{{v.title}}</a></td>
@@ -67,8 +68,8 @@
                 url : "http://localhost:8088/errands"
             }).then( resData => {
             	this.resData=true;
-                return this.errands = resData.data;
-                
+                this.errands = resData.data;
+                console.log(this.errands[0]);
             }).catch(errorData => {
             	return console.log(errorData);
             })
@@ -108,9 +109,7 @@
                 	return console.log(errorData);
                 })
         	},
-        }
-        	
-        	
+        }       	
     });
 	</script>
 </body>

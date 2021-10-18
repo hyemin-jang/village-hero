@@ -101,7 +101,7 @@ public class ApplyService {
 				Optional<Errand> e = errandDAO.findById(sub.get(i).getErrand().getErrandId());
 				Apply apply = sub.get(i);
 				e.ifPresent(errand ->{
-					if (errand.getErrandStatus() != 3) {
+					if (errand.getErrandStatus() != '3') {
 						all.add(new MyPageDTO.MyApply(errand,apply));
 					}
 				});
@@ -135,7 +135,8 @@ public class ApplyService {
 		Errand e = errandDAO.findById(errandId).get();
 		
 		List<Apply> all = applyDAO.findByErrand(e);
-		all.forEach(v -> applyList.add(new ApplyDTO.List(v.getMatchStatus(),
+		all.stream().filter(v -> v.getMatchStatus()!=3)
+			.forEach(v -> applyList.add(new ApplyDTO.List(v.getMatchStatus(),
 														v.getApplicant().getMemberId(),
 														v.getApplicant().getNickname(),
 														v.getApplicant().getGender(),
