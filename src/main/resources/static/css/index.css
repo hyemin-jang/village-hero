@@ -17,15 +17,15 @@ body {
 	width: 20%;
 	height: 850px;
 	overflow: hidden;
-	margin: -20px 0px 0px 140px;
+	margin: -20px 10px 0px 140px;
 }
 
 .side-container > .side-title {
-	margin: 30px 30px 30px 30px;	
+	margin: 10px 20px 25px 20px;
 	font-weight: 800;
-	color: #696969;
-	background-color: #00bfff;
-	border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px;
+	color: white;
+	background-color: black;
+	/* border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px; */
 }
 
 .side-title {
@@ -50,7 +50,7 @@ body {
 .content-container {
 	float: center;
 	width: 92%;
-	height: 850px;
+	height: 800px;
 	margin: 25px 0px 0px 10px;
 }
 
