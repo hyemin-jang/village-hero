@@ -4,16 +4,21 @@
 #footer-wrap {
 	width: 100%;
 	background-color: white;
+	min-height: 100vh;
+    position: relative;
+	
 }
 
 .footer-container {
 	width: 100%;
 	min-width: 1400px;
-	height: 55px;
 	background-color: black;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	height: 110px; 
+	bottom: 0px;
+	position: absolute;
 }
 	
 .footer-left {
@@ -67,78 +72,17 @@
 </style>
 
 <body>
-	<!-- Header -->
-	<template id="footer">
-		<div id="footer-wrap">
-			<div class="footer-container">
-				<<!-- div class="footer-left">					
-					<button type="button" class="footer-button"
-						onclick="location.href='http://localhost:8088/errandBoard/list.html';">
-						<span><h3>모든 심부름</h3></span>
-					</button>
-					<button type="button" class="footer-button"
-						onclick="location.href='http://localhost:8088/myerrands.html';"
-						v-if="logInCheck">
-						<span><h3>내 심부름</h3></span>
-					</button>
-				</div> -->
+	<div id="footer-wrap">
+		<div class="footer-container">
 
-				<div class="footer-middle">
-					<!-- <img src="/images/manhero.png" class="pic-footer-heroMan"> -->
-					<button class="footer-logo" onclick="location.href='http://localhost:8088';">
-						<b>Copyright © 2021 Playdata. All rights reserved.</b>
-						<br>
-						2조: 세은 / 기환 / 태경 / 혜민
-					</button>
-					<!-- <img src="/images/womenhero.png" class="pic-footer-heroWomen"> -->
-				</div>
-
-				<!-- <div class="footer-right">
-					<button type="button" class="footer-button"
-						onclick="location.href='http://localhost:8088/login.html';"
-						v-if="!logInCheck"><h3>로그인</h3></button>
-					<button type="button" class="footer-button"
-						onclick="location.href='http://localhost:8088/joinmember.html';"
-						v-if="!logInCheck"><h3>회원가입</h3></button>
-					<button type="button" class="footer-button"
-						onclick="location.href='http://localhost:8088/mypage.html';"
-						v-if="logInCheck">
-						<span><h3>마이페이지</h3></span>
-					</button>
-					<button type="button" class="footer-button"
-						onclick="location.href='http://localhost:8088';" @click="logout()"
-						v-if="logInCheck">
-						<span><h3>로그아웃</h3></span>
-					</button> -->
-				</div>
+			<div class="footer-middle">
+				<button class="footer-logo" onclick="location.href='http://localhost:8088';">
+					<b>Copyright © 2021 Playdata. All rights reserved.</b>
+					<br>
+					2조: 세은 / 기환 / 태경 / 혜민
+				</button>
 			</div>
 		</div>
-	</template>
-
-	<div id="footerCom">
-		<footer-com></footer-com>
 	</div>
-
-	<script>
-		// footer 컴포넌트
-		Vue.component("footer-com", {
-			template : "#footer",
-			data : function() {
-				return {
-					logInCheck : sessionStorage.getItem("logInMember")
-				}
-			},
-			methods : {
-				logout : function() {
-					sessionStorage.removeItem("logInMember");
-				}
-			}
-		});
-		
-		new Vue({
-			el: "#footerCom"            
-		});
-	</script>
-
 </body>
 </html>
