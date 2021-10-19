@@ -55,6 +55,7 @@
 		template: "#container",
 		data: function(){
 			return {
+				newLoc: "",
 				logInCheck: sessionStorage.getItem("logInMember"),
 				allErrands: [],		
 				errandCoords: [],
@@ -133,6 +134,20 @@
 				console.log("error", error);
 			});  				
 		},
+		methods: {
+			moveLoc : function(){
+				//this.newLoc
+				console.log(map);
+				var geocoder = new kakao.maps.services.Geocoder(); // 주소-좌표 변환 객체를 생성
+				// 문자열 주소를 좌표로 변환하는 함수
+				geocoder.addressSearch(this.newLoc, function(result, status) {	
+					if (status === kakao.maps.services.Status.OK) { 								
+						var coords = new kakao.maps.LatLng(result[0].y, result[0].x);  // 좌표로 변환된 위치
+					}
+					map.panTo(coords);		
+				})				     
+			}
+		}
 	});
 
 	new Vue({

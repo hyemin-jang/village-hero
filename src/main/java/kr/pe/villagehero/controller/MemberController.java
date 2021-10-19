@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -24,6 +25,7 @@ import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.dto.MemberDTO.Get;
 import kr.pe.villagehero.entity.Member;
 import kr.pe.villagehero.service.MemberService;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 public class MemberController {
@@ -33,7 +35,7 @@ public class MemberController {
 
 	// 회원가입 메소드
 	@PostMapping("addMember")
-	public void insertMember(MemberDTO.Join newMember, HttpServletResponse response) throws IOException {
+	public void insertMember(MemberDTO.Join newMember, @ApiIgnore HttpServletResponse response) throws IOException {
 		String newEmail = newMember.getEmail();
 		String newNickname = newMember.getNickname();
 		String newPhone = newMember.getPhone();
@@ -64,22 +66,21 @@ public class MemberController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
 	}
 
-	@ApiOperation(value = "로그인", notes = "로그인 API : Member에 기재되어 있는 이메일과 password만 입력하면 해당하는 회원의"
-			+ "저장된 정보를 불러옵니다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "OK !!"),
-            @ApiResponse(code = 500, message = "500 에러 발생시 출력 메세지, 가령 Internal Server Error !!"),
-            @ApiResponse(code = 404, message = "404 에러 발생시 출력 메세지, Not Found !!")
-    })
 	// 로그인 메소드
+	 @ApiOperation(value = "로그인", notes = "로그인")
+	    @ApiResponses({
+	            @ApiResponse(code = 200, message = "OK !!"),
+	            @ApiResponse(code = 500, message = "500 에러 발생시 출력 메세지, 가령 Internal Server Error !"),
+	            @ApiResponse(code = 404, message = "404 에러 발생시 출력 메세지, Not Found !")
+	    })
 	@GetMapping("/login")
-	public MemberDTO.Get logIn(HttpSession session, MemberDTO.Login loginData) {
+	public MemberDTO.Get logIn(@ApiIgnore HttpSession session, MemberDTO.Login loginData) {
 		MemberDTO.Get member = service.logIn(loginData.getEmail());
 		if (member != null) {
+			
 			// 로그인 성공시
 			if (member.getMemberStatus() == 0 && member.getPassword().equals(loginData.getPassword())) {
 				session.setAttribute("loginMember", member);
@@ -94,6 +95,7 @@ public class MemberController {
 		return member;
 	}
 
+	 @ApiIgnore
 	@GetMapping("logout")
 	public RedirectView logOut(HttpSession session) {
 		session.invalidate();
@@ -103,7 +105,7 @@ public class MemberController {
 
 	// 회원정보 수정
 	@PutMapping("updateMember")
-	public void updateMember(HttpSession session, MemberDTO.update member, HttpServletResponse response)
+	public void updateMember(@ApiIgnore HttpSession session, MemberDTO.update member, @ApiIgnore HttpServletResponse response)
 			throws IOException {
 		MemberDTO.Get loginMember = (Get) session.getAttribute("loginMember");
 		long id = loginMember.getMemberId();
@@ -130,7 +132,7 @@ public class MemberController {
 
 	// 회원탈퇴
 	@PutMapping("deleteMember/{id}")
-	public String deleteMember(HttpSession session, @PathVariable long id) throws IOException {
+	public String deleteMember(@ApiIgnore HttpSession session, @PathVariable long id) throws IOException {
 		try {
 			service.deleteMember(id);
 			session.invalidate();

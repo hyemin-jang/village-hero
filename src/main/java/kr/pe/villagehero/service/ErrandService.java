@@ -2,7 +2,6 @@ package kr.pe.villagehero.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -17,8 +16,6 @@ import kr.pe.villagehero.dao.MemberRepository;
 import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.entity.Errand;
 import kr.pe.villagehero.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @Service
 public class ErrandService {
@@ -60,8 +57,6 @@ public class ErrandService {
 	
 	//심부름 수정
 	public boolean updateErrand(ErrandDTO.updateErrand errand) {
-		System.out.println("심부름 수정시도");
-		
 		long errandId = errand.getErrandId();
 		Errand updateErrand = errandDAO.findById(errandId).get();
 		boolean result = false;
@@ -155,9 +150,10 @@ public class ErrandService {
 		errandDAO.save(e);
 	}
 	
-	// 지원 수락 - 심부름 상태 2로 변경
+	// 지원 수락 - 심부름 상태 2 (매칭완료)로 변경
 	public void updateErrandStatusToMatched(long errandId) {
 		Errand e = errandDAO.findById(errandId).get();
+		System.out.println(e.getCreatedAt());  // yyyy-mm-dd 00:00:00 형태로 가져와짐!
 		
 		e.setErrandStatus('2');
 		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));		
