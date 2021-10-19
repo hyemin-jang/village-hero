@@ -135,7 +135,7 @@ public class ApplyService {
 		Errand e = errandDAO.findById(errandId).get();
 		
 		List<Apply> all = applyDAO.findByErrand(e);
-		all.stream().filter(v -> v.getMatchStatus()!=3)
+		all.stream().filter(v -> v.getMatchStatus()!='3')
 			.forEach(v -> applyList.add(new ApplyDTO.List(v.getMatchStatus(),
 														v.getApplicant().getMemberId(),
 														v.getApplicant().getNickname(),

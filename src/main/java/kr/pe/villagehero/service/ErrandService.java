@@ -150,9 +150,10 @@ public class ErrandService {
 		errandDAO.save(e);
 	}
 	
-	// 지원 수락 - 심부름 상태 2로 변경
+	// 지원 수락 - 심부름 상태 2 (매칭완료)로 변경
 	public void updateErrandStatusToMatched(long errandId) {
 		Errand e = errandDAO.findById(errandId).get();
+		System.out.println(e.getCreatedAt());  // yyyy-mm-dd 00:00:00 형태로 가져와짐!
 		
 		e.setErrandStatus('2');
 		e.setCreatedAt(e.getCreatedAt().replace(" 00:00:00", ""));		
