@@ -69,7 +69,7 @@ public class MyPageDTO {
 	@Getter
 	@Setter
 	@Builder
-	public static class ErrandDTO2{
+	public static class MyErrand{
 		private String title;
 		private char errandStatus;
 	}
