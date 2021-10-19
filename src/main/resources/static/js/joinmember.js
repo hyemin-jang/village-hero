@@ -207,12 +207,5 @@ function isAddressCorrect() {
     if(address.value === "") { 
     	error[7].innerHTML = "필수 정보입니다.";
         error[7].style.display = "block"; 
-    } else if(!addressPattern.test(address.value)) {
-    	error[7].innerHTML = "형식에 맞지 않는 주소입니다.";
-        error[7].style.display = "block";
-    } else {
-    	error[7].innerHTML = "알맞은 주소입니다!";
-		error[7].style.color = "#08A600";
-        error[7].style.display = "block"; 
-    }
+    } 
 }

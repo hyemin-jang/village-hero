@@ -4,7 +4,9 @@
     padding: 0;
 }
 
-
+a {
+	text-decoration: none;
+}
 
 .profile-box {
     background-color: black;

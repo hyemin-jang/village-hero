@@ -32,8 +32,8 @@ public class SwaggerConfig {
 
     private ApiInfo swaggerInfo() {
         return new ApiInfoBuilder().title("Village Hero 사용을 위한 Doc 입니다")
-                .description("테스트")
-                .license("license : playdata").licenseUrl("http://www.google.com")
+                .description("로그인 메소드 / 심부름 1개 조회하기 메소드만 테스트해 보았습니다.")
+                .license("license : ♡2조♡").licenseUrl("https://github.com/hyemin-jang/village-hero")
                 .version("1").build();
     }
 }

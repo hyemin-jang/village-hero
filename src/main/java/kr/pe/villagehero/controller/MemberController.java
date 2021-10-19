@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +34,7 @@ public class MemberController {
 
 	// 회원가입 메소드
 	@PostMapping("addMember")
-	public void insertMember(MemberDTO.Join newMember, @ApiIgnore HttpServletResponse response) throws IOException {
+	public void insertMember(MemberDTO.Join newMember, @ApiIgnore HttpServletResponse response) throws Exception {
 		String newEmail = newMember.getEmail();
 		String newNickname = newMember.getNickname();
 		String newPhone = newMember.getPhone();
@@ -63,10 +64,11 @@ public class MemberController {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new Exception("입력 정보를 확인하세요.");
 		}
 	}
-
+	
+	
 	// 로그인 메소드
 	 @ApiOperation(value = "로그인", notes = "로그인")
 	    @ApiResponses({
@@ -104,7 +106,7 @@ public class MemberController {
 	// 회원정보 수정
 	@PutMapping("updateMember")
 	public void updateMember(@ApiIgnore HttpSession session, MemberDTO.update member, @ApiIgnore HttpServletResponse response)
-			throws IOException {
+			throws Exception {
 		MemberDTO.Get loginMember = (Get) session.getAttribute("loginMember");
 		long id = loginMember.getMemberId();
 
@@ -117,7 +119,7 @@ public class MemberController {
 				out.flush();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new Exception("입력 정보를 확인하세요.");
 
 		}
 	}
@@ -146,4 +148,18 @@ public class MemberController {
 		return service.getMemberStatus1(errandId);
 	}
 
+	
+	
+	@ApiIgnore
+	@ExceptionHandler
+	public void memberException(HttpServletResponse response, Exception e) {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println("<script>alert('입력 정보를 확인하세요'); window.location = \"/login.html\"; </script>");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}		
+	}
 }

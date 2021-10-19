@@ -1,5 +1,6 @@
 package kr.pe.villagehero.controller;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +36,7 @@ public class ErrandController {
 	
 	//심부름 수정
 	@PutMapping("updateErrand")
-	public void updateWriter(ErrandDTO.updateErrand errand, @ApiIgnore HttpServletResponse response) {
+	public void updateWriter(ErrandDTO.updateErrand errand, @ApiIgnore HttpServletResponse response) throws Exception {
 		try {
 			boolean result = service.updateErrand(errand);
 			if(result == true) {
@@ -44,14 +46,14 @@ public class ErrandController {
 				out.flush();
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			throw new Exception("입력 정보를 확인하세요.");	
 			
 		}
 	}
 
 	// 심부름 등록 
 	@PostMapping("newErrand")
-	public void insertErrand(@ApiIgnore HttpSession session, ErrandDTO newErrand, @ApiIgnore HttpServletResponse response) {
+	public void insertErrand(@ApiIgnore HttpSession session, ErrandDTO newErrand, @ApiIgnore HttpServletResponse response) throws Exception {
 		MemberDTO.Get loginMember = (Get) session.getAttribute("loginMember");
 		System.out.println(loginMember);  // 로그아웃후에 서버 세션 진짜 없어졌는지 확인
 		long memberId = loginMember.getMemberId();
@@ -66,8 +68,7 @@ public class ErrandController {
 				out.flush();
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
-			
+			throw new Exception("입력 정보를 확인하세요.");			
 		}
 	}
 	
@@ -164,6 +165,20 @@ public class ErrandController {
 	public List<ErrandDTO> getAllMyErrands(Long memberId){
 
 		return service.getAllMyErrands(memberId);
+	}
+	
+	
+	@ApiIgnore
+	@ExceptionHandler
+	public void errandException(HttpServletResponse response, Exception e) {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println("<script>alert('입력 정보를 확인하세요'); window.location = \"/login.html\"; </script>");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}		
 	}
 	
 }

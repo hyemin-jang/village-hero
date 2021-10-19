@@ -28,7 +28,7 @@ errLoca.addEventListener("focusout", checkErrLoca);
  * 콜백 함수
  */
 function checkId() {
-   var idPattern = /[a-zA-Z가-힣0-9\[~!@#$%^&*\-()_+|<>?:;\]{}]{5,50}/;
+   var idPattern = /[a-zA-Z가-힣0-9\[~!@#$%^&*\-()_+|<>?:;\]{}]{2,50}/;
    if (id.value === "") {
       error[0].innerHTML = "필수 정보입니다.";
       error[0].style.display = "block";
@@ -58,7 +58,7 @@ function checkPay() {
 }
 
 function checkErrLoca() {
-   var errLocaPattern = /[a-zA-Z가-힣0-9\[~!@#$%^&*\-()_+|<>?:;\]{}]{5,50}/;
+   var errLocaPattern = /[a-zA-Z가-힣0-9\[~!@#$%^&*\-()_+|<>?:;\]{}]{2,50}/;
    if (errLoca.value === "") {
       error[3].innerHTML = "필수 정보입니다.";
       error[3].style.display = "block";
