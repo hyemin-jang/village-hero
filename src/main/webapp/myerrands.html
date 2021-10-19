@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>동네히어로 : 내 심부름</title>
 </head>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -11,6 +11,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   
 <script src="js/headerTemplate.js"></script>
+<script src="js/footerTemplate.js"></script>
 <link rel="stylesheet" href="/css/list.css">
 <link rel="stylesheet" href="/css/myerrand.css">
 <body>
@@ -28,7 +29,7 @@
 			</div>
 			<div class="table">
 			<table v-if="myReqBool">
-				<tr style="background-color: rgb(255, 251, 0);">
+				<tr style="background-color: rgb(255, 196, 0);">
 					<th>No.</th>
 					<th>심부름 제목</th>
 					<th>상태</th>
@@ -43,7 +44,7 @@
 			</table>
 
 			<table v-if="myApplyBool">
-				<tr style="background-color: rgb(255, 251, 0);">
+				<tr style="background-color: rgb(255, 196, 0);">
 					<th></th>
 					<th>No.</th>
 					<th>심부름 작성자</th>
@@ -146,5 +147,6 @@
 		el:"#app"
 	});
 </script>
+<div id="footerBar"></div>
 </body>
 </html>

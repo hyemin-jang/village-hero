@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>동네히어로</title>
+<title>동네히어로 : 모든 심부름 보기</title>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
 <script src="../js/headerTemplate.js"></script>
+<script src="../js/footerTemplate.js"></script>
 
 <link rel="stylesheet" href="/css/list.css">
 <link rel="stylesheet" href="/css/index.css">
@@ -21,7 +22,7 @@
 		<div id="body">			
 			<div class="top">
 				<button class="sort-button" @click="getDateDesc()">최근 등록된 순 보기</button>&nbsp;&nbsp;	
-				<button class="sort-button" @click="getPayDesc()">금액 높은순 보기</button>				
+				<button class="sort-button" @click="getPayDesc()">금액 높은 순 보기</button>				
 			</div>
 			<table v-if="resData">
 				<tr>
@@ -112,5 +113,6 @@
         }       	
     });
 	</script>
+	<div id="footerBar"></div>
 </body>
 </html>
