@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>동네히어로 : 심부름 상세페이지</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
+	<script src="../js/headerTemplate.js"></script>
+	<script src="../js/footerTemplate.js"></script>
+
+	<link rel="stylesheet" href="/css/index.css" />
+	<link rel="stylesheet" href="/css/detail.css" />
+</head>
+<body>
+	<template id="detail">		
+		<div>		
+			<div class="main-container">				
+						
+				<!-- 심부름 상세 내용 출력 -->
+				<div id="errandDetail">						
+					<div class="status" v-if="errands.errandStatus==0" style="background-color: rgb(228, 232, 236);">지원자 대기중</div>
+					<div class="status" v-if="errands.errandStatus==1" style="background-color:rgb(178, 222, 252); color:rgb(2, 64, 116)">매칭 대기중</div>
+					<div class="status" v-if="errands.errandStatus==2" style="background-color: rgb(192, 252, 180); color:rgb(3, 63, 1)">매칭 완료</div>
+					<div class="status" v-if="errands.errandStatus==3" style="background-color: rgb(253, 219, 230); color:rgb(63, 1, 11)">심부름 완료</div>
+					
+					<div v-bind="errands">
+						<div class="title">
+							{{errands.title}}
+						</div>
+						<div class="write-info">
+							<span class="category">
+								{{errands.category}}
+							</span>
+							<span class="writer">
+								<span v-if="memberStatus==1">탈퇴한 회원</span>
+								<span v-else>{{errands.writer}} ·</span>
+								<span>{{errands.createdAt}}</span>
+							</span>
+						</div>
+						<hr>
+						<div class="errand-info">
+							<div class="content">
+								{{errands.content}}
+							</div>
+							<div class="info">
+								<br>
+								<div class="info-each"><b>심부름 일시</b><span style="margin-left: 10px;">{{errands.reqDate}}</span></div>
+								<div class="info-each"><b>심부름 위치</b><span style="margin-left: 10px;">{{errands.reqLocation}}</span></div>	
+							</div>
+							<hr>
+							<div class="pay">
+								<b>{{errands.pay}}</b>원
+							</div>
+						</div>						
+					</div>
+					<div class="bottom">
+						<span class="left">
+							<button v-if="errands.writerId == logInMemberId"
+									class="btn" @click="showApplicants" >
+									지원자 보기
+							</button>
+							<button v-if="errands.writerId == logInMemberId && errands.errandStatus==2"
+									class="btn" @click="complete()">
+									심부름 완료 확인
+							</button>
+							<button v-if="logInMemberId!=errands.writerId && (errands.errandStatus==0 || errands.errandStatus==1) && isApplied==false && memberStatus==0" 
+									class="btn" @click="showForm">									
+									<b>도와줄게요!</b>
+							</button>
+							<span v-if="errands.errandStatus==1 && isApplied==true" 
+									style="color:red; font-weight:600; font-size:18px;">
+									지원한 심부름입니다. 상대방의 수락을 기다리세요.
+							</span>
+						</span>
+						<span class="right">
+							<a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart1+errands.errandId" ><b>수정하기</b></a>
+							<a v-if="errands.writerId == logInMemberId" @click="deleteCheck" style="cursor:pointer;"><b>삭제하기</b></a>
+							<a href="list.html"><b>목록으로</b></a>
+						</span>
+					</div>
+				</div>
+
+				<!-- 지원자 내역 보기 -->
+				<div class="modal-wrap"  v-if="list">					
+					<div id="applicantList">
+						<div v-if="applicants.length==0">아직 지원자가 없습니다.</div>
+						<div v-else class="applicant" v-for="v in applicants">
+							<div class="applicant-info">
+								<b style="color:black; font-size:20px;">{{v.nickname}}</b><br>
+								{{v.gender}} ·
+								{{v.birthYear}}년생 ·
+								{{v.specialty1}} 
+								{{v.specialty2}} 
+								{{v.specialty3}}<br>
+								{{v.phone}}
+							</div>
+							<div class="message">
+								{{v.message}}
+							</div>
+							<div class="submit">
+								<button v-if="v.matchStatus=='0'" 
+										class="btn" @click="accept(this.value, $event)" v-bind:value="v.memberId">
+										수락하기
+								</button>
+								<span v-if="v.matchStatus=='1'" 
+									  style="background-color: rgb(192, 252, 180); color:rgb(3, 63, 1);
+									  padding: 5px; border-radius: 5px;">
+									  <b>수락한 지원자</b>
+								</span>								
+							</div>						
+						</div>
+						<div class="bottom">
+							<span class="close" @click="closeApplicants"><b>닫기</b></span>
+						</div>
+					</div>
+				</div>	
+				
+				<!-- 심부름 지원 폼 -->
+				<div class="modal-wrap" v-if="form">
+					<div id="applyForm">
+						<h2>도와줄게요!</h2>	
+						<form action="../apply" method="post">
+							<input type="hidden" name="errandId" v-bind:value="errands.errandId">
+							<input type="hidden" name="memberId" v-bind:value="logInMemberId">
+							<label for="title">간단한 자기소개와 메세지를 남겨주세요.</label>
+							<div>
+								<textarea name="message" required></textarea>
+								<button type="submit" class="btn">보내기</button>		
+							</div>	
+						</form>
+						<div class="submit">							
+							<span class="close" @click="closeForm" ><b>닫기</b></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</template>
+	
+	<div id="headerBar"></div>
+	<div id="app">		
+		<detail-com></detail-com>
+	</div>
+	
+ 	<script>
+		Vue.component("detail-com", {
+			template: "#detail",       
+	        data : function(){
+				return {
+					resData : false,
+					errands :"",
+					applicants: "",
+					logInMemberId: JSON.parse(sessionStorage.getItem("logInMember")).memberId,	
+					memberStatus:"" ,
+					memberIdForAccept: "",
+					errandIdForAccept: "",
+					form: false,
+					list: false,
+					isApplied: "", // 로그인한 사용자가 이 심부름에 지원했는지 
+		        	urlPart1 :"http://localhost:8088/getErrandDetail2/",
+		        	urlPart2 :"http://localhost:8088/errandDelete/",
+		        	thisYear: new Date().getFullYear()
+				}
+	        },
+	        created :function(){	 
+	        	if (!this.logInMemberId){	        	
+        			location.href="http://localhost:8088/login.html";
+        		};
+	        	
+        		// 심부름 상세 정보 조회
+	        	axios({
+	                method : "get",
+	                url : "http://localhost:8088/errandDetail" + location.search
+	            }).then( resData => {
+	            	this.resData=true;
+	                this.errands = resData.data;
+					this.errandIdForAccept = resData.data.errandId;
+	            }).catch(errorData => {
+	            	return console.log(errorData);
+	            });	
+				
+				
+				// 모든 지원자 내역 가져오기
+				axios({
+	                method : "get",
+	                url : "http://localhost:8088/applicants" + location.search
+	            }).then( resData => {
+	                this.applicants = resData.data;
+	                console.log(this.applicants[0]);
+	            }).catch(errorData => {
+	            	return console.log(errorData);
+	            });
+				
+				// 로그인한 사용자가 이 심부름에 지원했는지 여부 가져오기
+				axios({
+	                method : "get",
+	                url : "http://localhost:8088/isApplied" + location.search + "&memberId=" + this.logInMemberId
+	            }).then( resData => {
+	                this.isApplied = resData.data;
+	            }).catch(errorData => {
+	            	return console.log(errorData);
+	            });
+				
+				//게시물 작성자의 탈퇴여부 가져오기
+				axios({
+	                method : "get",
+	                url : "http://localhost:8088/memberStatus" + location.search
+	            }).then( resData => {
+	                this.memberStatus = resData.data;
+	            }).catch(errorData => {
+	            	return console.log(errorData);
+	            });
+	        },		        
+			methods: {
+				// 지원자 수락
+				accept: function(id, event){
+					this.memberIdForAccept = event.target.value;
+					console.log(this.memberIdForAccept);
+
+					axios({
+						method : "get",
+						url : "http://localhost:8088/accept?errandId="+this.errandIdForAccept+"&memberId="+this.memberIdForAccept
+					}).then( () => {
+						alert("수락이 완료되었습니다.");
+						location.reload();
+					}).catch(errorData => {
+						return console.log(errorData);
+					});	
+				},
+				// 심부름 완료 처리
+				complete: function(){
+					axios({
+						method : "put",
+						url : "http://localhost:8088/complete?errandId="+this.errandIdForAccept						
+					}).then( () => {
+						alert("심부름이 완료되었습니다. 히어로에게 감사의 인사를 전해주세요!");
+						location.reload();				
+					}).catch(errorData => {
+						return console.log(errorData);
+					});	
+				},
+				deletePage: function(){
+					axios({
+						method : "delete",
+						url : "http://localhost:8088/errandDelete/"+this.errandIdForAccept,
+					}).then((res)=>{
+						alert("삭제가 완료되었습니다.")
+						window.location = "/errandBoard/list.html";
+					}).catch(errorData => {
+						return console.log(errorData);
+					});	
+				},
+				deleteCheck: function(){
+					this.confirm = confirm("심부름을 삭제하시겠습니까?");
+					if(this.confirm == true){
+						this.deletePage();
+					}
+				},
+				showForm: function(){
+					this.form = true;
+				},
+				closeForm: function(){
+					this.form = false;
+				},
+				showApplicants: function(){					
+					this.list = true;					
+				},
+				closeApplicants: function(){
+					this.list = false;
+				},
+			}
+	    });
+
+		new Vue({
+            el: "#app"            
+        });
+	</script>
+
+	
+</body>
+
+</html>

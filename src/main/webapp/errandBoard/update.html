@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>동네히어로 : 심부름 수정</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<link rel="stylesheet" href="../css/errandform.css">
+<script src="../js/errandform.js"></script>
+</head>
+				
+<body>
+	<div id="detail">
+		<!-- header -->
+		<div id="header">
+			<h1 class="join_title">
+				<label for="id">심부름 수정</label>
+			</h1>
+		</div>
+	
+		<!-- wrapper in -->
+		<div id="wrapper">
+	
+			<!-- content in -->
+			<div id="content" v-bind="errands">
+	
+				<!-- form in -->
+				<form action="../updateErrand" method="post">
+					<input type="hidden" name="_method" value="PUT"> 
+					<input type="hidden" class="form-control" id="errandId" name="errandId"
+							v-bind:value="errands.errandId">
+					
+						<!-- 심부름 제목 -->
+						<div>
+							<h3 class="join_title">
+								<label for="id">심부름 제목</label>
+							</h3>
+							<span class="box int_id"> 
+								<input type="text" id="id" class="int" maxlength="50" name="title"  v-bind:value="errands.title" required> 
+								<span class="step_url">50자 제한</span>
+							</span> 
+							<span class="error_next_box">필수 정보입니다.</span>
+						</div>
+										
+						<!-- 가격/심부름 종류 -->
+						<div>
+							<h3 class="join_title">
+								<label for="category-errand">심부름 항목</label>
+							</h3>
+		
+							<span class="box int_category"> 
+								<select id="category-errand" class="sel" name="category" required>
+									<option>필수선택</option>
+									<option value="배달/장보기">배달/장보기</option>
+									<option value="청소/집안일">청소/집안일</option>
+									<option value="설치/조립/운반">설치/조립/운반</option>
+									<option value="돌봄/동행">돌봄/동행</option>
+									<option value="과외/공부">과외/공부</option>
+									<option value="역할대행">역할대행</option>
+									<option value="운전/카풀">운전/카풀</option>
+									<option value="벌레/쥐잡기">벌레/쥐잡기</option>
+									<option value="기타">기타</option>
+								</select>
+							</span> 
+							<span class="error_next_box">필수 정보입니다.</span>
+						</div>
+		
+						<!-- 가격 -->
+						<div>
+							<h3 class="join_title">
+								<label for="pay">심부름 가격</label>
+							</h3>
+							<span class="box int_pay"> 
+								<input type="text" id="pay" class="int" maxlength="7" name="pay" v-bind:value="errands.pay" required> 
+								<span class="step_url">숫자만 입력</span>
+							</span> 
+							<span class="error_next_box">필수 정보입니다.</span>
+						</div>
+		
+						<!-- 위치 -->
+						<div>
+							<h3 class="join_title">
+								<label for="errLoca">심부름 주소</label>
+							</h3>
+							<span class="box int_location"> 
+								<input type="text" id="errLoca" class="int" maxlength="50" name="reqLocation" v-bind:value="errands.reqLocation" required>
+								<span class="step_url">필수 입력</span>
+							</span> 
+							<span class="error_next_box">필수 정보입니다.</span>
+						</div>
+		
+						<!-- 요청일시 -->
+						<div>
+							<h3 class="join_title">
+								<label for="reqDate">요청일시</label>
+							</h3>
+							<span class="box int_date"> 
+								<input type="date" id="reqDate" class="int" name="reqDate" v-bind:value="errands.reqDate" required> 
+								<span class="step_url"></span>
+							</span> 
+							<span class="error_next_box">필수 정보입니다.</span>
+						</div>
+		
+						<!-- 심부름 내용 -->
+						<div>
+							<h3 class="join_title">
+								<label for="content-errand">심부름 내용</label>
+							</h3>
+							<span class="box2 int_content"> 
+								<textarea id="content-errand" class="textarea" maxlength="500" name="content" v-bind:value="errands.content" required></textarea>
+								<span class="step_url">500자 제한</span>
+							</span> 
+							<span class="error_next_box"></span>
+						</div>
+		
+						<!-- 등록 버튼 -->
+						<div class="btn_area">
+							<button type="submit" id="btnJoin">
+								<span>등록하기</span>
+							</button>
+						</div>
+				</form> 
+				<!-- form out -->
+	
+			</div>
+			<!-- content out-->
+	
+		</div>
+		<!-- wrapper out-->
+	</div>
+	<script>
+		new Vue({
+	        el:"#detail",
+	        data : {
+	        	resData : false,
+	        	errands :"",
+	        	idCheck :""
+	        },
+	        created :function(){
+	        	axios({
+	                method : "get",
+	                url : "http://localhost:8088/errandDetail2" + location.search
+	            }).then( resData => {
+	            	this.resData=true;
+	                return this.errands = resData.data;
+	            }).catch(errorData => {
+	            	return console.log(errorData);
+	            });
+	        }
+	    });
+	</script>
+</body>
+</html>

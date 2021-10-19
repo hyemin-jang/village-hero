@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+.button {
+  background-color: rgb(255, 255, 81); /* Green */
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 4px 2px;
+  transition-duration: 0.2s;
+  cursor: pointer;
+  border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px;
+}
+
+.button1 {
+  background-color: #696969; 
+  color: white; 
+}
+
+.button1:hover {
+  background-color: rgb(255, 196, 0);
+  color: #696969;
+}
+
+.button1:focus{
+	background: rgb(255, 196, 0);
+  	color: #696969;
+}
+.body{
+	text-align:center;
+	margin-top:50px;
+}
+
+.table{
+	margin-top:50px;
+	margin-left:200px;
+	margin-right:200px;
+}

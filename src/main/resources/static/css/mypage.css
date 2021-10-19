@@ -1,0 +1,112 @@
+#main {
+    margin-left: 200px;
+    margin-right: 200px;
+    padding: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+.profile-box {
+    background-color: black;
+    color: white;
+    margin-top: 50px;
+    padding: 30px;
+}
+
+.profile-top {
+	height: 300px;
+	display: flex;
+	align-items: center;
+}
+
+.my-profile {
+    width: 50%;	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.profile-img-f {
+	display: inline-block;
+	width: 150px;
+	height: 150px; 
+	border-radius: 50%;
+	background-color: gray;
+	background-image: url(/images/womenhero.png);	
+	background-size: 120px;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin-right: 20px;
+}
+
+.profile-text {
+	text-align: center;
+}
+
+.profile-text > a {
+	color: white;
+}
+
+.profile-name {
+	font-size: 60px;
+	font-weight: 600;
+	margin-bottom: 20px;
+}
+
+.profile-img-m {
+	display: inline-block;
+	width: 150px;
+	height: 150px; 
+	border-radius: 50%;
+	background-color: gray;
+	background-image: url(/images/manhero.png);
+	background-size: 120px;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin-right: 20px;	
+}
+
+.req-cnt {
+	display: inline;
+    width: 25%;
+    text-align: center;
+}
+
+.completion-cnt {
+	display: inline;
+    width: 25%;
+    text-align: center;
+}
+
+.cnt-title {
+	font-size: 25px;
+	margin-bottom: 20px;
+}
+.cnt {
+	font-size: 50px;
+	font-weight: 600;
+}
+
+
+.list-box{
+	margin-top: 30px;
+	padding: 0;
+}
+
+.menu-btn{
+	margin-bottom: 20px;
+}
+
+.list-btn{
+	width: 49.5%;
+	color: #696969;
+	padding: 10px 25px;
+	text-align: center;
+	text-decoration: none;
+	border: none;
+	font-size: 20px;
+	font-weight: 600;
+	cursor: pointer;	
+	
+}

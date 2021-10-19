@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>동네히어로 : 내 심부름</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+<script src="js/headerTemplate.js"></script>
+<script src="js/footerTemplate.js"></script>
+<link rel="stylesheet" href="/css/list.css">
+<link rel="stylesheet" href="/css/myerrand.css">
+<body>
+	<div id="headerBar"></div>
+	
+	<div id="app">
+		<mycom></mycom>
+	</div>
+
+	<template id="myerrand">
+		<div class="body">
+			<div class="">
+			<button class="button button1" @click="getmyerrands()">내가 요청한 심부름 목록</button>
+			<button class="button button1" @click="getmyapplies()">내가 지원한 심부름 목록</button>
+			</div>
+			<div class="table">
+			<table v-if="myReqBool">
+				<tr style="background-color: rgb(255, 196, 0);">
+					<th>No.</th>
+					<th>심부름 제목</th>
+					<th>상태</th>
+				</tr>
+				<tr class="tr-errand" v-for="v,index in myReq" v-if="v.errandStatus!=3">
+					<td>{{index}}</td>
+					<td><a v-bind:href="urlPart1+v.errandId">{{v.title}}</a></td>
+					<td v-if="v.errandStatus==0"><span style="background-color: rgb(228, 232, 236); padding:3px; border-radius:3px;">지원자 대기중</span></td>
+					<td v-if="v.errandStatus==1"><span style="background-color:rgb(178, 222, 252); color:rgb(2, 64, 116); padding:3px; border-radius:3px;">매칭 대기중</span></td>
+					<td v-if="v.errandStatus==2"><span style="background-color: rgb(192, 252, 180); color:rgb(3, 63, 1); padding:3px; border-radius:3px;">매칭완료</span></td>
+				</tr>
+			</table>
+
+			<table v-if="myApplyBool">
+				<tr style="background-color: rgb(255, 196, 0);">
+					<th></th>
+					<th>No.</th>
+					<th>심부름 작성자</th>
+					<th>심부름 제목</th>
+					<th>상태</th>
+				</tr>
+				<tr class="tr-errand" v-for="v,index in myApply">
+					<td>
+					<a class="button1" v-if="v.matchStatus==0" v-bind:href="urlPart2+v.errandId"><span style="background-color: rgb(207, 197, 197); color:rgb(63, 1, 11); padding:3px; border-radius:3px;">지원취소</span></a>
+					</td>
+					<td>{{index}}</td>
+					<td>{{v.writer}}</td>
+					<td><a v-bind:href="urlPart1+v.errandId">{{v.title}}</a></td>
+					<td v-if="v.matchStatus==0"><span style="background-color: rgb(228, 232, 236); padding:3px; border-radius:3px;">수락 대기중</span></td>
+					<td v-if="v.matchStatus==1"><span style="background-color: rgb(192, 252, 180); color:rgb(3, 63, 1); padding:3px; border-radius:3px;">나한테 매칭됨</span></td>
+					<td v-if="v.matchStatus==2"><span style="background-color: rgb(253, 219, 230); color:rgb(63, 1, 11); padding:3px; border-radius:3px;">다른사람한테 매칭됨</span></td>
+				</tr>
+			</table>
+			</div>
+			<br>
+		</div>
+
+	</template>
+
+	<script>
+
+	//현재 세션에 저장된 값 확인 component
+	Vue.component("mycom",{
+		template : "#myerrand",
+		data : function(){
+			return{
+				myReq:[],
+				myReqBool : true,
+				myApply : [],
+				myApply2 : [],
+				myApplyBool : false,
+				urlPart1 : "http://localhost:8088/getErrandDetail/",
+				urlPart2 : "http://localhost:8088/applycancel?memberId="+JSON.parse(sessionStorage.getItem("logInMember")).memberId
+						+"&errandId="
+			}
+		},
+		created : function(){
+			// 상세페이지로 넘어가기
+			axios({
+				method: "get",
+				url: "http://localhost:8088/myerrands/req?memberId="+JSON.parse(sessionStorage.getItem("logInMember")).memberId					
+			}).then(resData => {
+				this.myReq = resData.data; 
+				
+			}).catch(error => {
+				console.log("error", error);
+			});
+			
+			axios({
+				method: "get",
+				url: "http://localhost:8088/myerrands/apply2?memberId="+JSON.parse(sessionStorage.getItem("logInMember")).memberId					
+			}).then(resData => {
+				this.myApply2 = resData.data; 
+				
+			}).catch(error => {
+				console.log("error", error);
+			});
+			
+		},
+		methods: {
+			getmyerrands : function(){
+	    		axios({
+	                method : "get",
+	                url : "http://localhost:8088/myerrands/req?memberId="+JSON.parse(sessionStorage.getItem("logInMember")).memberId
+	            }).then( resData => {
+	            	this.myReqBool=true;
+	            	this.myApplyBool=false;
+	                return this.myReq = resData.data;
+	            }).catch(errorData => {
+	            	return console.log(errorData);
+	            })
+	    	},
+	    	getmyapplies : function(){
+	    		axios({
+	                method : "get",
+	                url : "http://localhost:8088/myerrands/apply?memberId="+JSON.parse(sessionStorage.getItem("logInMember")).memberId
+	            }).then( resData => {
+	            	this.myApplyBool=true;
+	            	this.myReqBool=false;
+	                this.myApply = resData.data;
+					console.log(this.myApply[0]);
+	            }).catch(errorData => {
+	            	return console.log(errorData);
+	            })
+	    	},
+	    	gotomain : function(){
+	    		document.location.href="/";
+	    	},
+	    	
+		}
+	})
+
+	
+	new Vue({
+		el:"#app"
+	});
+</script>
+<div id="footerBar"></div>
+</body>
+</html>

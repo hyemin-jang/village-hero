@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>동네히어로 : 마이페이지</title>
+<!-- 지도 API include -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c2c65e47ff9efd53c90ebd6f14d04ecb&libraries=services,clusterer,drawing"></script>	
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+<script src="js/headerTemplate.js"></script>
+<script src="js/footerTemplate.js"></script>
+
+<link rel="stylesheet" href="/css/mypage.css">
+<link rel="stylesheet" href="/css/list.css">
+</head>
+<body>		
+	<template id="mypage">
+		<div id="main">	
+			<div class="profile-box">				
+				<div class="profile-top">
+					<div class="my-profile" v-bind="logInMember">
+						<div v-if="logInMember.gender=='F'" class="profile-img-f"></div>
+						<div v-if="logInMember.gender=='M'" class="profile-img-m"></div>
+						<div class="profile-text">
+							<div class="profile-name">{{logInMemberDB.nickname}}</div>
+							<a href="../updatemember.html">수정하기&nbsp;&nbsp;</a> 
+							<a @click="deleteCheck" style="cursor:pointer;">탈퇴하기</a>
+						</div>
+					</div>			
+					<div class="req-cnt" v-bind="reqList">
+						<div class="cnt-title">심부름 요청</div>
+						<div class="cnt">{{reqList.length}}번</div>
+					</div>
+					<div class="completion-cnt" v-bind="completionList">
+						<div class="cnt-title">심부름 수행</div>
+						<div class="cnt">{{completionList.length}}번</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="list-box">
+				<div class="menu-btn" v-if="show=='req'">
+					<button class="list-btn" @click="showReqList" style="background-color:rgb(255, 196, 0);">요청 내역</button>
+					<button class="list-btn" @click="showCompletionList">수행 내역</button>
+				</div>
+				<div class="menu-btn" v-if="show=='completion'">
+					<button class="list-btn" @click="showReqList">요청 내역</button>
+					<button class="list-btn" @click="showCompletionList" style="background-color:rgb(255, 196, 0);">수행 내역</button>
+				</div>
+				<table id="reqList"  v-if="show=='req'">
+					<thead>
+						<tr>
+							<th>등록일</th><th>심부름 제목</th><th>분류</th><th>완료일</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="tr-errand" v-for="v in reqList">
+							<td>{{v.createdAt}}</td>
+							<td><a v-bind:href="urlPart1+v.errandId">{{v.title}}</a></td>
+							<td>{{v.category}}</td>
+							<td>{{v.completedAt}}</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table id="completionList"  v-if="show=='completion'">
+					<thead>
+						<tr>
+							<th>작성자</th><th>심부름 제목</th><th>분류</th><th>완료일</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="v in completionList">
+							<td>{{v.writer}}</td>
+							<td><a v-bind:href="urlPart1+v.errandId">{{v.title}}</a></td>
+							<td>{{v.category}}</td>
+							<td>{{v.completedAt}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</template>
+	
+	<div id="headerBar"></div>
+	<div id="app">
+		<my-com></my-com>				
+	</div>
+	
+	
+	<script>
+		Vue.component("my-com", {
+			template: "#mypage",
+			data: function(){
+				return {
+					logInMember: JSON.parse(sessionStorage.getItem("logInMember")),
+					logInMemberDB: [],// DB에서 바로가져오기
+					reqList: [],
+					completionList: [],
+					confirm: false,
+					show: "req",
+					urlPart1 : "http://localhost:8088/getErrandDetail/"
+				}
+			},
+			created : function(){	
+				// DB에서 회원정보 받아오는 비동기
+				axios({
+					method: "get",
+					url: "http://localhost:8088/getLogInInfo?memberId="+this.logInMember.memberId			
+				}).then(resData => {									      			
+					this.logInMemberDB = resData.data;  	
+				}).catch(error => {
+					console.log("error", error);
+				});  
+				
+				// 내 요청 내역 데이터 받아오는 비동기			
+				axios({
+					method: "get",
+					url: "http://localhost:8088/mypage/req?memberId="+this.logInMember.memberId					
+				}).then(resData => {									      			
+					this.reqList = resData.data;  	
+				}).catch(error => {
+					console.log("error", error);
+				}); 	
+
+				// 내 수행 내역 데이터 받아오는 비동기			
+				axios({
+					method: "get",
+					url: "http://localhost:8088/mypage/completion?memberId="+this.logInMember.memberId					
+				}).then(resData => {									      			
+					this.completionList = resData.data;  
+				}).catch(error => {
+					console.log("error", error);
+				}); 				
+			}, 
+			methods: {				
+				deleteMember: function(){
+					axios({
+						method : "put",
+						url : "http://localhost:8088/deleteMember/"+this.logInMember.memberId,
+					}).then((res)=>{
+						alert("탈퇴가 완료되었습니다.");
+						window.location = "/index.html";
+						sessionStorage.removeItem("logInMember");
+					}).catch(errorData => {
+						return console.log(errorData);
+					});	
+				},
+				deleteCheck: function(){
+					this.confirm = confirm("동네히어로를 탈퇴하시겠습니까?");
+					if(this.confirm == true){
+						this.deleteMember();
+					}
+				},	
+				showReqList: function(){
+					this.show = "req";
+					this.btnColor = true;
+				},
+				showCompletionList: function(){
+					this.show = "completion";	
+					this.btnColor = true;
+				}
+			}				
+		});
+				
+
+		new Vue({
+            el: "#app"            
+        });
+
+	</script>
+	<div id="footerBar"></div>
+	
+</body>
+</html>

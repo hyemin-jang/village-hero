@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>동네히어로 : 로그인</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<link rel="stylesheet" href="css/joinmember.css">
+</head>
+
+<!-- 바디 -->
+<body>
+	<!-- header -->
+	<div id="header">
+		<h1 class="login_title">
+			<label for="email">로그인</label><br>
+			<!-- <img src="images/villagehero.png"> -->
+		</h1>
+		<h3>Welcome! 동네히어로에 오신 것을 환영합니다.</h3>
+	</div>
+
+	<!-- wrapper -->
+	<div id="wrapper">
+
+		<!-- content -->
+		<div id="content">
+
+			<!-- template -->
+			<template id="form">
+				<div>
+					<!-- email -->
+					<h3 class="login_title">
+						<label for="email">이메일</label>
+					</h3>
+					<span class="box int_id"> <input type="text" id="email"
+						v-model="email" class="int" maxlength="50"> <span
+						class="step_url">@</span>
+					</span>
+
+					<!-- password -->
+					<h3 class="login_title">
+						<label for="password">암호</label>
+					</h3>
+
+					<span class="box int_pass"> <input type="password"
+						id="password" v-model="password" class="int" maxlength="16" @keyup.enter="logInCheck">
+						<span class="step_url">****</span>
+					</span>
+
+					<!-- Login BTN-->
+					<div class="btn_area">
+						<input type="submit" id="btnJoin" value="로그인" @click="logInCheck">
+						<br> <br>
+						<button type="button" id="btnJoin"
+							onclick="location.href='http://localhost:8088/joinmember.html';">
+							<span>회원가입</span>
+						</button>
+					</div>
+
+				</div>
+			</template>
+			<!-- template -->
+
+			<!-- component -->
+			<div id="app">
+				<form-com></form-com>
+			</div>
+
+		</div>
+		<!-- content -->
+
+	</div>
+	<!-- wrapper -->
+
+
+
+
+
+	<!-- Vue -->
+	<script>
+	   Vue.component("form-com", {
+			template: "#form",
+			data: function(){
+				return {
+					logInTry: "",
+					logInMember: "",
+					email: "",
+					password: ""
+				}
+			},
+		
+			methods: {				
+				logInCheck: function(){
+					axios({
+						method: "get",
+						url: "http://localhost:8088/login?email="+this.email+"&password="+this.password,
+					}).then(resData => {		
+						this.logInMember = resData.data;   				
+						sessionStorage.setItem("logInMember", JSON.stringify(this.logInMember));
+						if(this.logInMember==""){
+							console.log("비밀번호 및 이메일 입력 실패시 요청 잘옴?")
+							alert("이메일 또는 비밀번호를 확인하세요.");
+						}else{
+							alert("환영합니다!");
+							document.location.href = '/';
+						}
+						
+					}).catch(error => {
+						alert("이메일 또는 비밀번호를 확인하세요.");
+						console.log("error", error);
+					});  
+				}
+			}				
+		});
+	
+		new Vue({
+	       el: "#app"            
+	   });
+		
+		function enterkey() {
+	        if (window.event.keyCode == 13) {
+	 
+	             // 엔터키가 눌렸을 때 실행할 내용
+	             logInCheck();
+	        }
+	}
+   </script>
+
+</body>
+</html>
