@@ -173,8 +173,8 @@ select {
 	padding: 16px 0 12px;
 	border: 0;
 	cursor: pointer;
-	color: #fff;
-	background-color: #696969;
+	color: color: #696969;
+	background-color: rgb(255, 196, 0);
 	border-radius: 5px 5px 5px 5px/5px 5px 5px 5px;
 	font-size: 20px;
 	font-weight: 800;

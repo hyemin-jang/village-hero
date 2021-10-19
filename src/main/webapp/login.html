@@ -43,7 +43,7 @@
 					</h3>
 
 					<span class="box int_pass"> <input type="password"
-						id="password" v-model="password" class="int" maxlength="16">
+						id="password" v-model="password" class="int" maxlength="16" @keyup.enter="logInCheck">
 						<span class="step_url">****</span>
 					</span>
 
@@ -101,7 +101,7 @@
 							console.log("비밀번호 및 이메일 입력 실패시 요청 잘옴?")
 							alert("이메일 또는 비밀번호를 확인하세요.");
 						}else{
-							alert("환영합니다.");
+							alert("환영합니다!");
 							document.location.href = '/';
 						}
 						

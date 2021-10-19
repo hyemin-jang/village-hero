@@ -66,15 +66,11 @@ public class MemberController {
 	// 로그인 메소드
 	@GetMapping("/login")
 	public MemberDTO.Get logIn(HttpSession session, MemberDTO.Login loginData) {
-		System.out.println(" --===== " + loginData);
 		MemberDTO.Get member = service.logIn(loginData.getEmail());
 		if (member != null) {
-			System.out.println("여기는 오니?");
 			// 로그인 성공시
 			if (member.getMemberStatus() == 0 && member.getPassword().equals(loginData.getPassword())) {
-				System.out.println("여기를 못온느거같애");
 				session.setAttribute("loginMember", member);
-				System.out.println("----------------------------");
 
 				// 로그인 실패시 (비밀번호 오류)
 			} else {
@@ -83,7 +79,6 @@ public class MemberController {
 		} else {
 			return null;
 		}
-		System.out.println("==================== " + member);
 		return member;
 	}
 

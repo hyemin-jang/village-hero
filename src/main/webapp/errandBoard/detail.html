@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>심부름 상세페이지</title>
+<title>동네히어로 : 심부름 상세페이지</title>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	
@@ -45,6 +45,7 @@
 								{{errands.content}}
 							</div>
 							<div class="info">
+								<br>
 								<div class="info-each"><b>심부름 일시</b><span style="margin-left: 10px;">{{errands.reqDate}}</span></div>
 								<div class="info-each"><b>심부름 위치</b><span style="margin-left: 10px;">{{errands.reqLocation}}</span></div>	
 							</div>
@@ -70,13 +71,13 @@
 							</button>
 							<span v-if="errands.errandStatus==1 && isApplied==true" 
 									style="color:red; font-weight:600; font-size:18px;">
-									지원한 심부름입니다. 수락될때까지 기다려주세요.
+									지원한 심부름입니다. 상대방의 수락을 기다리세요.
 							</span>
 						</span>
 						<span class="right">
-							<a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart1+errands.errandId" >수정하기</a>
-							<a v-if="errands.writerId == logInMemberId" @click="deleteCheck" style="cursor:pointer;">삭제하기</a>
-							<a href="list.html">목록으로</a>
+							<a v-if="errands.writerId == logInMemberId" v-bind:href="urlPart1+errands.errandId" ><b>수정하기</b></a>
+							<a v-if="errands.writerId == logInMemberId" @click="deleteCheck" style="cursor:pointer;"><b>삭제하기</b></a>
+							<a href="list.html"><b>목록으로</b></a>
 						</span>
 					</div>
 				</div>
@@ -104,13 +105,14 @@
 										수락하기
 								</button>
 								<span v-if="v.matchStatus=='1'" 
-									 	style="background-color: rgb(192, 252, 180); color:rgb(3, 63, 1)">
-									 	수락한 지원자
+									  style="background-color: rgb(192, 252, 180); color:rgb(3, 63, 1);
+									  padding: 5px; border-radius: 5px;">
+									  <b>수락한 지원자</b>
 								</span>								
 							</div>						
 						</div>
 						<div class="bottom">
-							<span class="close" @click="closeApplicants">닫기</span>
+							<span class="close" @click="closeApplicants"><b>닫기</b></span>
 						</div>
 					</div>
 				</div>	
@@ -129,7 +131,7 @@
 							</div>	
 						</form>
 						<div class="submit">							
-							<span class="close" @click="closeForm" >닫기</span>
+							<span class="close" @click="closeForm" ><b>닫기</b></span>
 						</div>
 					</div>
 				</div>

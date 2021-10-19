@@ -1,42 +1,41 @@
 <style>
 
-/** 헤더 */
-#header-wrap {
+/** 푸터 */
+#footer-wrap {
 	width: 100%;
 	background-color: white;
 }
 
-.header-container {
+.footer-container {
 	width: 100%;
 	min-width: 1400px;
-	height: 150px;
-	margin: 0 auto;
+	height: 55px;
 	background-color: black;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 	
-.header-left {
+.footer-left {
 	width: 28%;	
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
-.header-middle {
-	width: 40%;
+.footer-middle {
+	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
-.header-right {
+.footer-right {
 	width: 28%;	
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.header-button {
+.footer-button {
 	border: 0;
 	color: white;
 	background-color: black;
@@ -46,22 +45,22 @@
 	margin: 10px;
 }
 
-.header-logo {
+.footer-logo {
 	border: 0;
-	color: rgb(255, 196, 0);
+	color: white;
 	background-color: black;
-	font-size: 80px;
-	font-weight: 600;
+	font-size: 15px;
+	font-weight: 200;
 	cursor: pointer;	
 	margin: 10px;
 }
 
-.pic-header-heroMan {
+.pic-footer-heroMan {
 	height: 85px;
 	width: auto;
 }
 
-.pic-header-heroWomen {
+.pic-footer-heroWomen {
 	height: 85px;
 	width: auto;
 }
@@ -69,59 +68,61 @@
 
 <body>
 	<!-- Header -->
-	<template id="header">
-		<div id="header-wrap">
-			<div class="header-container">
-				<div class="header-left">					
-					<button type="button" class="header-button"
+	<template id="footer">
+		<div id="footer-wrap">
+			<div class="footer-container">
+				<<!-- div class="footer-left">					
+					<button type="button" class="footer-button"
 						onclick="location.href='http://localhost:8088/errandBoard/list.html';">
 						<span><h3>모든 심부름</h3></span>
 					</button>
-					<button type="button" class="header-button"
+					<button type="button" class="footer-button"
 						onclick="location.href='http://localhost:8088/myerrands.html';"
 						v-if="logInCheck">
 						<span><h3>내 심부름</h3></span>
 					</button>
-				</div>
+				</div> -->
 
-				<div class="header-middle">
-					<img src="/images/manhero.png" class="pic-header-heroMan">
-					<button class="header-logo" onclick="location.href='http://localhost:8088';">
-						<b>동네히어로</b>
+				<div class="footer-middle">
+					<!-- <img src="/images/manhero.png" class="pic-footer-heroMan"> -->
+					<button class="footer-logo" onclick="location.href='http://localhost:8088';">
+						<b>Copyright © 2021 Playdata. All rights reserved.</b>
+						<br>
+						2조: 세은 / 기환 / 태경 / 혜민
 					</button>
-					<img src="/images/womenhero.png" class="pic-header-heroWomen">
+					<!-- <img src="/images/womenhero.png" class="pic-footer-heroWomen"> -->
 				</div>
 
-				<div class="header-right">
-					<button type="button" class="header-button"
+				<!-- <div class="footer-right">
+					<button type="button" class="footer-button"
 						onclick="location.href='http://localhost:8088/login.html';"
 						v-if="!logInCheck"><h3>로그인</h3></button>
-					<button type="button" class="header-button"
+					<button type="button" class="footer-button"
 						onclick="location.href='http://localhost:8088/joinmember.html';"
 						v-if="!logInCheck"><h3>회원가입</h3></button>
-					<button type="button" class="header-button"
+					<button type="button" class="footer-button"
 						onclick="location.href='http://localhost:8088/mypage.html';"
 						v-if="logInCheck">
 						<span><h3>마이페이지</h3></span>
 					</button>
-					<button type="button" class="header-button"
+					<button type="button" class="footer-button"
 						onclick="location.href='http://localhost:8088';" @click="logout()"
 						v-if="logInCheck">
 						<span><h3>로그아웃</h3></span>
-					</button>
+					</button> -->
 				</div>
 			</div>
 		</div>
 	</template>
 
-	<div id="headerCom">
-		<header-com></header-com>
+	<div id="footerCom">
+		<footer-com></footer-com>
 	</div>
 
 	<script>
-		// header 컴포넌트
-		Vue.component("header-com", {
-			template : "#header",
+		// footer 컴포넌트
+		Vue.component("footer-com", {
+			template : "#footer",
 			data : function() {
 				return {
 					logInCheck : sessionStorage.getItem("logInMember")
@@ -135,7 +136,7 @@
 		});
 		
 		new Vue({
-			el: "#headerCom"            
+			el: "#footerCom"            
 		});
 	</script>
 
