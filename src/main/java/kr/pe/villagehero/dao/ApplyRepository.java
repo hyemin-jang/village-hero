@@ -27,12 +27,12 @@ public interface ApplyRepository extends CrudRepository<Apply, Long>{
 
 	@Transactional
 	@Modifying
-	@Query(value="update Apply a set a.matchStatus=1 where a.errand=:e and a.applicant=:m", nativeQuery=false)
+	@Query(value="update Apply a set a.matchStatus=1 where a.errand=:e and a.applicant=:m and a.matchStatus!=3", nativeQuery=false)
 	void updateMyApplyStatus(Errand e, Member m);
 
 	@Transactional
 	@Modifying
-	@Query(value="update Apply a set a.matchStatus=2 where a.errand=:e and a.applicant!=:m", nativeQuery=false)
+	@Query(value="update Apply a set a.matchStatus=2 where a.errand=:e and a.applicant!=:m and a.matchStatus!=3", nativeQuery=false)
 	void updateOtherApplyStatus(Errand e, Member m);
 	
 	
