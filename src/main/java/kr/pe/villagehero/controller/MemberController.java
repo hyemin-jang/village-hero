@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.dto.MemberDTO.Get;
 import kr.pe.villagehero.entity.Member;
@@ -64,17 +68,21 @@ public class MemberController {
 	}
 
 	// 로그인 메소드
+	 @ApiOperation(value = "로그인", notes = "로그인")
+	    @ApiResponses({
+	            @ApiResponse(code = 200, message = "OK !!"),
+	            @ApiResponse(code = 500, message = "500 에러 발생시 출력 메세지, 가령 Internal Server Error !"),
+	            @ApiResponse(code = 404, message = "404 에러 발생시 출력 메세지, Not Found !")
+	    })
 	@GetMapping("/login")
 	public MemberDTO.Get logIn(HttpSession session, MemberDTO.Login loginData) {
 		System.out.println(" --===== " + loginData);
 		MemberDTO.Get member = service.logIn(loginData.getEmail());
 		if (member != null) {
-			System.out.println("여기는 오니?");
+			
 			// 로그인 성공시
 			if (member.getMemberStatus() == 0 && member.getPassword().equals(loginData.getPassword())) {
-				System.out.println("여기를 못온느거같애");
 				session.setAttribute("loginMember", member);
-				System.out.println("----------------------------");
 
 				// 로그인 실패시 (비밀번호 오류)
 			} else {

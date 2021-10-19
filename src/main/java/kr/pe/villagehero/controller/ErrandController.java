@@ -12,10 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import kr.pe.villagehero.dto.ErrandDTO;
 import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.dto.MemberDTO.Get;
@@ -87,9 +91,17 @@ public class ErrandController {
 		return new RedirectView("/errandBoard/detail.html");		
 	}
 
+	
+	
 	// 심부름 상세페이지 - 1개 심부름 정보 출력
+    @ApiOperation(value = "심부름 1개 조회", notes = "API 설명 부분 : 심부름 1개 조회")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK !!"),
+            @ApiResponse(code = 500, message = "500 에러 발생시 출력 메세지, 가령 Internal Server Error !"),
+            @ApiResponse(code = 404, message = "404 에러 발생시 출력 메세지, Not Found !")
+    })
 	@GetMapping("/errandDetail")
-	public ErrandDTO errandDetail(long errandId) {
+	public ErrandDTO errandDetail(@RequestParam long errandId) {
 		ErrandDTO errand = service.getOneErrand(errandId);
 		return errand;
 	}

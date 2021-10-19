@@ -1,5 +1,6 @@
 package kr.pe.villagehero.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import kr.pe.villagehero.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -55,7 +56,9 @@ public class MemberDTO {
 	@Setter
 	@ToString
 	public static class Login {  // 로그인한 정보 넘겨줄때 필요한 DTO 클래스
+		@ApiModelProperty(example="hm@google.com")
 		private String email;	
+		@ApiModelProperty(example="123")
 		private String password;
 	}
 	
