@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,8 +28,10 @@ public class Member {
 	@Column(name="member_id")
 	private long memberId;
 	
+	@ApiModelProperty(example="gh@google.com")
 	private String email;
 	
+	@ApiModelProperty(example="222")
 	private String password;
 	
 	private String nickname;

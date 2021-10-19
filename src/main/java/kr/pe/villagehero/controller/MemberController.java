@@ -12,9 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import kr.pe.villagehero.dto.MemberDTO;
 import kr.pe.villagehero.dto.MemberDTO.Get;
 import kr.pe.villagehero.entity.Member;
@@ -63,6 +68,13 @@ public class MemberController {
 		}
 	}
 
+	@ApiOperation(value = "로그인", notes = "로그인 API : Member에 기재되어 있는 이메일과 password만 입력하면 해당하는 회원의"
+			+ "저장된 정보를 불러옵니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK !!"),
+            @ApiResponse(code = 500, message = "500 에러 발생시 출력 메세지, 가령 Internal Server Error !!"),
+            @ApiResponse(code = 404, message = "404 에러 발생시 출력 메세지, Not Found !!")
+    })
 	// 로그인 메소드
 	@GetMapping("/login")
 	public MemberDTO.Get logIn(HttpSession session, MemberDTO.Login loginData) {
